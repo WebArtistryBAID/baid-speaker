@@ -6,11 +6,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    @apply bg-blue-100;
+    @apply bg-blue-100 h-screen w-screen;
 }
 
 .messagebox {
-    @apply bg-white p-4 rounded-3xl max-w-md max-h-96 overflow-y-auto;
+    @apply bg-white p-8 rounded-3xl max-w-md max-h-96 overflow-y-auto;
 }
 
 .btn {
