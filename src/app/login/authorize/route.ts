@@ -43,7 +43,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const meJson = await me.json()
     const user = await prisma.user.upsert({
         where: {
-            id: meJson['schoolId']
+            id: meJson['seiueId']
         },
         update: {
             name: meJson['name'],
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             phone: meJson['phone']
         },
         create: {
-            id: meJson['schoolId'],
+            id: meJson['seiueId'],
             name: meJson['name'],
             pinyin: meJson['pinyin'],
             phone: meJson['phone']
