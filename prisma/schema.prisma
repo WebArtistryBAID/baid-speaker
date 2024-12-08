@@ -41,6 +41,7 @@ model AvailableDate {
 }
 
 enum PreLectureTasks {
+  confirmDate
   confirmNeedComPoster
   confirmPosterDesigner
   submitPoster
@@ -65,6 +66,7 @@ enum PostLectureTasks {
 enum LectureAuditLogType {
   created
   assignedHost
+  confirmedDate
   assignedTeacher
   confirmedNeedComPoster
   confirmedSelfDesignPoster
@@ -108,7 +110,7 @@ model Lecture {
   contactWeChat     String
   preSurveyQ1       String // 1. Please describe the content of your lecture.
   preSurveyQ2       String // 2. Please describe why you chose this topic.
-  date              DateTime
+  date              DateTime?
   user              User               @relation("lectures", fields: [userId], references: [id])
   userId            Int
   assignee          User?              @relation("assignedLectures", fields: [assigneeId], references: [id])
