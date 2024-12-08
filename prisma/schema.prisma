@@ -14,6 +14,13 @@ model User {
   phone       String?
   permissions String[]
   logs        UserAuditLog[]
+
+  lectures         Lecture[] @relation("lectures")
+  assignedLectures Lecture[] @relation("assignedLectures")
+  assignedPosters  Lecture[] @relation("assignedPosters")
+  assignedTeachers Lecture[] @relation("assignedTeachers")
+
+  lectureLogs LectureAuditLog[]
 }
 
 enum UserAuditLogType {
@@ -27,4 +34,102 @@ model UserAuditLog {
   user   User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
   values String[]
+}
+
+model AvailableDate {
+  date DateTime @id
+}
+
+enum PreLectureTasks {
+  confirmNeedComPoster
+  confirmPosterDesigner
+  submitPoster
+  inviteTeacher
+  submitPresentation
+  teacherApprovePresentation
+  schoolApprovePoster
+  confirmLocation
+  testDevice
+  createGroupChat
+  inviteParticipants
+  sendAdvertisements
+}
+
+enum PostLectureTasks {
+  updateLiveAudience
+  submitFeedback
+  submitVideo
+  submitReflection
+}
+
+enum LectureAuditLogType {
+  created
+  assignedHost
+  assignedTeacher
+  confirmedNeedComPoster
+  confirmedSelfDesignPoster
+  assignedPosterDesigner
+  submittedPoster
+  submittedPresentation
+  approvedPoster
+  createdGroupChat
+  invitedParticipants
+  sentAdvertisements
+  teacherApproved
+  confirmedLocation
+  testedDevice
+  updatedLiveAudience
+  submittedFeedback
+  submittedVideo
+  submittedReflection
+  modifiedStatus
+}
+
+enum LectureStatus {
+  waiting
+  completingPreTasks
+  ready
+  completingPostTasks
+  completed
+}
+
+model LectureAuditLog {
+  id     Int                 @id @default(autoincrement())
+  time   DateTime            @default(now())
+  type   LectureAuditLogType
+  user   User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  values String[]
+}
+
+model Lecture {
+  id                Int                @id
+  title             String
+  contactWeChat     String
+  preSurveyQ1       String // 1. Please describe the content of your lecture.
+  preSurveyQ2       String // 2. Please describe why you chose this topic.
+  date              DateTime
+  user              User               @relation("lectures", fields: [userId], references: [id])
+  userId            Int
+  assignee          User?              @relation("assignedLectures", fields: [assigneeId], references: [id])
+  assigneeId        Int?
+  posterAssignee    User?              @relation("assignedPosters", fields: [posterAssigneeId], references: [id])
+  posterAssigneeId  Int?
+  needComPoster     Boolean?
+  assigneeTeacher   User?              @relation("assignedTeachers", fields: [assigneeTeacherId], references: [id])
+  assigneeTeacherId Int?
+  teacherPreFdbk    String?
+  tasks             PreLectureTasks[]
+  tasksDues         DateTime[]
+  postTasks         PostLectureTasks[]
+  postTasksDues     DateTime[]
+  uploadedGroupQR   String?
+  uploadedSlides    String?
+  uploadedPoster    String?
+  uploadedVideo     String?
+  uploadedFeedback  String?
+  teacherRating     Int?
+  liveAudience      Int?
+  videoViews        Int                @default(0)
+  videoLikes        Int                @default(0)
 }

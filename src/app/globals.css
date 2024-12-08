@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    @apply bg-white dark:bg-gray-900 text-black dark:text-white;
+}
+
 .messagebox-container {
     display: flex;
     justify-content: center;
@@ -27,4 +31,16 @@ h2 {
 
 h3 {
     @apply font-display text-xl font-bold;
+}
+
+.secondary {
+    @apply text-gray-800 dark:text-gray-400;
+}
+
+.base-studio-page {
+    @apply p-8 lg:p-16 xl:p-24 2xl:p-32;
+}
+
+.btn-guide-icon {
+    @apply -mr-1 mt-0.5 ml-2 h-4 w-4;
 }

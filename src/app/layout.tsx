@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { Albert_Sans, Noto_Sans_SC } from 'next/font/google'
+import { Noto_Sans_SC, Outfit } from 'next/font/google'
 import { ReactNode } from 'react'
 import NextTopLoader from 'nextjs-toploader'
+import { ThemeModeScript } from 'flowbite-react'
 
 
-const albertSans = Albert_Sans({
+const outfit = Outfit({
     subsets: [ 'latin' ],
-    variable: '--font-albert-sans'
+    variable: '--font-outfit'
 })
 
 const notoSans = Noto_Sans_SC({
@@ -22,9 +23,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
+        <head>
+            <ThemeModeScript mode="auto"/>
+        </head>
         <body
-            className={`${albertSans.variable} ${notoSans.variable} antialiased`}
+            className={`${outfit.variable} ${notoSans.variable} antialiased`}
         >
         <NextTopLoader showSpinner={false} color="#3b82f6"/>
         {children}

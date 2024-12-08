@@ -1,18 +1,22 @@
 import type { Config } from 'tailwindcss'
+import * as flowbite from 'flowbite-react/tailwind'
 
 export default {
     content: [
         './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
         './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-        './src/app/**/*.{js,ts,jsx,tsx,mdx}'
+        './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+        flowbite.content()
     ],
     theme: {
         extend: {
             fontFamily: {
-                display: [ 'Albert Sans', 'Noto Sans CJK SC', 'system-ui', 'sans-serif' ],
+                display: [ 'Outfit', 'Noto Sans CJK SC', 'system-ui', 'sans-serif' ],
                 body: [ 'Noto Sans CJK SC', 'system-ui', 'sans-serif' ]
             }
         }
     },
-    plugins: []
+    plugins: [
+        flowbite.plugin()
+    ]
 } satisfies Config

@@ -16,7 +16,7 @@ const initI18next = async (lng: string, ns: string) => {
     return i18nInstance
 }
 
-export async function useTranslation(ns: string) {
+export async function serverTranslation(ns: string) {
     let lng
     if ((await cookies()).has(cookieName)) lng = acceptLanguage.get((await cookies()).get(cookieName)!.value)
     if (!lng) lng = acceptLanguage.get((await headers()).get('Accept-Language'))
