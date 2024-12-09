@@ -116,12 +116,13 @@ model LectureAuditLog {
 }
 
 model Lecture {
-  id                Int           @id
+  id                Int           @id @default(autoincrement())
   title             String
   contactWeChat     String
   preSurveyQ1       String // 1. Please describe the content of your lecture.
   preSurveyQ2       String // 2. Please describe why you chose this topic.
   date              DateTime?
+  status            LectureStatus
   user              User          @relation("lectures", fields: [userId], references: [id])
   userId            Int
   assignee          User?         @relation("assignedLectures", fields: [assigneeId], references: [id])

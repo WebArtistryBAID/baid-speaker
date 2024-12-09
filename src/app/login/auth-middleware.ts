@@ -7,9 +7,20 @@ const protectedRoutes = [
     '/'
 ]
 
+const protectedRoutesPartial = [
+    '/studio'
+]
+
 export default async function authMiddleware(req: NextRequest): Promise<NextResponse | null> {
     const path = req.nextUrl.pathname
-    if (!protectedRoutes.includes(path)) {
+    let isProtected = false
+    for (const path of protectedRoutesPartial) {
+        if (req.nextUrl.pathname.startsWith(path)) {
+            isProtected = true
+            break
+        }
+    }
+    if (!protectedRoutes.includes(path) && !isProtected) {
         return null
     }
     const cookie = (await cookies()).get('access_token')?.value

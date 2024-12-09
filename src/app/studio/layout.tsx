@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import {
     Badge,
     Sidebar,
@@ -14,9 +14,19 @@ import {
 import { HiAcademicCap, HiChartPie, HiCog, HiCollection, HiInbox, HiUsers } from 'react-icons/hi'
 import Link from 'next/link'
 import { useTranslationClient } from '@/app/i18n/client'
+import { getMyUser } from '@/app/login/login-actions'
+import { User } from '@prisma/client'
 
 export default function StudioLayout({ children }: { children: ReactNode }) {
     const { t } = useTranslationClient('studio')
+    const [ myUser, setMyUser ] = useState<User>()
+
+    useEffect(() => {
+        (async () => {
+            setMyUser((await getMyUser())!)
+        })()
+    }, [])
+
     return <div className="h-screen flex">
         <div className="h-screen">
             <Sidebar className="h-full relative">
@@ -43,12 +53,15 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                         </SidebarCollapse>
                     </SidebarItemGroup>
                 </SidebarItems>
-                <SidebarCTA className="mr-3 mb-3 absolute bottom-0">
-                    <Badge color="warning" className="inline-block mb-3">{t('nav.beta')}</Badge>
-                    <p className="secondary text-sm">
-                        {t('nav.betaDetails')}
-                    </p>
-                </SidebarCTA>
+                <div className="mr-3 mb-3 absolute bottom-0">
+                    <p className="text-sm">{t('nav.login', { name: myUser?.name })}</p>
+                    <SidebarCTA>
+                        <Badge color="warning" className="inline-block mb-3">{t('nav.beta')}</Badge>
+                        <p className="secondary text-sm">
+                            {t('nav.betaDetails')}
+                        </p>
+                    </SidebarCTA>
+                </div>
             </Sidebar>
         </div>
         <div className="flex-grow h-screen min-h-screen overflow-y-auto">

@@ -5,6 +5,7 @@
     "inbox": "Inbox",
     "manage": "Lecture Management",
     "user": "User Management",
+    "login": "Logged in as {{name}}.",
     "beta": "Beta",
     "betaDetails": "The BAID Speaker platform is in beta testing. Please report any issues you find to Lin."
   },
@@ -42,6 +43,26 @@
       "total": "Total Views",
       "likes": "Likes",
       "rating": "Teacher Rating"
+    }
+  },
+  "create": {
+    "title": "Start Your Next Lecture",
+    "details": "To get started, you will need to fill out the following information. <1>All questions are required. Please answer in <2>Chinese</2>.</1>",
+    "form": {
+      "title": "What's the title of your lecture?",
+      "contact": "Please share your WeChat ID or WeChat phone number so we can contact you.",
+      "preSurveyQ1": "Please tell us about the content of your lecture.",
+      "preSurveyQ2": "Why did you choose this topic?",
+      "titleError": "Please enter at most 100 characters.",
+      "contactError": "Please enter at most 100 characters.",
+      "surveyQ1Error": "Please enter at most 1000 characters.",
+      "surveyQ2Error": "Please enter at most 1000 characters."
+    },
+    "continue": "Continue",
+    "createError": {
+      "title": "Cannot Start Lecture Yet",
+      "message": "You can only have one active lecture at once. You may start your next lecture when you finish the previous one.",
+      "cta": "Back to Dashboard"
     }
   }
 }

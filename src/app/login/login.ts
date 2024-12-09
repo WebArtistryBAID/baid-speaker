@@ -20,7 +20,7 @@ export async function isLoggedIn(): Promise<boolean> {
     return decodeJwt(token).type === 'internal'
 }
 
-export async function me(): Promise<string> {
+export async function me(): Promise<number> {
     const cook = await cookies()
     if (!cook.has('access_token')) {
         throw new Error('Unauthorized')
@@ -31,7 +31,7 @@ export async function me(): Promise<string> {
     } catch {
         throw new Error('Unauthorized')
     }
-    return decodeJwt(token).id as string
+    return decodeJwt(token).id as number
 }
 
 export async function isLoggedInWithPermission(permission: string): Promise<boolean> {
