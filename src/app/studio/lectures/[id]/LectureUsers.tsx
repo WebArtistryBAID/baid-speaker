@@ -18,7 +18,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
             <TableBody className="divide-y">
                 <TableRow className="tr">
                     <TableCell className="th">{lecture.user.name}</TableCell>
-                    <TableCell>{lecture.user.phone}</TableCell>
+                    <TableCell>{lecture.contactWeChat}</TableCell>
                     <TableCell>{t('lecture.people.speaker')}</TableCell>
                 </TableRow>
                 <If condition={lecture.assigneeId != null}>

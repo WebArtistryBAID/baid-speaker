@@ -242,7 +242,7 @@
     "people": {
       "message": "These people are involved in your lecture. They can access the information associated with your lecture. Feel free to contact them for help.",
       "name": "Name",
-      "phone": "Phone Number",
+      "phone": "Phone Number / WeChat",
       "role": "Role",
       "speaker": "Speaker",
       "host": "Host",
