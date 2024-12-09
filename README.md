@@ -44,3 +44,30 @@ Upon completing of lecture:
 * `submitFeedback`: Assigned to lecture host, deadline 1 day after date
 * `submitVideo`: Assigned to lecture host, deadline 1 day after date
 * `submitReflection`: Assigned to lecture host, deadline 7 days after date
+
+## Features to complete
+
+* Show tasks and allow action upon tasks
+* Show the following on the lecture dashboard
+  * Days until lecture (if available)
+  * Next task due (if available)
+  * Lecture poster (if available)
+  * Lecture presentation (if available)
+  * Lecture group QR code (if available)
+  * Teacher feedback (if given)
+  * After lecture completion, show the following
+    * Days since lecture
+    * Next task due
+    * Teacher rating
+    * Lecture video (with link to main video page)
+    * Lecture video views
+    * Lecture video likes
+    * Lecture presentation
+    * Lecture feedback form
+* Show action history on lectures
+* Show all available files on lectures
+* Add a dialog on first open for users, hosts, teachers, and artists to explain how to use the app when they open
+  lecture page
+* Show in-progress lectures, completed lectures, and all lectures in manage page: pagination
+* Show users in user management page: pagination
+* Allow editing users (mostly permissions) in user management page
