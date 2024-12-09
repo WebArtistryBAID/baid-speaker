@@ -224,13 +224,20 @@
       "message": "Good luck on your lecture! We can't wait to see what you have to offer.",
       "messageReady": "It's all set! Your lecture is ready to go. Good luck!",
       "messagePost": "Thank you for your lecture! We hope you had a fabulous time.",
-      "status": "Status"
+      "status": "Status",
+      "host": "Your Host",
+      "hostMessage": "Your host will help you throughout your BAID Speaker journey and will host your lecture on the big day.",
+      "teacher": "Your Teacher",
+      "teacherMessage": "Your teacher will help you review your content and provide feedback on your lecture.",
+      "tasks": "Available Tasks",
+      "tasksSub": "tasks to complete",
+      "tasksCta": "View Details"
     },
     "tasks": {
       "empty": "You have no tasks to complete right now. Congratulations!"
     },
     "people": {
-      "message": "These people are involved in your lecture and can access this page. Feel free to contact them for help.",
+      "message": "These people are involved in your lecture. They can access the information associated with your lecture. Feel free to contact them for help.",
       "name": "Name",
       "phone": "Phone Number",
       "role": "Role",
@@ -262,6 +269,18 @@
     }
   },
   "manage": {
-    "title": "Manage Lectures"
+    "title": "Lectures Management",
+    "tabs": {
+      "title": "Management",
+      "unassigned": "Unassigned Lectures",
+      "inProgress": "In Progress Lectures",
+      "completed": "Completed Lectures",
+      "all": "All Lectures"
+    },
+    "unassigned": {
+      "name": "Title",
+      "speaker": "Speaker",
+      "claim": "Claim Lecture"
+    }
   }
 }

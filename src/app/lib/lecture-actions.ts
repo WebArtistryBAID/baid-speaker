@@ -1,7 +1,7 @@
 'use server'
 
 import { Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient } from '@prisma/client'
-import { requireUser } from '@/app/login/login-actions'
+import { requireUser, requireUserPermission } from '@/app/login/login-actions'
 
 const prisma = new PrismaClient()
 
@@ -96,7 +96,8 @@ export async function createLecture(title: string, contact: string, surveyQ1: st
     await prisma.lectureAuditLog.create({
         data: {
             type: LectureAuditLogType.created,
-            userId: user.id
+            userId: user.id,
+            lectureId: lecture.id
         }
     })
     return lecture
@@ -155,4 +156,91 @@ export async function getLecture(id: number): Promise<HydratedLecture | null> {
         throw new Error('Unauthorized')
     }
     return lecture
+}
+
+export async function claimLecture(id: number): Promise<void> {
+    const user = await requireUserPermission('admin.manage')
+    const lecture = await prisma.lecture.findUnique({
+        where: {
+            id
+        }
+    })
+    if (lecture?.status !== LectureStatus.waiting) {
+        throw new Error('Cannot claim lecture')
+    }
+    await prisma.lecture.update({
+        where: {
+            id
+        },
+        data: {
+            status: LectureStatus.completingPreTasks,
+            assigneeId: user.id
+        }
+    })
+    await prisma.lectureAuditLog.create({
+        data: {
+            type: LectureAuditLogType.assignedHost,
+            userId: user.id,
+            lectureId: lecture.id
+        }
+    })
+    await prisma.lectureTask.create({
+        data: {
+            type: LectureTasks.confirmDate,
+            assigneeId: user.id,
+            lectureId: lecture.id,
+            // Due in 14 days
+            dueAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
+        }
+    })
+}
+
+export async function getUnassignedLectures(): Promise<HydratedLecture[]> {
+    await requireUserPermission('admin.manage')
+    return prisma.lecture.findMany({
+        where: {
+            status: LectureStatus.waiting
+        },
+        include: {
+            user: {
+                select: {
+                    id: true,
+                    name: true,
+                    phone: true
+                }
+            },
+            assignee: {
+                select: {
+                    id: true,
+                    name: true,
+                    phone: true
+                }
+            },
+            assigneeTeacher: {
+                select: {
+                    id: true,
+                    name: true,
+                    phone: true
+                }
+            },
+            posterAssignee: {
+                select: {
+                    id: true,
+                    name: true,
+                    phone: true
+                }
+            },
+            tasks: {
+                include: {
+                    assignee: {
+                        select: {
+                            id: true,
+                            name: true,
+                            phone: true
+                        }
+                    }
+                }
+            }
+        }
+    })
 }

@@ -1,13 +1,10 @@
 import { getMyUser } from '@/app/login/login-actions'
-import { serverTranslation } from '@/app/i18n'
+import StudioManage from '@/app/studio/manage/StudioManage'
 
-export default async function StudioManage() {
-    const { t } = await serverTranslation('studio')
+export default async function StudioManageBase() {
     const myUser = (await getMyUser())!
     if (!myUser.permissions.includes('admin.manage')) {
         return <div>Unauthorized</div>
     }
-    return <div className="base-studio-page">
-        <h1 className="mb-5">{t('manage.title')}</h1>
-    </div>
+    return <StudioManage/>
 }

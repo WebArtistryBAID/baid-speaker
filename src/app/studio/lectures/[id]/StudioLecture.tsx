@@ -2,18 +2,33 @@
 
 import { LectureStatus } from '@prisma/client'
 import { useTranslationClient } from '@/app/i18n/client'
-import { Card, TabItem, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, Tabs } from 'flowbite-react'
-import { HiCalendar, HiChartPie, HiDocumentText, HiInbox, HiRefresh, HiUsers } from 'react-icons/hi'
+import {
+    Button,
+    Card,
+    TabItem,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeadCell,
+    TableRow,
+    Tabs,
+    TabsRef
+} from 'flowbite-react'
+import { HiArrowRight, HiCalendar, HiChartPie, HiDocumentText, HiInbox, HiRefresh, HiUsers } from 'react-icons/hi'
 import If from '@/app/lib/If'
 import LectureStatusIcon from '@/app/lib/LectureStatusIcon'
 import { HydratedLecture } from '@/app/lib/lecture-actions'
+import { useRef } from 'react'
 
 export default function StudioLecture({ lecture }: { lecture: HydratedLecture }) {
     const { t } = useTranslationClient('studio')
+    const tabsRef = useRef<TabsRef>(null)
+
     return <div className="base-studio-page">
         <h1 className="mb-3">{lecture.title}</h1>
         <p className="text-xl mb-5 secondary">{lecture.user.name}</p>
-        <Tabs aria-label={t('lecture.tabs.title')} variant="underline">
+        <Tabs aria-label={t('lecture.tabs.title')} variant="underline" ref={tabsRef}>
             <TabItem active title={t('lecture.tabs.dashboard')} icon={HiChartPie}>
                 <div className="mb-5">
                     <If condition={lecture.status === LectureStatus.waiting || lecture.status === LectureStatus.completingPreTasks}>
@@ -32,10 +47,41 @@ export default function StudioLecture({ lecture }: { lecture: HydratedLecture })
                         <p className="secondary text-sm font-display">{t('lecture.dashboard.status')}</p>
                         <div className="flex flex-col w-full justify-center items-center">
                             <LectureStatusIcon status={lecture.status}/>
-                            <p>{t(`lectureStatus.${lecture.status}.name`)}</p>
+                            <p className="mt-3">{t(`lectureStatus.${lecture.status}.name`)}</p>
                         </div>
                         <p className="secondary text-sm">{t(`lectureStatus.${lecture.status}.details`)}</p>
                     </Card>
+                    <If condition={lecture.tasks.length > 0}>
+                        <Card>
+                            <p className="secondary text-sm font-display">{t('lecture.dashboard.tasks')}</p>
+                            <div className="flex flex-col w-full justify-center items-center h-full">
+                                <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{lecture.tasks.length}</p>
+                                <p>{t('lecture.dashboard.tasksSub')}</p>
+                            </div>
+                            <Button color="blue" onClick={() => tabsRef.current!.setActiveTab(1)}>
+                                {t('lecture.dashboard.tasksCta')}
+                                <HiArrowRight className="btn-guide-icon"/>
+                            </Button>
+                        </Card>
+                    </If>
+                    <If condition={lecture.assigneeId != null}>
+                        <Card>
+                            <p className="secondary text-sm font-display">{t('lecture.dashboard.host')}</p>
+                            <div className="flex flex-col w-full justify-center items-center">
+                                <p className="text-2xl">{lecture.assignee?.name}</p>
+                            </div>
+                            <p className="secondary text-sm">{t('lecture.dashboard.hostMessage')}</p>
+                        </Card>
+                    </If>
+                    <If condition={lecture.assigneeTeacherId != null}>
+                        <Card>
+                            <p className="secondary text-sm font-display">{t('lecture.dashboard.teacher')}</p>
+                            <div className="flex flex-col w-full justify-center items-center">
+                                <p className="text-2xl">{lecture.assigneeTeacher?.name}</p>
+                            </div>
+                            <p className="secondary text-sm">{t('lecture.dashboard.teacherMessage')}</p>
+                        </Card>
+                    </If>
                 </div>
             </TabItem>
             <TabItem title={t('lecture.tabs.tasks')} icon={HiCalendar}>

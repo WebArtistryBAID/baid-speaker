@@ -107,30 +107,32 @@ enum LectureStatus {
 }
 
 model LectureAuditLog {
-  id     Int                 @id @default(autoincrement())
-  time   DateTime            @default(now())
-  type   LectureAuditLogType
-  user   User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
-  values String[]
+  id        Int                 @id @default(autoincrement())
+  time      DateTime            @default(now())
+  type      LectureAuditLogType
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  lecture   Lecture             @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  lectureId Int
+  values    String[]
 }
 
 model Lecture {
-  id                Int           @id @default(autoincrement())
+  id              Int              @id @default(autoincrement())
   title             String
   contactWeChat     String
   preSurveyQ1       String // 1. Please describe the content of your lecture.
   preSurveyQ2       String // 2. Please describe why you chose this topic.
   date              DateTime?
   status            LectureStatus
-  user              User          @relation("lectures", fields: [userId], references: [id])
+  user            User             @relation("lectures", fields: [userId], references: [id])
   userId            Int
-  assignee          User?         @relation("assignedLectures", fields: [assigneeId], references: [id])
+  assignee        User?            @relation("assignedLectures", fields: [assigneeId], references: [id])
   assigneeId        Int?
-  posterAssignee    User?         @relation("assignedPosters", fields: [posterAssigneeId], references: [id])
+  posterAssignee  User?            @relation("assignedPosters", fields: [posterAssigneeId], references: [id])
   posterAssigneeId  Int?
   needComPoster     Boolean?
-  assigneeTeacher   User?         @relation("assignedTeachers", fields: [assigneeTeacherId], references: [id])
+  assigneeTeacher User?            @relation("assignedTeachers", fields: [assigneeTeacherId], references: [id])
   assigneeTeacherId Int?
   teacherPreFdbk    String?
   slidesApproved    Boolean?
@@ -143,6 +145,7 @@ model Lecture {
   uploadedFeedback  String?
   teacherRating     Int?
   liveAudience      Int?
-  videoViews        Int           @default(0)
-  videoLikes        Int           @default(0)
+  videoViews      Int              @default(0)
+  videoLikes      Int              @default(0)
+  logs            LectureAuditLog[]
 }

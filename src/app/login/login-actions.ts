@@ -17,6 +17,14 @@ export async function requireUser(): Promise<User> {
     return user
 }
 
+export async function requireUserPermission(permission: string): Promise<User> {
+    const user = await requireUser()
+    if (!user.permissions.includes(permission)) {
+        throw new Error('Unauthorized')
+    }
+    return user
+}
+
 export async function getMyUser(): Promise<User | null> {
     return prisma.user.findUnique({
         where: { id: await me() }
