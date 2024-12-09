@@ -20,7 +20,8 @@ model User {
   assignedPosters  Lecture[] @relation("assignedPosters")
   assignedTeachers Lecture[] @relation("assignedTeachers")
 
-  lectureLogs LectureAuditLog[]
+  lectureLogs   LectureAuditLog[]
+  assignedTasks LectureTask[]
 }
 
 enum UserAuditLogType {
@@ -40,7 +41,7 @@ model AvailableDate {
   date DateTime @id
 }
 
-enum PreLectureTasks {
+enum LectureTasks {
   confirmDate
   confirmNeedComPoster
   confirmPosterDesigner
@@ -54,13 +55,23 @@ enum PreLectureTasks {
   createGroupChat
   inviteParticipants
   sendAdvertisements
+  updateLiveAudience // Post-lecture
+  submitFeedback // Post-lecture
+  submitVideo // Post-lecture
+  submitReflection // Post-lecture
 }
 
-enum PostLectureTasks {
-  updateLiveAudience
-  submitFeedback
-  submitVideo
-  submitReflection
+model LectureTask {
+  id          Int          @id @default(autoincrement())
+  type        LectureTasks
+  assignee    User         @relation(fields: [assigneeId], references: [id], onDelete: Cascade)
+  assigneeId  Int
+  lecture     Lecture      @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  lectureId   Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  dueAt       DateTime
+  completedAt DateTime?
 }
 
 enum LectureAuditLogType {
@@ -105,26 +116,25 @@ model LectureAuditLog {
 }
 
 model Lecture {
-  id                Int                @id
+  id                Int           @id
   title             String
   contactWeChat     String
   preSurveyQ1       String // 1. Please describe the content of your lecture.
   preSurveyQ2       String // 2. Please describe why you chose this topic.
   date              DateTime?
-  user              User               @relation("lectures", fields: [userId], references: [id])
+  user              User          @relation("lectures", fields: [userId], references: [id])
   userId            Int
-  assignee          User?              @relation("assignedLectures", fields: [assigneeId], references: [id])
+  assignee          User?         @relation("assignedLectures", fields: [assigneeId], references: [id])
   assigneeId        Int?
-  posterAssignee    User?              @relation("assignedPosters", fields: [posterAssigneeId], references: [id])
+  posterAssignee    User?         @relation("assignedPosters", fields: [posterAssigneeId], references: [id])
   posterAssigneeId  Int?
   needComPoster     Boolean?
-  assigneeTeacher   User?              @relation("assignedTeachers", fields: [assigneeTeacherId], references: [id])
+  assigneeTeacher   User?         @relation("assignedTeachers", fields: [assigneeTeacherId], references: [id])
   assigneeTeacherId Int?
   teacherPreFdbk    String?
-  tasks             PreLectureTasks[]
-  tasksDues         DateTime[]
-  postTasks         PostLectureTasks[]
-  postTasksDues     DateTime[]
+  slidesApproved    Boolean?
+  tasks             LectureTask[]
+  posterApproved    Boolean?
   uploadedGroupQR   String?
   uploadedSlides    String?
   uploadedPoster    String?
@@ -132,6 +142,6 @@ model Lecture {
   uploadedFeedback  String?
   teacherRating     Int?
   liveAudience      Int?
-  videoViews        Int                @default(0)
-  videoLikes        Int                @default(0)
+  videoViews        Int           @default(0)
+  videoLikes        Int           @default(0)
 }

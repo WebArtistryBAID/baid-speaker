@@ -1,42 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [
-`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TEMPORARY: How tasks should be allocated
 
-## Getting Started
+Upon lecture creation: Wait for lecture to be assigned to host
 
-First, run the development server:
+Upon lecture assigned to host:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* `confirmDate`: Assigned to host, no deadline
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Upon finishing of `confirmDate`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* `confirmNeedComPoster`: Assigned to lecture owner, deadline 5 days before date
+* `inviteTeacher`: Assigned to lecture host, deadline 5 days before date
+* `submitPresentation`: Assigned to lecture owner, deadline 3 days before date
+* `confirmLocation`: Assigned to lecture host, deadline 3 days before date
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically
-optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Upon finishing of `confirmNeedComPoster`:
 
-## Learn More
+* If user requests com poster, `confirmPosterDesigner`: Assigned to lecture host, deadline 4 days before date
+  * Upon finishing of `confirmPosterDesigner`, `submitPoster`: Assigned to poster designer, deadline 3 days before date
+* If user does not request com poster, `submitPoster`: Assigned to lecture owner, deadline 3 days before date
 
-To learn more about Next.js, take a look at the following resources:
+Upon finishing of `submitPoster`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* `schoolApprovePoster`: Assigned to lecture host, deadline 1 day before date
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions
-are welcome!
+Upon finishing of `schoolApprovePoster`:
 
-## Deploy on Vercel
+* If `uploadedSlides != null`: `sendAdvertisements`: Assigned to lecture owner, deadline 1 day before date
 
-The easiest way to deploy your Next.js app is to use
-the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
+Upon finishing of `submitPresentation`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for
-more details.
+* `teacherApprovePresentation`: Assigned to lecture TEACHER, deadline 1 day before date
+* `createGroupChat`: Assigned to lecture host, deadline 1 day before date
+* `inviteParticipants`: Assigned to lecture owner, deadline 1 day before date
+* If `posterApproved`, `sendAdvertisements`: Assigned to lecture owner, deadline 1 day before date
+
+Upon finishing of `confirmLocation`:
+
+* `testDevice`: Assigned to lecture host, deadline 1 day before date
+
+Upon completing of lecture:
+
+* `updateLiveAudience`: Assigned to lecture host, deadline 1 day after date
+* `submitFeedback`: Assigned to lecture host, deadline 1 day after date
+* `submitVideo`: Assigned to lecture host, deadline 1 day after date
+* `submitReflection`: Assigned to lecture host, deadline 7 days after date
