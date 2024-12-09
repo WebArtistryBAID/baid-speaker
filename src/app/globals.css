@@ -44,3 +44,11 @@ h3 {
 .btn-guide-icon {
     @apply -mr-1 mt-0.5 ml-2 h-4 w-4;
 }
+
+.tr {
+    @apply bg-white dark:border-gray-700 dark:bg-gray-800;
+}
+
+.th {
+    @apply whitespace-nowrap font-medium text-gray-900 dark:text-white;
+}

@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { useTranslationClient } from '@/app/i18n/client'
 import { getMyUser } from '@/app/login/login-actions'
 import { User } from '@prisma/client'
+import If from '@/app/lib/If'
 
 export default function StudioLayout({ children }: { children: ReactNode }) {
     const { t } = useTranslationClient('studio')
@@ -43,14 +44,16 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                         <SidebarItem as={Link} href="/studio/inbox" icon={HiInbox}>
                             {t('nav.inbox')}
                         </SidebarItem>
-                        <SidebarCollapse label="Management" icon={HiCog}>
-                            <SidebarItem as={Link} href="/studio/manage" icon={HiCollection}>
-                                {t('nav.manage')}
-                            </SidebarItem>
-                            <SidebarItem as={Link} href="/studio/users" icon={HiUsers}>
-                                {t('nav.user')}
-                            </SidebarItem>
-                        </SidebarCollapse>
+                        <If condition={myUser?.permissions.includes('admin.manage')}>
+                            <SidebarCollapse label="Management" icon={HiCog}>
+                                <SidebarItem as={Link} href="/studio/manage" icon={HiCollection}>
+                                    {t('nav.manage')}
+                                </SidebarItem>
+                                <SidebarItem as={Link} href="/studio/users" icon={HiUsers}>
+                                    {t('nav.user')}
+                                </SidebarItem>
+                            </SidebarCollapse>
+                        </If>
                     </SidebarItemGroup>
                 </SidebarItems>
                 <div className="mr-3 mb-3 absolute bottom-0">
