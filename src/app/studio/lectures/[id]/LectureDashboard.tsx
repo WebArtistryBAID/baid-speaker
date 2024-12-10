@@ -93,9 +93,9 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                 <Card>
                     <p className="secondary text-sm font-display">{t('lecture.dashboard.countdown')}</p>
                     <div className="flex flex-col w-full justify-center items-center h-full">
-                        <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{Math.ceil((lecture.date?.getTime() ?? 0 - new Date().getTime()) / 1000 / 86400)}</p>
+                        <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{Math.ceil(((lecture.date?.getTime() ?? 0) - new Date().getTime()) / 1000 / 86400)}</p>
                         <p><Trans t={t} i18nKey="lecture.dashboard.days"
-                                  count={Math.ceil((lecture.date?.getTime() ?? 0 - new Date().getTime()) / 1000 / 86400)}/>
+                                  count={Math.ceil(((lecture.date?.getTime() ?? 0) - new Date().getTime()) / 1000 / 86400)}/>
                         </p>
                         <p className="secondary">{lecture.date?.toLocaleDateString()}</p>
                     </div>
