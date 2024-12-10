@@ -77,25 +77,27 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                     </Button>
                 </Card>
             </If>
-            <NextDueCard task={lecture.tasks.toSorted((a, b) => {
-                const aIsNotAssigned = a.assigneeId !== user.id ? 1 : 0
-                const bIsNotAssigned = b.assigneeId !== user.id ? 1 : 0
-                if (aIsNotAssigned !== bIsNotAssigned) {
-                    return aIsNotAssigned - bIsNotAssigned
-                }
-                const timeDiffA = a.dueAt.getTime() - new Date().getTime()
-                const timeDiffB = b.dueAt.getTime() - new Date().getTime()
-                return timeDiffA - timeDiffB
-            })[0]} tabsRef={tabsRef}/>
-            <If condition={lecture.date != null && new Date().getTime() <= lecture.date!.getTime()}>
+            <If condition={lecture.tasks.length > 0}>
+                <NextDueCard task={lecture.tasks.toSorted((a, b) => {
+                    const aIsNotAssigned = a.assigneeId !== user.id ? 1 : 0
+                    const bIsNotAssigned = b.assigneeId !== user.id ? 1 : 0
+                    if (aIsNotAssigned !== bIsNotAssigned) {
+                        return aIsNotAssigned - bIsNotAssigned
+                    }
+                    const timeDiffA = a.dueAt.getTime() - new Date().getTime()
+                    const timeDiffB = b.dueAt.getTime() - new Date().getTime()
+                    return timeDiffA - timeDiffB
+                })[0]} tabsRef={tabsRef}/>
+            </If>
+            <If condition={lecture.date != null && new Date().getTime() <= lecture.date?.getTime()}>
                 <Card>
                     <p className="secondary text-sm font-display">{t('lecture.dashboard.countdown')}</p>
                     <div className="flex flex-col w-full justify-center items-center h-full">
-                        <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{Math.ceil((lecture.date!.getTime() - new Date().getTime()) / 1000 / 86400)}</p>
+                        <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{Math.ceil((lecture.date?.getTime() ?? 0 - new Date().getTime()) / 1000 / 86400)}</p>
                         <p><Trans t={t} i18nKey="lecture.dashboard.days"
-                                  count={Math.ceil((lecture.date!.getTime() - new Date().getTime()) / 1000 / 86400)}/>
+                                  count={Math.ceil((lecture.date?.getTime() ?? 0 - new Date().getTime()) / 1000 / 86400)}/>
                         </p>
-                        <p className="secondary">{lecture.date!.toLocaleDateString()}</p>
+                        <p className="secondary">{lecture.date?.toLocaleDateString()}</p>
                     </div>
                 </Card>
             </If>
