@@ -212,6 +212,7 @@
     }
   },
   "lecture": {
+    "userAlert": "You are viewing this lecture as the speaker. Some actions may not be available.",
     "tabs": {
       "title": "Lecture Actions",
       "dashboard": "At a Glance",
