@@ -17,7 +17,7 @@
     "confirmNeedComPoster": {
       "name": "Do you need a commissioned poster?",
       "smallName": "confirm poster requirements",
-      "descriptionUser": "You can choose to have a free commissioned poster for your lecture or to design a poster yourself. Beware: You have no editorial control over commissioned posters.",
+      "descriptionAssignee": "You can choose to have a free commissioned poster for your lecture or to design a poster yourself. Beware: You have no editorial control over commissioned posters.",
       "cta1": "Use Commissioned Poster",
       "cta2": "Design My Own Poster"
     },

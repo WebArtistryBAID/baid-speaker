@@ -32,7 +32,7 @@ export default function LectureTasksC({lecture}: { lecture: HydratedLecture }) {
         <If condition={tasks.length > 0}>
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
                 {tasks.map(task =>
-                    <div key={task.id} className="col-span-1">
+                    <div key={task.id} className="col-span-1 h-full w-full">
                         <TaskCard task={task}/>
                     </div>)}
             </div>

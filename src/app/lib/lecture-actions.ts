@@ -508,6 +508,29 @@ export async function schoolApprovePoster(lectureId: number, task: HydratedLectu
     return lecture
 }
 
+export async function sendAdvertisements(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
+    const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
+    await prisma.lectureTask.delete({
+        where: {
+            id: task.id
+        }
+    })
+    await prisma.lectureAuditLog.create({
+        data: {
+            type: LectureAuditLogType.sentAdvertisements,
+            userId: user.id,
+            lectureId: lecture.id
+        }
+    })
+    return lecture
+}
+
 export async function submitPresentation(lectureId: number, task: HydratedLectureTask, slides: string): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
     const lecture = (await prisma.lecture.findUnique({

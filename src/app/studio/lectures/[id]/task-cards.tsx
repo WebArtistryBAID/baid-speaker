@@ -17,7 +17,15 @@ import {
     HiUser,
     HiUserGroup
 } from 'react-icons/hi'
-import {confirmDate, HydratedLectureTask} from '@/app/lib/lecture-actions'
+import {
+    confirmDate,
+    confirmNeedComPoster,
+    HydratedLectureTask,
+    inviteParticipants,
+    sendAdvertisements,
+    teacherApprovePresentation,
+    testDevice
+} from '@/app/lib/lecture-actions'
 import {HiArrowUpTray, HiMapPin} from 'react-icons/hi2'
 import {Trans} from 'react-i18next/TransWithoutContext'
 import {useRouter} from 'next/navigation'
@@ -112,7 +120,7 @@ export function NextDueCard({task, tabsRef}: { task: HydratedLectureTask, tabsRe
 export function BaseCard({task, children}: { task: HydratedLectureTask, children: ReactNode }) {
     const {t} = useTranslationClient('studio')
     const user = useCachedUser()
-    return <Card>
+    return <Card className="h-full w-full">
         <h2>{t(`tasks.${task.type}.name`)}</h2>
         <p className="secondary">{t(task.assigneeId === user.id ?
             `tasks.${task.type}.descriptionAssignee` : `tasks.${task.type}.descriptionUser`)}</p>
@@ -190,13 +198,24 @@ export function ConfirmDateCard({task}: { task: HydratedLectureTask }) {
 
 export function ConfirmNeedComPosterCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized className="mb-3">{t('tasks.confirmNeedComPoster.cta1')}</Button>
-        <Button color="blue" fullSized>{t('tasks.confirmNeedComPoster.cta2')}</Button>
+        <Button disabled={loading} color="blue" fullSized onClick={async () => {
+            setLoading(true)
+            await confirmNeedComPoster(task.lectureId, task, true)
+            router.refresh()
+        }}>{t('tasks.confirmNeedComPoster.cta1')}</Button>
+        <Button disabled={loading} color="blue" fullSized onClick={async () => {
+            setLoading(true)
+            await confirmNeedComPoster(task.lectureId, task, false)
+            router.refresh()
+        }}>{t('tasks.confirmNeedComPoster.cta2')}</Button>
     </BaseCard>
 }
 
 export function ConfirmPosterDesignerCard({task}: { task: HydratedLectureTask }) {
+    // TODO
     const {t} = useTranslationClient('studio')
     return <BaseCard task={task}>
         <Button color="blue" fullSized><HiLink className="btn-icon"/>{t('tasks.confirmPosterDesigner.cta')}</Button>
@@ -204,6 +223,7 @@ export function ConfirmPosterDesignerCard({task}: { task: HydratedLectureTask })
 }
 
 export function SubmitPosterCard({task}: { task: HydratedLectureTask }) {
+    // TODO
     const {t} = useTranslationClient('studio')
     return <BaseCard task={task}>
         <Button color="blue" fullSized><HiArrowUpTray className="btn-icon"/>{t('tasks.submitPoster.cta')}</Button>
@@ -211,6 +231,7 @@ export function SubmitPosterCard({task}: { task: HydratedLectureTask }) {
 }
 
 export function InviteTeacherCard({task}: { task: HydratedLectureTask }) {
+    // TODO
     const {t} = useTranslationClient('studio')
     return <BaseCard task={task}>
         <Button color="blue" fullSized><HiLink className="btn-icon"/>{t('tasks.inviteTeacher.cta')}</Button>
@@ -218,6 +239,7 @@ export function InviteTeacherCard({task}: { task: HydratedLectureTask }) {
 }
 
 export function SubmitPresentationCard({task}: { task: HydratedLectureTask }) {
+    // TODO
     const {t} = useTranslationClient('studio')
     return <BaseCard task={task}>
         <Button color="blue" fullSized><HiArrowUpTray className="btn-icon"/>{t('tasks.submitPresentation.cta')}</Button>
@@ -226,13 +248,22 @@ export function SubmitPresentationCard({task}: { task: HydratedLectureTask }) {
 
 export function TeacherApprovePresentationCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiArrowRight className="btn-icon"/>{t('tasks.teacherApprovePresentation.cta')}
+        <Button color="blue" disabled={loading}
+                onClick={async () => {
+                    setLoading(true)
+                    await teacherApprovePresentation(task.lectureId, task)
+                    router.refresh()
+                }}
+                fullSized><HiArrowRight className="btn-icon"/>{t('tasks.teacherApprovePresentation.cta')}
         </Button>
     </BaseCard>
 }
 
 export function SchoolApprovePosterCard({task}: { task: HydratedLectureTask }) {
+    // TODO
     const {t} = useTranslationClient('studio')
     return <BaseCard task={task}>
         <Button color="blue" fullSized><HiLink className="btn-icon"/>{t('tasks.schoolApprovePoster.cta')}</Button>
@@ -240,6 +271,7 @@ export function SchoolApprovePosterCard({task}: { task: HydratedLectureTask }) {
 }
 
 export function ConfirmLocationCard({task}: { task: HydratedLectureTask }) {
+    // TODO
     const {t} = useTranslationClient('studio')
     return <BaseCard task={task}>
         <Button color="blue" fullSized><HiMapPin className="btn-icon"/>{t('tasks.confirmLocation.cta')}</Button>
@@ -247,13 +279,21 @@ export function ConfirmLocationCard({task}: { task: HydratedLectureTask }) {
 }
 
 export function TestDeviceCard({task}: { task: HydratedLectureTask }) {
+    // TODO
     const {t} = useTranslationClient('studio')
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiMicrophone className="btn-icon"/>{t('tasks.testDevice.cta')}</Button>
+        <Button color="blue" fullSized disabled={loading} onClick={async () => {
+            setLoading(true)
+            await testDevice(task.lectureId, task)
+            router.refresh()
+        }}><HiMicrophone className="btn-icon"/>{t('tasks.testDevice.cta')}</Button>
     </BaseCard>
 }
 
 export function CreateGroupChatCard({task}: { task: HydratedLectureTask }) {
+    // TODO
     const {t} = useTranslationClient('studio')
     return <BaseCard task={task}>
         <Button color="blue" fullSized><HiArrowUpTray className="btn-icon"/>{t('tasks.createGroupChat.cta')}</Button>
@@ -262,15 +302,27 @@ export function CreateGroupChatCard({task}: { task: HydratedLectureTask }) {
 
 export function InviteParticipantsCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiCheck className="btn-icon"/>{t('tasks.inviteParticipants.cta')}</Button>
+        <Button color="blue" fullSized disabled={loading} onClick={async () => {
+            setLoading(true)
+            await inviteParticipants(task.lectureId, task)
+            router.refresh()
+        }}><HiCheck className="btn-icon"/>{t('tasks.inviteParticipants.cta')}</Button>
     </BaseCard>
 }
 
 export function SendAdvertisementsCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiCheck className="btn-icon"/>{t('tasks.sendAdvertisements.cta')}</Button>
+        <Button color="blue" fullSized disabled={loading} onClick={async () => {
+            setLoading(true)
+            await sendAdvertisements(task.lectureId, task)
+            router.refresh()
+        }}><HiCheck className="btn-icon"/>{t('tasks.sendAdvertisements.cta')}</Button>
     </BaseCard>
 }
 
