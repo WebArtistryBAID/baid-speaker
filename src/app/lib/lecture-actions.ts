@@ -5,6 +5,48 @@ import {requireUser, requireUserPermission} from '@/app/login/login-actions'
 
 const prisma = new PrismaClient()
 
+const HydratedLectureInclude = {
+    user: {
+        select: {
+            id: true,
+            name: true,
+            phone: true
+        }
+    },
+    assignee: {
+        select: {
+            id: true,
+            name: true,
+            phone: true
+        }
+    },
+    assigneeTeacher: {
+        select: {
+            id: true,
+            name: true,
+            phone: true
+        }
+    },
+    posterAssignee: {
+        select: {
+            id: true,
+            name: true,
+            phone: true
+        }
+    },
+    tasks: {
+        include: {
+            assignee: {
+                select: {
+                    id: true,
+                    name: true,
+                    phone: true
+                }
+            }
+        }
+    }
+}
+
 export interface HydratedLecture {
     id: number
     title: string
@@ -61,6 +103,7 @@ export interface HydratedLectureTask {
         name: string
         phone: string | null
     }
+    lectureId: number
     assigneeId: number
     createdAt: Date
     updatedAt: Date
@@ -111,47 +154,7 @@ export async function getLecture(id: number): Promise<HydratedLecture | null> {
         where: {
             id
         },
-        include: {
-            user: {
-                select: {
-                    id: true,
-                    name: true,
-                    phone: true
-                }
-            },
-            assignee: {
-                select: {
-                    id: true,
-                    name: true,
-                    phone: true
-                }
-            },
-            assigneeTeacher: {
-                select: {
-                    id: true,
-                    name: true,
-                    phone: true
-                }
-            },
-            posterAssignee: {
-                select: {
-                    id: true,
-                    name: true,
-                    phone: true
-                }
-            },
-            tasks: {
-                include: {
-                    assignee: {
-                        select: {
-                            id: true,
-                            name: true,
-                            phone: true
-                        }
-                    }
-                }
-            }
-        }
+        include: HydratedLectureInclude
     })
     if (lecture?.userId !== user.id && lecture?.assigneeId !== user.id && lecture?.assigneeTeacherId !== user.id
         && lecture?.posterAssigneeId !== user.id && !user.permissions.includes('admin.manage')) {
@@ -169,7 +172,8 @@ export async function claimLecture(id: number): Promise<void> {
     const lecture = await prisma.lecture.findUnique({
         where: {
             id
-        }
+        },
+        include: HydratedLectureInclude
     })
     if (lecture?.status !== LectureStatus.waiting) {
         throw new Error('Cannot claim lecture')
@@ -207,47 +211,7 @@ export async function getUnassignedLectures(): Promise<HydratedLecture[]> {
         where: {
             status: LectureStatus.waiting
         },
-        include: {
-            user: {
-                select: {
-                    id: true,
-                    name: true,
-                    phone: true
-                }
-            },
-            assignee: {
-                select: {
-                    id: true,
-                    name: true,
-                    phone: true
-                }
-            },
-            assigneeTeacher: {
-                select: {
-                    id: true,
-                    name: true,
-                    phone: true
-                }
-            },
-            posterAssignee: {
-                select: {
-                    id: true,
-                    name: true,
-                    phone: true
-                }
-            },
-            tasks: {
-                include: {
-                    assignee: {
-                        select: {
-                            id: true,
-                            name: true,
-                            phone: true
-                        }
-                    }
-                }
-            }
-        }
+        include: HydratedLectureInclude
     })
 }
 
@@ -262,8 +226,14 @@ async function requireTaskUser(task: HydratedLectureTask): Promise<User> {
     return user
 }
 
-export async function confirmDate(lecture: HydratedLecture, task: HydratedLectureTask, date: Date): Promise<HydratedLecture> {
+export async function confirmDate(lectureId: number, task: HydratedLectureTask, date: Date): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -320,8 +290,14 @@ export async function confirmDate(lecture: HydratedLecture, task: HydratedLectur
     return lecture
 }
 
-export async function confirmNeedComPoster(lecture: HydratedLecture, task: HydratedLectureTask, needComPoster: boolean): Promise<HydratedLecture> {
+export async function confirmNeedComPoster(lectureId: number, task: HydratedLectureTask, needComPoster: boolean): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -365,8 +341,14 @@ export async function confirmNeedComPoster(lecture: HydratedLecture, task: Hydra
     return lecture
 }
 
-export async function confirmPosterDesigner(lecture: HydratedLecture, task: HydratedLectureTask): Promise<HydratedLecture> {
+export async function confirmPosterDesigner(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
     const user = await requireUser()
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     if (lecture.needComPoster !== true) {
         throw new Error('Poster not needed')
     }
@@ -401,8 +383,14 @@ export async function confirmPosterDesigner(lecture: HydratedLecture, task: Hydr
     return lecture
 }
 
-export async function inviteTeacher(lecture: HydratedLecture, task: HydratedLectureTask): Promise<HydratedLecture> {
+export async function inviteTeacher(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
     const user = await requireUser()
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     if (lecture.assigneeTeacherId != null) {
         throw new Error('Teacher not needed')
     }
@@ -439,8 +427,14 @@ export async function inviteTeacher(lecture: HydratedLecture, task: HydratedLect
     return lecture
 }
 
-export async function submitPoster(lecture: HydratedLecture, task: HydratedLectureTask, poster: string): Promise<HydratedLecture> {
+export async function submitPoster(lectureId: number, task: HydratedLectureTask, poster: string): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -473,8 +467,14 @@ export async function submitPoster(lecture: HydratedLecture, task: HydratedLectu
     return lecture
 }
 
-export async function schoolApprovePoster(lecture: HydratedLecture, task: HydratedLectureTask): Promise<HydratedLecture> {
+export async function schoolApprovePoster(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
     const user = await requireUser()
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -508,8 +508,14 @@ export async function schoolApprovePoster(lecture: HydratedLecture, task: Hydrat
     return lecture
 }
 
-export async function submitPresentation(lecture: HydratedLecture, task: HydratedLectureTask, slides: string): Promise<HydratedLecture> {
+export async function submitPresentation(lectureId: number, task: HydratedLectureTask, slides: string): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -570,8 +576,14 @@ export async function submitPresentation(lecture: HydratedLecture, task: Hydrate
     return lecture
 }
 
-export async function teacherApprovePresentation(lecture: HydratedLecture, task: HydratedLectureTask): Promise<HydratedLecture> {
+export async function teacherApprovePresentation(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -595,8 +607,14 @@ export async function teacherApprovePresentation(lecture: HydratedLecture, task:
     return lecture
 }
 
-export async function createGroupChat(lecture: HydratedLecture, task: HydratedLectureTask, groupChatQR: string): Promise<HydratedLecture> {
+export async function createGroupChat(lectureId: number, task: HydratedLectureTask, groupChatQR: string): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -621,8 +639,14 @@ export async function createGroupChat(lecture: HydratedLecture, task: HydratedLe
     return lecture
 }
 
-export async function inviteParticipants(lecture: HydratedLecture, task: HydratedLectureTask): Promise<HydratedLecture> {
+export async function inviteParticipants(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lectureTask.delete({
         where: {
             id: task.id
@@ -638,8 +662,14 @@ export async function inviteParticipants(lecture: HydratedLecture, task: Hydrate
     return lecture
 }
 
-export async function confirmLocation(lecture: HydratedLecture, task: HydratedLectureTask, location: string) {
+export async function confirmLocation(lectureId: number, task: HydratedLectureTask, location: string) {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -672,8 +702,14 @@ export async function confirmLocation(lecture: HydratedLecture, task: HydratedLe
     return lecture
 }
 
-export async function testDevice(lecture: HydratedLecture, task: HydratedLectureTask): Promise<HydratedLecture> {
+export async function testDevice(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lectureTask.delete({
         where: {
             id: task.id
@@ -689,8 +725,14 @@ export async function testDevice(lecture: HydratedLecture, task: HydratedLecture
     return lecture
 }
 
-export async function markReady(lecture: HydratedLecture): Promise<HydratedLecture> {
+export async function markReady(lectureId: number): Promise<HydratedLecture> {
     const user = await requireUserPermission('admin.manage')
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -710,8 +752,14 @@ export async function markReady(lecture: HydratedLecture): Promise<HydratedLectu
     return lecture
 }
 
-export async function markCompletingPostTasks(lecture: HydratedLecture): Promise<HydratedLecture> {
+export async function markCompletingPostTasks(lectureId: number): Promise<HydratedLecture> {
     const user = await requireUserPermission('admin.manage')
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -763,8 +811,14 @@ export async function markCompletingPostTasks(lecture: HydratedLecture): Promise
     return lecture
 }
 
-export async function updateLiveAudience(lecture: HydratedLecture, task: HydratedLectureTask, liveAudience: number): Promise<HydratedLecture> {
+export async function updateLiveAudience(lectureId: number, task: HydratedLectureTask, liveAudience: number): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -789,8 +843,14 @@ export async function updateLiveAudience(lecture: HydratedLecture, task: Hydrate
     return lecture
 }
 
-export async function submitFeedback(lecture: HydratedLecture, task: HydratedLectureTask, feedback: string): Promise<HydratedLecture> {
+export async function submitFeedback(lectureId: number, task: HydratedLectureTask, feedback: string): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -815,8 +875,14 @@ export async function submitFeedback(lecture: HydratedLecture, task: HydratedLec
     return lecture
 }
 
-export async function submitVideo(lecture: HydratedLecture, task: HydratedLectureTask, video: string): Promise<HydratedLecture> {
+export async function submitVideo(lectureId: number, task: HydratedLectureTask, video: string): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -841,8 +907,14 @@ export async function submitVideo(lecture: HydratedLecture, task: HydratedLectur
     return lecture
 }
 
-export async function submitReflection(lecture: HydratedLecture, task: HydratedLectureTask, reflection: string): Promise<HydratedLecture> {
+export async function submitReflection(lectureId: number, task: HydratedLectureTask, reflection: string): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -867,8 +939,14 @@ export async function submitReflection(lecture: HydratedLecture, task: HydratedL
     return lecture
 }
 
-export async function markCompleted(lecture: HydratedLecture): Promise<HydratedLecture> {
+export async function markCompleted(lectureId: number): Promise<HydratedLecture> {
     const user = await requireUserPermission('admin.manage')
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
     await prisma.lecture.update({
         where: {
             id: lecture.id

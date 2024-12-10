@@ -5,6 +5,7 @@
   "dueToday": "Due today",
   "overdue_one": "Overdue for <1>{{count}}</1> day",
   "overdue_other": "Overdue for <1>{{count}}</1> days",
+  "cancel": "Cancel",
   "tasks": {
     "confirmDate": {
       "name": "Confirm Date",

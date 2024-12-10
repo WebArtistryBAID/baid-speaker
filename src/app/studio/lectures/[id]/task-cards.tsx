@@ -1,9 +1,9 @@
 'use client'
 
 import {LectureTasks} from '@prisma/client'
-import {ReactNode} from 'react'
+import {ReactNode, useState} from 'react'
 import {useCachedUser} from '@/app/login/login-client'
-import {Button, Card, TabsRef, Tooltip} from 'flowbite-react'
+import {Button, Card, Datepicker, Modal, ModalBody, ModalFooter, ModalHeader, TabsRef, Tooltip} from 'flowbite-react'
 import {useTranslationClient} from '@/app/i18n/client'
 import If from '@/app/lib/If'
 import {
@@ -17,9 +17,10 @@ import {
     HiUser,
     HiUserGroup
 } from 'react-icons/hi'
-import {HydratedLectureTask} from '@/app/lib/lecture-actions'
+import {confirmDate, HydratedLectureTask} from '@/app/lib/lecture-actions'
 import {HiArrowUpTray, HiMapPin} from 'react-icons/hi2'
 import {Trans} from 'react-i18next/TransWithoutContext'
+import {useRouter} from 'next/navigation'
 
 export default function TaskCard({task}: { task: HydratedLectureTask }) {
     switch (task.type) {
@@ -154,8 +155,36 @@ export function BaseCard({task, children}: { task: HydratedLectureTask, children
 
 export function ConfirmDateCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
+    const [open, setOpen] = useState(false)
+    const [date, setDate] = useState<Date | null>(null)
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiCalendar className="btn-icon"/>{t('tasks.confirmDate.cta')}</Button>
+        <Button color="blue" onClick={() => setOpen(true)} fullSized><HiCalendar
+            className="btn-icon"/>{t('tasks.confirmDate.cta')}</Button>
+        <Modal show={open} size="xl" onClose={() => setOpen(false)}>
+            <ModalHeader>{t('tasks.confirmDate.name')}</ModalHeader>
+            <ModalBody>
+                <div className="p-6 relative">
+                    <p className="secondary mb-3">{t('tasks.confirmDate.descriptionAssignee')}</p>
+                    <div className="w-full flex justify-center items-center">
+                        <Datepicker inline value={date} onChange={e => setDate(e)} weekStart={1}/>
+                    </div>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button disabled={loading} onClick={async () => {
+                    if (date != null) {
+                        setLoading(true)
+                        await confirmDate(task.lectureId, task, date)
+                        router.refresh()
+                    }
+                }}>{t('tasks.confirmDate.cta')}</Button>
+                <Button color="gray" onClick={() => setOpen(false)}>
+                    {t('cancel')}
+                </Button>
+            </ModalFooter>
+        </Modal>
     </BaseCard>
 }
 
