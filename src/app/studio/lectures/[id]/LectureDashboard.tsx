@@ -9,6 +9,7 @@ import {HiArrowRight} from 'react-icons/hi'
 import {useTranslationClient} from '@/app/i18n/client'
 import {NextDueCard} from '@/app/studio/lectures/[id]/task-cards'
 import {useCachedUser} from '@/app/login/login-client'
+import {Trans} from 'react-i18next/TransWithoutContext'
 
 export default function LectureDashboard({ lecture, tabsRef }: { lecture: HydratedLecture, tabsRef: TabsRef }) {
     const { t } = useTranslationClient('studio')
@@ -42,7 +43,7 @@ export default function LectureDashboard({ lecture, tabsRef }: { lecture: Hydrat
                     <p className="secondary text-sm font-display">{t('lecture.dashboard.tasks')}</p>
                     <div className="flex flex-col w-full justify-center items-center h-full">
                         <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{lecture.tasks.length}</p>
-                        <p>{t('lecture.dashboard.tasksSub')}</p>
+                        <p><Trans t={t} i18nKey="lecture.dashboard.tasksSub" count={lecture.tasks.length}/></p>
                     </div>
                     <Button color="blue" onClick={() => tabsRef.setActiveTab(1)}>
                         {t('lecture.dashboard.tasksCta')}

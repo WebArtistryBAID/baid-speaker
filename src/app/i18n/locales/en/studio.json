@@ -237,7 +237,8 @@
       "teacher": "Your Teacher",
       "teacherMessage": "Your teacher will help you review your content and provide feedback on your lecture.",
       "tasks": "Available Tasks",
-      "tasksSub": "tasks to complete",
+      "tasksSub_one": "task to complete",
+      "tasksSub_other": "tasks to complete",
       "tasksCta": "View Details",
       "files": "Available Files",
       "contact": "Contact"
