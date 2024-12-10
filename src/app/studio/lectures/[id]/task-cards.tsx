@@ -72,7 +72,7 @@ export default function TaskCard({task}: { task: HydratedLectureTask }) {
 }
 
 function getDueDays(task: HydratedLectureTask) {
-    return Math.floor((task.dueAt.getTime() - new Date().getTime()) / 1000 / 86400)
+    return Math.ceil((task.dueAt.getTime() - new Date().getTime()) / 1000 / 86400)
 }
 
 export function NextDueCard({task, tabsRef}: { task: HydratedLectureTask, tabsRef: TabsRef }) {

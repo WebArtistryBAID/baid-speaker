@@ -1,9 +1,9 @@
 'use client'
 
-import { useTranslationClient } from '@/app/i18n/client'
+import {useTranslationClient} from '@/app/i18n/client'
 import {Alert, TabItem, Tabs, TabsRef} from 'flowbite-react'
-import { HiCalendar, HiChartPie, HiDocumentText, HiRefresh, HiUsers } from 'react-icons/hi'
-import { HydratedLecture } from '@/app/lib/lecture-actions'
+import {HiCalendar, HiChartPie, HiDocumentText, HiRefresh, HiUsers} from 'react-icons/hi'
+import {HydratedLecture} from '@/app/lib/lecture-actions'
 import {useEffect, useRef, useState} from 'react'
 import LectureDashboard from '@/app/studio/lectures/[id]/LectureDashboard'
 import LectureTasksC from '@/app/studio/lectures/[id]/LectureTasks'
@@ -38,7 +38,7 @@ export default function StudioLecture({ lecture }: { lecture: HydratedLecture })
         <h1 className="mb-3">{lecture.title}</h1>
         <p className="text-xl mb-5 secondary">{lecture.user.name}</p>
         <If condition={myUser.id !== lecture.user.id}>
-            <Alert color="info">{t('lecture.userAlert')}</Alert>
+            <Alert color="info" className="mb-3">{t('lecture.userAlert')}</Alert>
         </If>
         <Tabs aria-label={t('lecture.tabs.title')} variant="underline" ref={tabsRef}>
             <TabItem active title={t('lecture.tabs.dashboard')} icon={HiChartPie}>

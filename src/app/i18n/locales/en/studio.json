@@ -240,6 +240,10 @@
       "tasks": "Available Tasks",
       "tasksSub_one": "task to complete",
       "tasksSub_other": "tasks to complete",
+      "countdown": "Countdown",
+      "days_one": "day until lecture",
+      "days_other": "days until lecture",
+      "days_today": "It's the day!",
       "tasksCta": "View Details",
       "files": "Available Files",
       "contact": "Contact"
