@@ -239,7 +239,8 @@
       "tasks": "Available Tasks",
       "tasksSub": "tasks to complete",
       "tasksCta": "View Details",
-      "files": "Available Files"
+      "files": "Available Files",
+      "contact": "Contact"
     },
     "tasks": {
       "empty": "You have no tasks to complete right now. Congratulations!",

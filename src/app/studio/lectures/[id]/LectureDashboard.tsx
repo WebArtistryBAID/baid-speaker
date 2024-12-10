@@ -57,6 +57,10 @@ export default function LectureDashboard({ lecture, tabsRef }: { lecture: Hydrat
                         <p className="text-3xl text-blue-500 font-bold">{lecture.assignee?.name}</p>
                     </div>
                     <p className="secondary text-sm">{t('lecture.dashboard.hostMessage')}</p>
+                    <Button color="blue" onClick={() => tabsRef.setActiveTab(2)}>
+                        {t('lecture.dashboard.contact')}
+                        <HiArrowRight className="btn-guide-icon"/>
+                    </Button>
                 </Card>
             </If>
             <If condition={lecture.assigneeTeacherId != null}>
@@ -66,6 +70,10 @@ export default function LectureDashboard({ lecture, tabsRef }: { lecture: Hydrat
                         <p className="text-3xl text-blue-500 font-bold">{lecture.assigneeTeacher?.name}</p>
                     </div>
                     <p className="secondary text-sm">{t('lecture.dashboard.teacherMessage')}</p>
+                    <Button color="blue" onClick={() => tabsRef.setActiveTab(2)}>
+                        {t('lecture.dashboard.contact')}
+                        <HiArrowRight className="btn-guide-icon"/>
+                    </Button>
                 </Card>
             </If>
             <NextDueCard task={lecture.tasks.toSorted((a, b) => {

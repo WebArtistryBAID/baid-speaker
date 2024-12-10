@@ -120,7 +120,7 @@ export function BaseCard({task, children}: { task: HydratedLectureTask, children
                 <HiUser className="text-white"/>
             </div>
             <p><Trans t={t} i18nKey="assignedTo" values={{name: task.assignee.name}}
-                      components={{1: <span className="font-bold"/>}}/></p>
+                      components={{1: <span className="font-bold" key={1919810}/>}}/></p>
         </div>
         <Tooltip content={task.dueAt.toLocaleDateString()}>
             <div className="flex items-center mb-3">
@@ -129,7 +129,7 @@ export function BaseCard({task, children}: { task: HydratedLectureTask, children
                         <HiClock className="text-white"/>
                     </div>
                     <p><Trans t={t} i18nKey="dueIn" count={getDueDays(task)}
-                              components={{1: <span className="font-bold"/>}}/></p>
+                              components={{1: <span className="font-bold" key={188}/>}}/></p>
                 </If>
                 <If condition={getDueDays(task) === 0}>
                     <div className="flex justify-center items-center w-8 h-8 mr-3 bg-blue-500 rounded-full">
@@ -142,7 +142,7 @@ export function BaseCard({task, children}: { task: HydratedLectureTask, children
                         <HiExclamation className="text-white"/>
                     </div>
                     <p><Trans t={t} i18nKey="overdue" count={-getDueDays(task)}
-                              components={{1: <span className="font-bold"/>}}/></p>
+                              components={{1: <span className="font-bold" key={114514}/>}}/></p>
                 </If>
             </div>
         </Tooltip>
