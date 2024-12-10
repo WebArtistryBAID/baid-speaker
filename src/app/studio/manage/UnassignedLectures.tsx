@@ -1,15 +1,17 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { claimLecture, getUnassignedLectures, HydratedLecture } from '@/app/lib/lecture-actions'
-import { Button, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 'flowbite-react'
-import { useTranslationClient } from '@/app/i18n/client'
-import { useRouter } from 'next/navigation'
+import {useEffect, useState} from 'react'
+import {claimLecture, getUnassignedLectures, HydratedLecture} from '@/app/lib/lecture-actions'
+import {Button, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from 'flowbite-react'
+import {useTranslationClient} from '@/app/i18n/client'
+import {useRouter} from 'next/navigation'
+import {HiInbox} from 'react-icons/hi'
+import If from '@/app/lib/If'
 
 export default function UnassignedLectures() {
-    const { t } = useTranslationClient('studio')
-    const [ unassignedLectures, setUnassignedLectures ] = useState<HydratedLecture[] | null>(null)
-    const [ loading, setLoading ] = useState(false)
+    const {t} = useTranslationClient('studio')
+    const [unassignedLectures, setUnassignedLectures] = useState<HydratedLecture[] | null>(null)
+    const [loading, setLoading] = useState(false)
     const router = useRouter()
 
     function claim(lecture: HydratedLecture) {
@@ -32,23 +34,31 @@ export default function UnassignedLectures() {
             <div className="w-full h-8 bg-gray-300 dark:bg-gray-700 rounded-3xl mb-3"/>
         </div>
     }
-    return <div>
-        <Table>
-            <TableHead>
-                <TableHeadCell>{t('manage.unassigned.name')}</TableHeadCell>
-                <TableHeadCell>{t('manage.unassigned.speaker')}</TableHeadCell>
-                <TableHeadCell></TableHeadCell>
-            </TableHead>
-            <TableBody className="divide-y">
-                {unassignedLectures.map(lecture => <TableRow className="tr" key={lecture.id}>
-                    <TableCell className="th">{lecture.title}</TableCell>
-                    <TableCell>{lecture.user.name}</TableCell>
-                    <TableCell>
-                        <Button disabled={loading} onClick={() => claim(lecture)} pill
-                                size="xs">{t('manage.unassigned.claim')}</Button>
-                    </TableCell>
-                </TableRow>)}
-            </TableBody>
-        </Table>
-    </div>
+    return <>
+        <If condition={unassignedLectures.length < 1}>
+            <div className="w-full flex flex-col justify-center items-center">
+                <HiInbox className="text-7xl mb-3 secondary"/>
+                <p>{t('manage.unassigned.empty')}</p>
+            </div>
+        </If>
+        <If condition={unassignedLectures.length > 0}>
+            <Table>
+                <TableHead>
+                    <TableHeadCell>{t('manage.unassigned.name')}</TableHeadCell>
+                    <TableHeadCell>{t('manage.unassigned.speaker')}</TableHeadCell>
+                    <TableHeadCell></TableHeadCell>
+                </TableHead>
+                <TableBody className="divide-y">
+                    {unassignedLectures.map(lecture => <TableRow className="tr" key={lecture.id}>
+                        <TableCell className="th">{lecture.title}</TableCell>
+                        <TableCell>{lecture.user.name}</TableCell>
+                        <TableCell>
+                            <Button disabled={loading} onClick={() => claim(lecture)} pill
+                                    size="xs">{t('manage.unassigned.claim')}</Button>
+                        </TableCell>
+                    </TableRow>)}
+                </TableBody>
+            </Table>
+        </If>
+    </>
 }

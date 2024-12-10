@@ -304,6 +304,7 @@
     "unassigned": {
       "name": "Title",
       "speaker": "Speaker",
+      "empty": "Congrats! No unassigned lectures.",
       "claim": "Claim Lecture"
     }
   }
