@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient, UserAuditLogType } from '@prisma/client'
-import { createSecretKey } from 'node:crypto'
-import { SignJWT } from 'jose'
-import { cookies } from 'next/headers'
+import {NextRequest, NextResponse} from 'next/server'
+import {PrismaClient, UserAuditLogType} from '@prisma/client'
+import {createSecretKey} from 'node:crypto'
+import {SignJWT} from 'jose'
+import {cookies} from 'next/headers'
 
 const prisma = new PrismaClient()
 const secret = createSecretKey(process.env.JWT_SECRET!, 'utf-8')
@@ -29,7 +29,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         }).toString()
     })
     const json = await r.json()
-    console.log(json)
     if ('error' in json) {
         return NextResponse.redirect(`${process.env.HOST}/login/error`)
     }
@@ -67,6 +66,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const token = await new SignJWT({
         id: user.id,
         name: user.name,
+        phone: user.phone,
         pinyin: user.pinyin,
         permissions: user.permissions,
         type: 'internal'

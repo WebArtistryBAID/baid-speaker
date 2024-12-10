@@ -1,5 +1,10 @@
 {
-  "assignedTo": "Assigned To",
+  "assignedTo": "Assigned to <1>{{name}}</1>",
+  "dueIn_one": "Due in <1>{{count}}</1> day",
+  "dueIn_other": "Due in <1>{{count}}</1> days",
+  "dueToday": "Due today",
+  "overdue_one": "Overdue for <1>{{count}}</1> day",
+  "overdue_other": "Overdue for <1>{{count}}</1> days",
   "tasks": {
     "confirmDate": {
       "name": "Confirm Date",
@@ -225,7 +230,7 @@
       "message": "Good luck on your lecture! We can't wait to see what you have to offer.",
       "messageReady": "It's all set! Your lecture is ready to go. Good luck!",
       "messagePost": "Thank you for your lecture! We hope you had a fabulous time.",
-      "basic": "Basic Information",
+      "basic": "Get Started",
       "status": "Status",
       "host": "Your Host",
       "hostMessage": "Your host will help you throughout your BAID Speaker journey and will host your lecture on the big day.",
@@ -234,11 +239,19 @@
       "tasks": "Available Tasks",
       "tasksSub": "tasks to complete",
       "tasksCta": "View Details",
-      "files": "Available Files",
-      "tasksTitle": "Upcoming Tasks"
+      "files": "Available Files"
     },
     "tasks": {
-      "empty": "You have no tasks to complete right now. Congratulations!"
+      "empty": "You have no tasks to complete right now. Congratulations!",
+      "nextDue": {
+        "title": "Next Due",
+        "template_one": "You need to <1>{{action}}</1> in <1>{{count}}</1> day.",
+        "template_other": "You need to <1>{{action}}</1> in <1>{{count}}</1> days.",
+        "template_today": "You need to <1>{{action}}</1> <1>today</1>.",
+        "templateOverdue_one": "You needed to <1>{{action}}</1> <1>{{count}}</1> day ago.",
+        "templateOverdue_other": "You needed to <1>{{action}}</1> <1>{{count}}</1> days ago.",
+        "cta": "Complete Now"
+      }
     },
     "people": {
       "message": "These people are involved in your lecture. They can access the information associated with your lecture. Feel free to contact them for help.",

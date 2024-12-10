@@ -41,6 +41,10 @@ h3 {
     @apply p-8 lg:p-16 xl:p-24 2xl:p-32;
 }
 
+.btn-icon {
+    @apply mr-2 h-5 w-5;
+}
+
 .btn-guide-icon {
     @apply -mr-1 mt-0.5 ml-2 h-4 w-4;
 }

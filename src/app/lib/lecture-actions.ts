@@ -1,7 +1,7 @@
 'use server'
 
-import { Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient } from '@prisma/client'
-import { requireUser, requireUserPermission } from '@/app/login/login-actions'
+import {Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient} from '@prisma/client'
+import {requireUser, requireUserPermission} from '@/app/login/login-actions'
 
 const prisma = new PrismaClient()
 
@@ -40,20 +40,7 @@ export interface HydratedLecture {
     needComPoster: boolean | null
     teacherPreFdbk: string | null
     slidesApproved: boolean | null
-    tasks: {
-        id: number
-        type: LectureTasks
-        assignee: {
-            id: number
-            name: string
-            phone: string | null
-        }
-        assigneeId: number
-        createdAt: Date
-        updatedAt: Date
-        dueAt: Date
-        completedAt: Date | null
-    }[]
+    tasks: HydratedLectureTask[]
     posterApproved: boolean | null
     uploadedGroupQR: string | null
     uploadedSlides: string | null
@@ -64,6 +51,21 @@ export interface HydratedLecture {
     liveAudience: number | null
     videoViews: number
     videoLikes: number
+}
+
+export interface HydratedLectureTask {
+    id: number
+    type: LectureTasks
+    assignee: {
+        id: number
+        name: string
+        phone: string | null
+    }
+    assigneeId: number
+    createdAt: Date
+    updatedAt: Date
+    dueAt: Date
+    completedAt: Date | null
 }
 
 export async function canCreateLecture(): Promise<boolean> {
