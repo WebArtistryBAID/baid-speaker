@@ -18,7 +18,7 @@ import {
     HiUserGroup
 } from 'react-icons/hi'
 import {HydratedLectureTask} from '@/app/lib/lecture-actions'
-import {HiArrowUpTray, HiMapPin, HiSwatch} from 'react-icons/hi2'
+import {HiArrowUpTray, HiMapPin} from 'react-icons/hi2'
 import {Trans} from 'react-i18next/TransWithoutContext'
 
 export default function TaskCard({task}: { task: HydratedLectureTask }) {
@@ -170,7 +170,7 @@ export function ConfirmNeedComPosterCard({task}: { task: HydratedLectureTask }) 
 export function ConfirmPosterDesignerCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiSwatch className="btn-icon"/>{t('tasks.confirmPosterDesigner.cta')}</Button>
+        <Button color="blue" fullSized><HiLink className="btn-icon"/>{t('tasks.confirmPosterDesigner.cta')}</Button>
     </BaseCard>
 }
 

@@ -25,7 +25,7 @@
       "smallName": "invite poster designer",
       "descriptionUser": "We will invite a poster designer to create a poster for your lecture. You will have no editorial control over the poster.",
       "descriptionAssignee": "Please invite a poster designer to create a poster for this lecture.",
-      "cta": "Invite Designer"
+      "cta": "Copy Link"
     },
     "submitPoster": {
       "name": "Submit Poster",
