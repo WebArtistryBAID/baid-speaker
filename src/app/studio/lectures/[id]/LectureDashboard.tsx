@@ -61,7 +61,6 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
             </ModalFooter>
         </Modal>
 
-        <h2 className="mb-3">{t('lecture.dashboard.basic')}</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
             <Card>
                 <p className="secondary text-sm font-display">{t('lecture.dashboard.status')}</p>

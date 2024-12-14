@@ -445,46 +445,6 @@ export async function inviteTeacher(lectureId: number): Promise<HydratedLecture>
     return lecture
 }
 
-export async function submitPoster(lectureId: number, task: HydratedLectureTask, poster: string): Promise<HydratedLecture> {
-    const user = await requireTaskUser(task)
-    const lecture = (await prisma.lecture.findUnique({
-        where: {
-            id: lectureId
-        },
-        include: HydratedLectureInclude
-    }))!
-    await prisma.lecture.update({
-        where: {
-            id: lecture.id
-        },
-        data: {
-            uploadedPoster: poster
-        }
-    })
-    await prisma.lectureTask.delete({
-        where: {
-            id: task.id
-        }
-    })
-    await prisma.lectureAuditLog.create({
-        data: {
-            type: LectureAuditLogType.submittedPoster,
-            userId: user.id,
-            lectureId: lecture.id,
-            values: [poster]
-        }
-    })
-    await prisma.lectureTask.create({
-        data: {
-            type: LectureTasks.schoolApprovePoster,
-            assigneeId: lecture.assigneeId!,
-            lectureId: lecture.id,
-            dueAt: daysBefore(lecture.date!, 1)
-        }
-    })
-    return lecture
-}
-
 export async function schoolApprovePoster(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
     const user = await requireUser()
     const lecture = (await prisma.lecture.findUnique({
@@ -549,74 +509,6 @@ export async function sendAdvertisements(lectureId: number, task: HydratedLectur
     return lecture
 }
 
-export async function submitPresentation(lectureId: number, task: HydratedLectureTask, slides: string): Promise<HydratedLecture> {
-    const user = await requireTaskUser(task)
-    const lecture = (await prisma.lecture.findUnique({
-        where: {
-            id: lectureId
-        },
-        include: HydratedLectureInclude
-    }))!
-    await prisma.lecture.update({
-        where: {
-            id: lecture.id
-        },
-        data: {
-            uploadedSlides: slides
-        }
-    })
-    await prisma.lectureTask.delete({
-        where: {
-            id: task.id
-        }
-    })
-    await prisma.lectureAuditLog.create({
-        data: {
-            type: LectureAuditLogType.submittedPresentation,
-            userId: user.id,
-            lectureId: lecture.id,
-            values: [slides]
-        }
-    })
-    if (lecture.assigneeTeacherId != null) {
-        await prisma.lectureTask.create({
-            data: {
-                type: LectureTasks.teacherApprovePresentation,
-                assigneeId: lecture.assigneeTeacherId,
-                lectureId: lecture.id,
-                dueAt: daysBefore(lecture.date!, 1)
-            }
-        })
-    }
-    if (lecture.posterApproved === true) {
-        await prisma.lectureTask.create({
-            data: {
-                type: LectureTasks.sendAdvertisements,
-                assigneeId: lecture.assigneeId!,
-                lectureId: lecture.id,
-                dueAt: daysBefore(lecture.date!, 1)
-            }
-        })
-    }
-    await prisma.lectureTask.create({
-        data: {
-            type: LectureTasks.createGroupChat,
-            assigneeId: lecture.assigneeId!,
-            lectureId: lecture.id,
-            dueAt: daysBefore(lecture.date!, 1)
-        }
-    })
-    await prisma.lectureTask.create({
-        data: {
-            type: LectureTasks.inviteParticipants,
-            assigneeId: lecture.userId,
-            lectureId: lecture.id,
-            dueAt: daysBefore(lecture.date!, 1)
-        }
-    })
-    return lecture
-}
-
 export async function teacherApprovePresentation(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
     const user = await requireTaskUser(task)
     const lecture = (await prisma.lecture.findUnique({
@@ -643,38 +535,6 @@ export async function teacherApprovePresentation(lectureId: number, task: Hydrat
             type: LectureAuditLogType.teacherApproved,
             userId: user.id,
             lectureId: lecture.id
-        }
-    })
-    return lecture
-}
-
-export async function createGroupChat(lectureId: number, task: HydratedLectureTask, groupChatQR: string): Promise<HydratedLecture> {
-    const user = await requireTaskUser(task)
-    const lecture = (await prisma.lecture.findUnique({
-        where: {
-            id: lectureId
-        },
-        include: HydratedLectureInclude
-    }))!
-    await prisma.lecture.update({
-        where: {
-            id: lecture.id
-        },
-        data: {
-            uploadedGroupQR: groupChatQR
-        }
-    })
-    await prisma.lectureTask.delete({
-        where: {
-            id: task.id
-        }
-    })
-    await prisma.lectureAuditLog.create({
-        data: {
-            type: LectureAuditLogType.createdGroupChat,
-            userId: user.id,
-            lectureId: lecture.id,
-            values: [groupChatQR]
         }
     })
     return lecture
@@ -879,38 +739,6 @@ export async function updateLiveAudience(lectureId: number, task: HydratedLectur
             userId: user.id,
             lectureId: lecture.id,
             values: [liveAudience.toString()]
-        }
-    })
-    return lecture
-}
-
-export async function submitFeedback(lectureId: number, task: HydratedLectureTask, feedback: string): Promise<HydratedLecture> {
-    const user = await requireTaskUser(task)
-    const lecture = (await prisma.lecture.findUnique({
-        where: {
-            id: lectureId
-        },
-        include: HydratedLectureInclude
-    }))!
-    await prisma.lecture.update({
-        where: {
-            id: lecture.id
-        },
-        data: {
-            uploadedFeedback: feedback
-        }
-    })
-    await prisma.lectureTask.delete({
-        where: {
-            id: task.id
-        }
-    })
-    await prisma.lectureAuditLog.create({
-        data: {
-            type: LectureAuditLogType.submittedFeedback,
-            userId: user.id,
-            lectureId: lecture.id,
-            values: [feedback]
         }
     })
     return lecture
