@@ -8,6 +8,9 @@
   "cancel": "Cancel",
   "confirm": "Confirm",
   "copied": "Copied!",
+  "uploadMessage": "Do not close this page while uploading.",
+  "done": "Done",
+  "tryAgain": "Try Again",
   "tasks": {
     "confirmDate": {
       "name": "Confirm Date",

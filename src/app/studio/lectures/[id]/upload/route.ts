@@ -5,6 +5,7 @@ import * as fs from 'fs/promises'
 import path from 'node:path'
 import { createWriteStream } from 'node:fs'
 import { LectureAuditLogType, LectureTasks, PrismaClient } from '@prisma/client'
+import { Readable } from 'node:stream'
 
 const prisma = new PrismaClient()
 
@@ -16,9 +17,15 @@ function daysBefore(d: Date, days: number): Date {
     return new Date(d.getTime() - days * 24 * 60 * 60 * 1000)
 }
 
-export default async function POST(req: NextRequest, { params }: {
+export async function POST(req: NextRequest, { params }: {
     params: Promise<{ id: string }>
 }): Promise<Response> {
+    try {
+        await fs.access(process.env.UPLOAD_PATH!)
+    } catch {
+        await fs.mkdir(process.env.UPLOAD_PATH!, { recursive: true })
+    }
+
     const id = (await params).id
     const lecture = await getLecture(parseInt(id as string))
     if (lecture == null) {
@@ -47,9 +54,13 @@ export default async function POST(req: NextRequest, { params }: {
         if (lecture.uploadedPoster != null) {
             await fs.unlink(getPath(lecture.uploadedPoster))
         }
-        const filename = `${id}-poster-${Date.now()}`
-        const stream = createWriteStream(getPath(filename));
-        (file.stream() as unknown as NodeJS.ReadableStream).pipe(stream)
+        const filename = `${id}-poster-${Date.now()}.${file.name.split('.').pop()}`
+        const stream = createWriteStream(getPath(filename))
+        await new Promise((resolve, reject) => {
+            Readable.fromWeb(file.stream() as never).pipe(stream)
+            stream.on('finish', resolve)
+            stream.on('error', reject)
+        })
 
         await prisma.lecture.update({
             where: {
@@ -105,9 +116,13 @@ export default async function POST(req: NextRequest, { params }: {
             isFirstSubmit = false
             await fs.unlink(getPath(lecture.uploadedSlides))
         }
-        const filename = `${id}-slides-${Date.now()}`
-        const stream = createWriteStream(getPath(filename));
-        (file.stream() as unknown as NodeJS.ReadableStream).pipe(stream)
+        const filename = `${id}-slides-${Date.now()}.${file.name.split('.').pop()}`
+        const stream = createWriteStream(getPath(filename))
+        await new Promise((resolve, reject) => {
+            Readable.fromWeb(file.stream() as never).pipe(stream)
+            stream.on('finish', resolve)
+            stream.on('error', reject)
+        })
 
         await prisma.lecture.update({
             where: {
@@ -190,9 +205,13 @@ export default async function POST(req: NextRequest, { params }: {
         if (lecture.uploadedGroupQR != null) {
             await fs.unlink(getPath(lecture.uploadedGroupQR))
         }
-        const filename = `${id}-groupQR-${Date.now()}`
-        const stream = createWriteStream(getPath(filename));
-        (file.stream() as unknown as NodeJS.ReadableStream).pipe(stream)
+        const filename = `${id}-groupQR-${Date.now()}.${file.name.split('.').pop()}`
+        const stream = createWriteStream(getPath(filename))
+        await new Promise((resolve, reject) => {
+            Readable.fromWeb(file.stream() as never).pipe(stream)
+            stream.on('finish', resolve)
+            stream.on('error', reject)
+        })
 
         await prisma.lecture.update({
             where: {
@@ -231,9 +250,13 @@ export default async function POST(req: NextRequest, { params }: {
         if (lecture.uploadedFeedback != null) {
             await fs.unlink(getPath(lecture.uploadedFeedback))
         }
-        const filename = `${id}-feedback-${Date.now()}`
-        const stream = createWriteStream(getPath(filename));
-        (file.stream() as unknown as NodeJS.ReadableStream).pipe(stream)
+        const filename = `${id}-feedback-${Date.now()}.${file.name.split('.').pop()}`
+        const stream = createWriteStream(getPath(filename))
+        await new Promise((resolve, reject) => {
+            Readable.fromWeb(file.stream() as never).pipe(stream)
+            stream.on('finish', resolve)
+            stream.on('error', reject)
+        })
 
         await prisma.lecture.update({
             where: {
