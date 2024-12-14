@@ -5,8 +5,9 @@ import { me } from '@/app/login/login'
 
 const prisma = new PrismaClient()
 
-export async function getLoginTarget(): Promise<string> {
-    return `${process.env.ONELOGIN_HOST}/oauth2/authorize?client_id=${process.env.ONELOGIN_CLIENT_ID}&redirect_uri=${process.env.HOST}/login/authorize&scope=basic+phone&response_type=code`
+export async function getLoginTarget(redirect: string): Promise<string> {
+    // We are really abusing state here... But it works.
+    return `${process.env.ONELOGIN_HOST}/oauth2/authorize?client_id=${process.env.ONELOGIN_CLIENT_ID}&redirect_uri=${process.env.HOST}/login/authorize&scope=basic+phone&response_type=code&state=${redirect}`
 }
 
 export async function requireUser(): Promise<User> {
