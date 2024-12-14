@@ -1,7 +1,7 @@
 'use server'
 
-import {Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient, User} from '@prisma/client'
-import {requireUser, requireUserPermission} from '@/app/login/login-actions'
+import { Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient, User } from '@prisma/client'
+import { requireUser, requireUserPermission } from '@/app/login/login-actions'
 
 const prisma = new PrismaClient()
 
@@ -84,6 +84,7 @@ export interface HydratedLecture {
     slidesApproved: boolean | null
     tasks: HydratedLectureTask[]
     posterApproved: boolean | null
+    location: string | null
     uploadedGroupQR: string | null
     uploadedSlides: string | null
     uploadedPoster: string | null

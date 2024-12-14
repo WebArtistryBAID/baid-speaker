@@ -68,6 +68,7 @@
       "smallName": "confirm lecture location",
       "descriptionUser": "Please wait while we assign a location for your lecture.",
       "descriptionAssignee": "Please assign the location of this lecture.",
+      "inputLocation": "Please enter a location.",
       "cta": "Assign"
     },
     "testDevice": {
@@ -246,7 +247,9 @@
       "days_today": "It's the day!",
       "tasksCta": "View Details",
       "files": "Available Files",
-      "contact": "Contact"
+      "contact": "Contact",
+      "location": "Location",
+      "locationMessage": "This is where your lecture will take place."
     },
     "tasks": {
       "empty": "You have no tasks to complete right now. Congratulations!",

@@ -1,10 +1,21 @@
 'use client'
 
-import {LectureTasks} from '@prisma/client'
-import {ReactNode, useState} from 'react'
-import {useCachedUser} from '@/app/login/login-client'
-import {Button, Card, Datepicker, Modal, ModalBody, ModalFooter, ModalHeader, TabsRef, Tooltip} from 'flowbite-react'
-import {useTranslationClient} from '@/app/i18n/client'
+import { LectureTasks } from '@prisma/client'
+import { ReactNode, useState } from 'react'
+import { useCachedUser } from '@/app/login/login-client'
+import {
+    Button,
+    Card,
+    Datepicker,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    TabsRef,
+    TextInput,
+    Tooltip
+} from 'flowbite-react'
+import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
 import {
     HiArrowRight,
@@ -19,6 +30,7 @@ import {
 } from 'react-icons/hi'
 import {
     confirmDate,
+    confirmLocation,
     confirmNeedComPoster,
     HydratedLectureTask,
     inviteParticipants,
@@ -26,9 +38,9 @@ import {
     teacherApprovePresentation,
     testDevice
 } from '@/app/lib/lecture-actions'
-import {HiArrowUpTray, HiMapPin} from 'react-icons/hi2'
-import {Trans} from 'react-i18next/TransWithoutContext'
-import {useRouter} from 'next/navigation'
+import { HiArrowUpTray, HiMapPin } from 'react-icons/hi2'
+import { Trans } from 'react-i18next/TransWithoutContext'
+import { useRouter } from 'next/navigation'
 
 export default function TaskCard({task}: { task: HydratedLectureTask }) {
     switch (task.type) {
@@ -271,10 +283,45 @@ export function SchoolApprovePosterCard({task}: { task: HydratedLectureTask }) {
 }
 
 export function ConfirmLocationCard({task}: { task: HydratedLectureTask }) {
-    // TODO
     const {t} = useTranslationClient('studio')
+    const [ open, setOpen ] = useState(false)
+    const [ location, setLocation ] = useState('')
+    const [ loading, setLoading ] = useState(false)
+    const [ error, setError ] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiMapPin className="btn-icon"/>{t('tasks.confirmLocation.cta')}</Button>
+        <Button color="blue" onClick={() => setOpen(true)} fullSized><HiMapPin
+            className="btn-icon"/>{t('tasks.confirmLocation.cta')}</Button>
+        <Modal show={open} onClose={() => setOpen(false)}>
+            <ModalHeader>{t('tasks.confirmLocation.name')}</ModalHeader>
+            <ModalBody>
+                <div className="p-6 relative">
+                    <p className="secondary mb-3">{t('tasks.confirmLocation.descriptionAssignee')}</p>
+                    <TextInput type="text" required
+                               color={error ? 'failure' : undefined}
+                               value={location} onChange={e => setLocation(e.currentTarget.value)}
+                               helperText={error ? t('tasks.confirmLocation.inputError') : null}/>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button disabled={loading} onClick={async () => {
+                    setError(false)
+                    if (location.length < 1) {
+                        setError(true)
+                        return
+                    }
+
+                    setLoading(true)
+                    await confirmLocation(task.lectureId, task, location)
+                    router.refresh()
+                }}>
+                    {t('tasks.confirmLocation.cta')}
+                </Button>
+                <Button color="gray" onClick={() => setOpen(false)}>
+                    {t('cancel')}
+                </Button>
+            </ModalFooter>
+        </Modal>
     </BaseCard>
 }
 

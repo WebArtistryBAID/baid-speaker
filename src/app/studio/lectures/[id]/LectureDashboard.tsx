@@ -1,15 +1,15 @@
 'use client'
 
-import {HydratedLecture} from '@/app/lib/lecture-actions'
+import { HydratedLecture } from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
-import {LectureStatus} from '@prisma/client'
-import {Button, Card, TabsRef} from 'flowbite-react'
+import { LectureStatus } from '@prisma/client'
+import { Button, Card, TabsRef } from 'flowbite-react'
 import LectureStatusIcon from '@/app/lib/LectureStatusIcon'
-import {HiArrowRight} from 'react-icons/hi'
-import {useTranslationClient} from '@/app/i18n/client'
-import {NextDueCard} from '@/app/studio/lectures/[id]/task-cards'
-import {useCachedUser} from '@/app/login/login-client'
-import {Trans} from 'react-i18next/TransWithoutContext'
+import { HiArrowRight } from 'react-icons/hi'
+import { useTranslationClient } from '@/app/i18n/client'
+import { NextDueCard } from '@/app/studio/lectures/[id]/task-cards'
+import { useCachedUser } from '@/app/login/login-client'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 export default function LectureDashboard({lecture, tabsRef}: { lecture: HydratedLecture, tabsRef: TabsRef }) {
     const {t} = useTranslationClient('studio')
@@ -55,7 +55,7 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                 <Card>
                     <p className="secondary text-sm font-display">{t('lecture.dashboard.host')}</p>
                     <div className="flex flex-col w-full justify-center items-center">
-                        <p className="text-3xl text-blue-500 font-bold">{lecture.assignee?.name}</p>
+                        <p className="text-3xl text-blue-500 dark:text-white font-bold">{lecture.assignee?.name}</p>
                     </div>
                     <p className="secondary text-sm">{t('lecture.dashboard.hostMessage')}</p>
                     <Button color="blue" onClick={() => tabsRef.setActiveTab(2)}>
@@ -68,7 +68,7 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                 <Card>
                     <p className="secondary text-sm font-display">{t('lecture.dashboard.teacher')}</p>
                     <div className="flex flex-col w-full justify-center items-center">
-                        <p className="text-3xl text-blue-500 font-bold">{lecture.assigneeTeacher?.name}</p>
+                        <p className="text-3xl text-blue-500 dark:text-white font-bold">{lecture.assigneeTeacher?.name}</p>
                     </div>
                     <p className="secondary text-sm">{t('lecture.dashboard.teacherMessage')}</p>
                     <Button color="blue" onClick={() => tabsRef.setActiveTab(2)}>
@@ -99,6 +99,15 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                         </p>
                         <p className="secondary">{lecture.date?.toLocaleDateString()}</p>
                     </div>
+                </Card>
+            </If>
+            <If condition={lecture.location != null}>
+                <Card>
+                    <p className="secondary text-sm font-display">{t('lecture.dashboard.location')}</p>
+                    <div className="flex flex-col w-full justify-center items-center">
+                        <p className="text-3xl font-bold text-blue-500 dark:text-white">{lecture.location}</p>
+                    </div>
+                    <p className="secondary text-sm">{t('lecture.dashboard.locationMessage')}</p>
                 </Card>
             </If>
         </div>

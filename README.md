@@ -48,16 +48,14 @@ Upon completing of lecture:
 ## Features to complete
 
 * Show tasks and allow action upon tasks
+* Allow editing location and date of lecture - notice that date of lecture contains more complicated logic with changing
+  the task dates as well
 * Show the following on the lecture dashboard
-  * Days until lecture (if available)
-  * Next task due (if available)
   * Lecture poster (if available)
   * Lecture presentation (if available)
   * Lecture group QR code (if available)
   * Teacher feedback (if given)
   * After lecture completion, show the following
-    * Days since lecture
-    * Next task due
     * Teacher rating
     * Lecture video (with link to main video page)
     * Lecture video views
