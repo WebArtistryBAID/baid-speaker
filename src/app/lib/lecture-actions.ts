@@ -445,8 +445,17 @@ export async function inviteTeacher(lectureId: number): Promise<HydratedLecture>
     return lecture
 }
 
-export async function schoolApprovePoster(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
+export async function schoolApprovePoster(lectureId: number): Promise<HydratedLecture> {
+    const task = await prisma.lectureTask.findFirstOrThrow({
+        where: {
+            lectureId,
+            type: LectureTasks.schoolApprovePoster
+        }
+    })
     const user = await requireUser()
+    if (user.type !== UserType.teacher) {
+        throw new Error('That\'s not a teacher!')
+    }
     const lecture = (await prisma.lecture.findUnique({
         where: {
             id: lectureId
@@ -833,4 +842,16 @@ export async function markCompleted(lectureId: number): Promise<HydratedLecture>
         }
     })
     return lecture
+}
+
+export async function servePosterURL(lectureId: number) {
+    const lecture = await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        }
+    })
+    if (lecture == null || lecture.uploadedPoster == null) {
+        throw new Error('No poster')
+    }
+    return `/${process.env.UPLOAD_SERVE_PATH}/${lecture.uploadedPoster}`
 }

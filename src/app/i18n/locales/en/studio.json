@@ -331,6 +331,21 @@
     "unsupported": "Unsupported User Type",
     "unsupportedMessage": "This action is only available for teacher users."
   },
+  "posterApproval": {
+    "title": "Poster Approval",
+    "message": "You have been invited to approve the poster on BAID Speaker for the lecture <1>{{lecture}}</1> by <1>{{speaker}}</1>.",
+    "info": "Lecture Information",
+    "lecture": "Lecture Title",
+    "speaker": "Speaker",
+    "host": "Host",
+    "date": "Date",
+    "view": "View Poster",
+    "cta": "Approve",
+    "completed": "Completed",
+    "completedMessage": "You can close this page now.",
+    "unsupported": "Unsupported User Type",
+    "unsupportedMessage": "This action is only available for teacher users."
+  },
   "manage": {
     "title": "Lectures Management",
     "tabs": {
