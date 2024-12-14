@@ -6,6 +6,7 @@
   "overdue_one": "Overdue for <1>{{count}}</1> day",
   "overdue_other": "Overdue for <1>{{count}}</1> days",
   "cancel": "Cancel",
+  "confirm": "Confirm",
   "tasks": {
     "confirmDate": {
       "name": "Confirm Date",
@@ -249,7 +250,9 @@
       "files": "Available Files",
       "contact": "Contact",
       "location": "Location",
-      "locationMessage": "This is where your lecture will take place."
+      "locationMessage": "This is where your lecture will take place.",
+      "changeStatus": "Move to Next Stage",
+      "changeStatusMessage": "Are you sure you want to move this lecture to the next stage? This action is irreversible."
     },
     "tasks": {
       "empty": "You have no tasks to complete right now. Congratulations!",

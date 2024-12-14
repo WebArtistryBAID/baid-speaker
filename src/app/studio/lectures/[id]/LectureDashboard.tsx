@@ -1,19 +1,25 @@
 'use client'
 
-import { HydratedLecture } from '@/app/lib/lecture-actions'
+import { HydratedLecture, markCompleted, markCompletingPostTasks, markReady } from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
 import { LectureStatus } from '@prisma/client'
-import { Button, Card, TabsRef } from 'flowbite-react'
+import { Button, Card, Modal, ModalBody, ModalFooter, ModalHeader, TabsRef } from 'flowbite-react'
 import LectureStatusIcon from '@/app/lib/LectureStatusIcon'
 import { HiArrowRight } from 'react-icons/hi'
 import { useTranslationClient } from '@/app/i18n/client'
 import { NextDueCard } from '@/app/studio/lectures/[id]/task-cards'
 import { useCachedUser } from '@/app/login/login-client'
 import { Trans } from 'react-i18next/TransWithoutContext'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function LectureDashboard({lecture, tabsRef}: { lecture: HydratedLecture, tabsRef: TabsRef }) {
     const {t} = useTranslationClient('studio')
     const user = useCachedUser()
+
+    const [ changeStatusModal, setChangeStatusModal ] = useState(false)
+    const [ loading, setLoading ] = useState(false)
+    const router = useRouter()
 
     return <>
         <div className="mb-5">
@@ -28,6 +34,33 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
             </If>
         </div>
 
+        <Modal show={changeStatusModal} onClose={() => setChangeStatusModal(false)}>
+            <ModalHeader>{t('lecture.dashboard.changeStatus')}</ModalHeader>
+            <ModalBody>
+                <div className="p-6 relative">
+                    <p className="mb-3">{t('lecture.dashboard.changeStatusMessage')}</p>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button disabled={loading} onClick={async () => {
+                    setLoading(true)
+                    if (lecture.status === LectureStatus.completingPreTasks) {
+                        await markReady(lecture.id)
+                    } else if (lecture.status === LectureStatus.ready) {
+                        await markCompletingPostTasks(lecture.id)
+                    } else if (lecture.status === LectureStatus.completingPostTasks) {
+                        await markCompleted(lecture.id)
+                    }
+                    router.refresh()
+                }}>
+                    {t('confirm')}
+                </Button>
+                <Button color="gray" onClick={() => setChangeStatusModal(false)}>
+                    {t('cancel')}
+                </Button>
+            </ModalFooter>
+        </Modal>
+
         <h2 className="mb-3">{t('lecture.dashboard.basic')}</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
             <Card>
@@ -37,6 +70,12 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                     <p className="mt-3">{t(`lectureStatus.${lecture.status}.name`)}</p>
                 </div>
                 <p className="secondary text-sm">{t(`lectureStatus.${lecture.status}.details`)}</p>
+                <If condition={user.permissions.includes('admin.manage') && (lecture.status === LectureStatus.completingPreTasks || lecture.status === LectureStatus.ready || lecture.status === LectureStatus.completingPostTasks)}>
+                    <Button color="blue" className="mt-3" onClick={() => setChangeStatusModal(true)}>
+                        {t('lecture.dashboard.changeStatus')}
+                        <HiArrowRight className="btn-guide-icon"/>
+                    </Button>
+                </If>
             </Card>
             <If condition={lecture.tasks.length > 0}>
                 <Card>

@@ -186,7 +186,7 @@ export function ConfirmDateCard({task}: { task: HydratedLectureTask }) {
             <ModalHeader>{t('tasks.confirmDate.name')}</ModalHeader>
             <ModalBody>
                 <div className="p-6 relative">
-                    <p className="secondary mb-3">{t('tasks.confirmDate.descriptionAssignee')}</p>
+                    <p className="mb-3">{t('tasks.confirmDate.descriptionAssignee')}</p>
                     <div className="w-full flex justify-center items-center">
                         <Datepicker inline value={date} onChange={e => setDate(e)} weekStart={1}/>
                     </div>
@@ -296,7 +296,7 @@ export function ConfirmLocationCard({task}: { task: HydratedLectureTask }) {
             <ModalHeader>{t('tasks.confirmLocation.name')}</ModalHeader>
             <ModalBody>
                 <div className="p-6 relative">
-                    <p className="secondary mb-3">{t('tasks.confirmLocation.descriptionAssignee')}</p>
+                    <p className="mb-3">{t('tasks.confirmLocation.descriptionAssignee')}</p>
                     <TextInput type="text" required
                                color={error ? 'failure' : undefined}
                                value={location} onChange={e => setLocation(e.currentTarget.value)}
@@ -326,7 +326,6 @@ export function ConfirmLocationCard({task}: { task: HydratedLectureTask }) {
 }
 
 export function TestDeviceCard({task}: { task: HydratedLectureTask }) {
-    // TODO
     const {t} = useTranslationClient('studio')
     const [loading, setLoading] = useState(false)
     const router = useRouter()
