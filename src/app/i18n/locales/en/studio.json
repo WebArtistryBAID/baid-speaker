@@ -312,6 +312,22 @@
     "date": "Date",
     "cta": "Accept Invitation"
   },
+  "teacherInvitation": {
+    "title": "Invitation",
+    "message": "You have been invited to be the teacher mentor on BAID Speaker for the lecture <1>{{lecture}}</1> by <1>{{speaker}}</1>.",
+    "message2": "By accepting the invitation, you will need to do the following:",
+    "task1": "Review and provide feedback on the speaker's presentation before the lecture.",
+    "task2": "Arrive at the lecture location on the day of the lecture to provide feedback. You will fill a feedback form during the lecture.",
+    "task3": "Answer any questions the speaker may have regarding their subject.",
+    "info": "Lecture Information",
+    "lecture": "Lecture Title",
+    "speaker": "Speaker",
+    "host": "Host",
+    "date": "Date",
+    "cta": "Accept Invitation",
+    "unsupported": "Unsupported User Type",
+    "unsupportedMessage": "This action is only available for teacher users."
+  },
   "manage": {
     "title": "Lectures Management",
     "tabs": {

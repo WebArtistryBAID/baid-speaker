@@ -391,7 +391,13 @@ export async function confirmPosterDesigner(lectureId: number): Promise<Hydrated
     return lecture
 }
 
-export async function inviteTeacher(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
+export async function inviteTeacher(lectureId: number): Promise<HydratedLecture> {
+    const task = await prisma.lectureTask.findFirstOrThrow({
+        where: {
+            lectureId,
+            type: LectureTasks.inviteTeacher
+        }
+    })
     const user = await requireUser()
     const lecture = (await prisma.lecture.findUnique({
         where: {

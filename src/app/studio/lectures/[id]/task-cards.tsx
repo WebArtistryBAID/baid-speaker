@@ -251,10 +251,18 @@ export function SubmitPosterCard({task}: { task: HydratedLectureTask }) {
 }
 
 export function InviteTeacherCard({task}: { task: HydratedLectureTask }) {
-    // TODO
     const {t} = useTranslationClient('studio')
+    const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiLink className="btn-icon"/>{t('tasks.inviteTeacher.cta')}</Button>
+        <Button color="blue" fullSized onClick={async () => {
+            await navigator.clipboard.writeText(`${location.origin}/studio/lectures/${task.lectureId}/teacher`)
+            setCopied(true)
+            setTimeout(() => {
+                setCopied(false)
+            }, 3000)
+        }}>
+            <HiLink className="btn-icon"/>{t(copied ? 'copied' : 'tasks.inviteTeacher.cta')}
+        </Button>
     </BaseCard>
 }
 
