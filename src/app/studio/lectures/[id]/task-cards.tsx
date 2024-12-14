@@ -558,8 +558,63 @@ export function UpdateLiveAudienceCard({task}: { task: HydratedLectureTask }) {
 
 export function SubmitFeedbackCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
+    const [ loading, setLoading ] = useState(false)
+    const [ complete, setComplete ] = useState(false)
+    const [ progress, setProgress ] = useState(0)
+    const [ error, setError ] = useState(false)
+
+    function upload() {
+        const formData = new FormData()
+        formData.append('file', ref.current!.files![0])
+        formData.append('target', 'feedback')
+
+        setLoading(true)
+        const xhr = new XMLHttpRequest()
+        xhr.open('POST', `/studio/lectures/${task.lectureId}/upload`, true)
+        xhr.upload.onprogress = (e: ProgressEvent) => {
+            if (e.lengthComputable) {
+                setProgress(Math.round((e.loaded / e.total) * 100))
+            }
+        }
+        xhr.onload = () => {
+            setLoading(false)
+            setProgress(0)
+            if (xhr.status === 200) {
+                setComplete(true)
+            } else {
+                setError(true)
+            }
+        }
+        xhr.onerror = () => {
+            setError(true)
+        }
+
+        xhr.send(formData)
+    }
+
+    const ref = useRef<HTMLInputElement | null>(null)
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiArrowUpTray className="btn-icon"/>{t('tasks.submitFeedback.cta')}</Button>
+        <input type="file" onChange={upload}
+               accept="image/*"
+               className="hidden" ref={ref}/>
+        <p className="font-bold">{t('uploadMessage')}</p>
+        <Button color="blue" fullSized disabled={loading || complete} onClick={() => {
+            ref.current?.click()
+        }}>
+            <HiArrowUpTray className="btn-icon"/>
+            <If condition={loading}>
+                {progress}%
+            </If>
+            <If condition={complete}>
+                {t('done')}
+            </If>
+            <If condition={error}>
+                {t('tryAgain')}
+            </If>
+            <If condition={!loading && !complete && !error}>
+                {t('tasks.submitFeedback.cta')}
+            </If>
+        </Button>
     </BaseCard>
 }
 
