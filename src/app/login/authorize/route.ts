@@ -1,8 +1,8 @@
-import {NextRequest, NextResponse} from 'next/server'
-import {PrismaClient, UserAuditLogType} from '@prisma/client'
-import {createSecretKey} from 'node:crypto'
-import {SignJWT} from 'jose'
-import {cookies} from 'next/headers'
+import { NextRequest, NextResponse } from 'next/server'
+import { PrismaClient, UserAuditLogType } from '@prisma/client'
+import { createSecretKey } from 'node:crypto'
+import { SignJWT } from 'jose'
+import { cookies } from 'next/headers'
 
 const prisma = new PrismaClient()
 const secret = createSecretKey(process.env.JWT_SECRET!, 'utf-8')
@@ -53,7 +53,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             id: meJson['seiueId'],
             name: meJson['name'],
             pinyin: meJson['pinyin'],
-            phone: meJson['phone']
+            phone: meJson['phone'],
+            type: meJson['type']
         }
     })
     await prisma.userAuditLog.create({
@@ -69,6 +70,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         phone: user.phone,
         pinyin: user.pinyin,
         permissions: user.permissions,
+        userType: user.type,
         type: 'internal'
     })
         .setIssuedAt()

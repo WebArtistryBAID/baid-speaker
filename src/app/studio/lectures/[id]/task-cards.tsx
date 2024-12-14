@@ -227,10 +227,18 @@ export function ConfirmNeedComPosterCard({task}: { task: HydratedLectureTask }) 
 }
 
 export function ConfirmPosterDesignerCard({task}: { task: HydratedLectureTask }) {
-    // TODO
     const {t} = useTranslationClient('studio')
+    const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiLink className="btn-icon"/>{t('tasks.confirmPosterDesigner.cta')}</Button>
+        <Button color="blue" fullSized onClick={async () => {
+            await navigator.clipboard.writeText(`${location.origin}/studio/lectures/${task.lectureId}/artist`)
+            setCopied(true)
+            setTimeout(() => {
+                setCopied(false)
+            }, 3000)
+        }}>
+            <HiLink className="btn-icon"/>{t(copied ? 'copied' : 'tasks.confirmPosterDesigner.cta')}
+        </Button>
     </BaseCard>
 }
 

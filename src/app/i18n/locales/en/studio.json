@@ -7,6 +7,7 @@
   "overdue_other": "Overdue for <1>{{count}}</1> days",
   "cancel": "Cancel",
   "confirm": "Confirm",
+  "copied": "Copied!",
   "tasks": {
     "confirmDate": {
       "name": "Confirm Date",
@@ -297,6 +298,19 @@
       "message": "You can only have one active lecture at once. You may start your next lecture when you finish the previous one.",
       "cta": "Back to Dashboard"
     }
+  },
+  "artistInvitation": {
+    "title": "Invitation",
+    "message": "You have been invited to design a poster on BAID Speaker for the lecture <1>{{lecture}}</1> by <1>{{speaker}}</1>.",
+    "message2": "By accepting the invitation, lecture members will be able to see your phone number to contact you.",
+    "info": "Lecture Information",
+    "lecture": "Lecture Title",
+    "speaker": "Speaker",
+    "host": "Host",
+    "teacher": "Teacher",
+    "notInvited": "Not Invited Yet",
+    "date": "Date",
+    "cta": "Accept Invitation"
   },
   "manage": {
     "title": "Lectures Management",

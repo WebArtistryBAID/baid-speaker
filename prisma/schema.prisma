@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URI")
 }
 
+enum UserType {
+  student
+  teacher
+}
+
 model User {
   id          Int            @id
   name        String
@@ -14,6 +19,7 @@ model User {
   phone       String?
   permissions String[]
   logs        UserAuditLog[]
+  type        UserType
 
   lectures         Lecture[] @relation("lectures")
   assignedLectures Lecture[] @relation("assignedLectures")

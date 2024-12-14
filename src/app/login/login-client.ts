@@ -1,7 +1,7 @@
-import {getLoginTarget} from '@/app/login/login-actions'
-import {User} from '@prisma/client'
-import {useCookies} from 'react-cookie'
-import {decodeJwt} from 'jose'
+import { getLoginTarget } from '@/app/login/login-actions'
+import { User, UserType } from '@prisma/client'
+import { useCookies } from 'react-cookie'
+import { decodeJwt } from 'jose'
 
 export async function requireLoginClient(cookies: any): Promise<void> {
     if (!('access_token' in cookies)) {
@@ -19,6 +19,7 @@ export function useCachedUser(): User {
         name: data.name as string,
         phone: data.phone as string,
         pinyin: data.pinyin as string,
-        permissions: data.permissions as string[]
+        permissions: data.permissions as string[],
+        type: data.userType as UserType
     }
 }
