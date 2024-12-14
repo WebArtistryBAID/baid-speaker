@@ -1,6 +1,6 @@
 'use server'
 
-import { Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient, User } from '@prisma/client'
+import { Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient, User, UserType } from '@prisma/client'
 import { requireUser, requireUserPermission } from '@/app/login/login-actions'
 
 const prisma = new PrismaClient()
@@ -399,6 +399,10 @@ export async function inviteTeacher(lectureId: number): Promise<HydratedLecture>
         }
     })
     const user = await requireUser()
+    if (user.type !== UserType.teacher) {
+        throw new Error('That\'s not a teacher!')
+    }
+
     const lecture = (await prisma.lecture.findUnique({
         where: {
             id: lectureId
