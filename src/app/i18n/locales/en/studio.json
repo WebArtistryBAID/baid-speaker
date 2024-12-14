@@ -166,7 +166,7 @@
     },
     "ready": {
       "name": "Ready",
-      "details": "Your lecture is ready to go!"
+      "details": "In this stage, your lecture is ready to go!"
     },
     "completingPostTasks": {
       "name": "Completing Post-Tasks",
