@@ -25,6 +25,8 @@ import {
     HydratedLectureTask,
     inviteParticipants,
     sendAdvertisements,
+    submitReflection,
+    submitVideo,
     teacherApprovePresentation,
     testDevice,
     updateLiveAudience
@@ -661,14 +663,110 @@ export function SubmitFeedbackCard({task}: { task: HydratedLectureTask }) {
 
 export function SubmitVideoCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
+    const [ open, setOpen ] = useState(false)
+    const [ video, setVideo ] = useState('')
+    const [ loading, setLoading ] = useState(false)
+    const [ error, setError ] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiArrowUpTray className="btn-icon"/>{t('tasks.submitVideo.cta')}</Button>
+        <Button color="blue" onClick={() => setOpen(true)} fullSized><HiMapPin
+            className="btn-icon"/>{t('tasks.submitVideo.cta')}</Button>
+        <Modal show={open} onClose={() => setOpen(false)}>
+            <ModalHeader>{t('tasks.submitVideo.name')}</ModalHeader>
+            <ModalBody>
+                <div className="p-6 relative">
+                    <p className="mb-3"><Trans t={t} i18nKey="tasks.submitReflection.modalDescription"
+                                               components={{
+                                                   1: <span className="font-bold" key={123}/>,
+                                                   2: <a href="https://youtube.com/upload" className="inline"/>
+                                               }}/></p>
+                    <TextInput type="text" required
+                               color={error ? 'failure' : undefined}
+                               value={video} onChange={e => setVideo(e.currentTarget.value)}
+                               helperText={error ? t('tasks.submitVideo.inputError') : null}/>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button disabled={loading} onClick={async () => {
+                    setError(false)
+                    try {
+                        const url = new URL(video)
+                        if (url.host !== 'www.youtube.com' && url.host !== 'youtu.be' && url.host !== 'youtube.com') {
+                            setError(true)
+                            return
+                        }
+                        if ((url.host === 'www.youtube.com' || url.host === 'youtube.com') && !url.searchParams.has('v')) {
+                            setError(true)
+                            return
+                        }
+                    } catch {
+                        setError(true)
+                        return
+                    }
+
+                    setLoading(true)
+                    await submitVideo(task.lectureId, task, video.replace('http://', 'https://'))
+                    router.refresh()
+                }}>
+                    {t('tasks.submitVideo.cta')}
+                </Button>
+                <Button color="gray" onClick={() => setOpen(false)}>
+                    {t('cancel')}
+                </Button>
+            </ModalFooter>
+        </Modal>
     </BaseCard>
 }
 
 export function SubmitReflectionCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
+    const [ open, setOpen ] = useState(false)
+    const [ video, setVideo ] = useState('')
+    const [ loading, setLoading ] = useState(false)
+    const [ error, setError ] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiArrowUpTray className="btn-icon"/>{t('tasks.submitReflection.cta')}</Button>
+        <Button color="blue" onClick={() => setOpen(true)} fullSized><HiMapPin
+            className="btn-icon"/>{t('tasks.submitReflection.cta')}</Button>
+        <Modal show={open} onClose={() => setOpen(false)}>
+            <ModalHeader>{t('tasks.submitReflection.name')}</ModalHeader>
+            <ModalBody>
+                <div className="p-6 relative">
+                    <p className="mb-3"><Trans t={t} i18nKey="tasks.submitReflection.modalDescription"
+                                               components={{
+                                                   1: <span className="font-bold" key={123}/>,
+                                                   2: <a href="https://youtube.com/upload" className="inline"/>
+                                               }}/></p>
+                    <TextInput type="text" required
+                               color={error ? 'failure' : undefined}
+                               value={video} onChange={e => setVideo(e.currentTarget.value)}
+                               helperText={error ? t('tasks.submitReflection.inputError') : null}/>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button disabled={loading} onClick={async () => {
+                    setError(false)
+                    try {
+                        const url = new URL(video)
+                        if (url.host !== 'www.youtube.com' && url.host !== 'youtu.be' && url.host !== 'youtube.com') {
+                            setError(true)
+                            return
+                        }
+                    } catch {
+                        setError(true)
+                        return
+                    }
+
+                    setLoading(true)
+                    await submitReflection(task.lectureId, task, video)
+                    router.refresh()
+                }}>
+                    {t('tasks.submitReflection.cta')}
+                </Button>
+                <Button color="gray" onClick={() => setOpen(false)}>
+                    {t('cancel')}
+                </Button>
+            </ModalFooter>
+        </Modal>
     </BaseCard>
 }

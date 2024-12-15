@@ -110,6 +110,7 @@
       "descriptionUser": "Please wait while we update the live audience for your lecture.",
       "descriptionAssignee": "Please update the live audience for this lecture.",
       "modalDescription": "Please enter the number of audience members who attended the lecture.",
+      "inputError": "Please enter a valid number.",
       "cta": "Update"
     },
     "submitFeedback": {
@@ -124,6 +125,8 @@
       "smallName": "submit video",
       "descriptionUser": "Please wait while we upload the video of your lecture.",
       "descriptionAssignee": "Please upload the video of this lecture.",
+      "modalDescription": "Please upload the video to YouTube and paste the video link here. <1>Make sure you set the video to be unlisted.</1> <2>Upload now.</2>",
+      "inputError": "Please enter a valid YouTube link.",
       "cta": "Upload"
     },
     "submitReflection": {
@@ -131,6 +134,8 @@
       "smallName": "submit reflection",
       "descriptionUser": "Your host will schedule a time for you to record a reflection video on your lecture.",
       "descriptionAssignee": "Please schedule a time for the speaker to record a reflection video on this lecture, and upload this video.",
+      "modalDescription": "Please upload the video to YouTube and paste the video link here. <1>Make sure you set the video to be unlisted.</1> <2>Upload now.</2>",
+      "inputError": "Please enter a valid YouTube link.",
       "cta": "Upload"
     }
   },
