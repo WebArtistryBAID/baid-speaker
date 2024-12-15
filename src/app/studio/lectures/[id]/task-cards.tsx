@@ -17,17 +17,7 @@ import {
 } from 'flowbite-react'
 import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
-import {
-    HiArrowRight,
-    HiCalendar,
-    HiCheck,
-    HiClock,
-    HiExclamation,
-    HiLink,
-    HiMicrophone,
-    HiUser,
-    HiUserGroup
-} from 'react-icons/hi'
+import { HiArrowRight, HiCalendar, HiCheck, HiClock, HiExclamation, HiLink, HiMicrophone, HiUser } from 'react-icons/hi'
 import {
     confirmDate,
     confirmLocation,
@@ -36,7 +26,8 @@ import {
     inviteParticipants,
     sendAdvertisements,
     teacherApprovePresentation,
-    testDevice
+    testDevice,
+    updateLiveAudience
 } from '@/app/lib/lecture-actions'
 import { HiArrowUpTray, HiMapPin } from 'react-icons/hi2'
 import { Trans } from 'react-i18next/TransWithoutContext'
@@ -559,8 +550,50 @@ export function SendAdvertisementsCard({task}: { task: HydratedLectureTask }) {
 
 export function UpdateLiveAudienceCard({task}: { task: HydratedLectureTask }) {
     const {t} = useTranslationClient('studio')
+    const [ open, setOpen ] = useState(false)
+    const [ audience, setAudience ] = useState('')
+    const [ loading, setLoading ] = useState(false)
+    const [ error, setError ] = useState(false)
+    const router = useRouter()
     return <BaseCard task={task}>
-        <Button color="blue" fullSized><HiUserGroup className="btn-icon"/>{t('tasks.updateLiveAudience.cta')}</Button>
+        <Button color="blue" onClick={() => setOpen(true)} fullSized><HiMapPin
+            className="btn-icon"/>{t('tasks.updateLiveAudience.cta')}</Button>
+        <Modal show={open} onClose={() => setOpen(false)}>
+            <ModalHeader>{t('tasks.updateLiveAudience.name')}</ModalHeader>
+            <ModalBody>
+                <div className="p-6 relative">
+                    <p className="mb-3">{t('tasks.updateLiveAudience.modalDescription')}</p>
+                    <TextInput type="text" required
+                               color={error ? 'failure' : undefined}
+                               value={audience} onChange={e => setAudience(e.currentTarget.value)}
+                               helperText={error ? t('tasks.updateLiveAudience.inputError') : null}/>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button disabled={loading} onClick={async () => {
+                    setError(false)
+                    if (audience.length < 1) {
+                        setError(true)
+                        return
+                    }
+                    try {
+                        parseInt(audience)
+                    } catch {
+                        setError(true)
+                        return
+                    }
+
+                    setLoading(true)
+                    await updateLiveAudience(task.lectureId, task, parseInt(audience))
+                    router.refresh()
+                }}>
+                    {t('tasks.updateLiveAudience.cta')}
+                </Button>
+                <Button color="gray" onClick={() => setOpen(false)}>
+                    {t('cancel')}
+                </Button>
+            </ModalFooter>
+        </Modal>
     </BaseCard>
 }
 

@@ -109,6 +109,7 @@
       "smallName": "update live audience",
       "descriptionUser": "Please wait while we update the live audience for your lecture.",
       "descriptionAssignee": "Please update the live audience for this lecture.",
+      "modalDescription": "Please enter the number of audience members who attended the lecture.",
       "cta": "Update"
     },
     "submitFeedback": {
@@ -231,7 +232,8 @@
       "tasks": "Tasks",
       "users": "People",
       "history": "History",
-      "content": "Content"
+      "content": "Content",
+      "statistics": "Statistics"
     },
     "dashboard": {
       "message": "Good luck on your lecture! We can't wait to see what you have to offer.",

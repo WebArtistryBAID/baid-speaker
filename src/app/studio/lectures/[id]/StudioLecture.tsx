@@ -1,16 +1,16 @@
 'use client'
 
-import {useTranslationClient} from '@/app/i18n/client'
-import {Alert, TabItem, Tabs, TabsRef} from 'flowbite-react'
-import {HiCalendar, HiChartPie, HiDocumentText, HiRefresh, HiUsers} from 'react-icons/hi'
-import {HydratedLecture} from '@/app/lib/lecture-actions'
-import {useEffect, useRef, useState} from 'react'
+import { useTranslationClient } from '@/app/i18n/client'
+import { Alert, TabItem, Tabs, TabsRef } from 'flowbite-react'
+import { HiCalendar, HiChartBar, HiChartPie, HiDocumentText, HiRefresh, HiUsers } from 'react-icons/hi'
+import { HydratedLecture } from '@/app/lib/lecture-actions'
+import { useEffect, useRef, useState } from 'react'
 import LectureDashboard from '@/app/studio/lectures/[id]/LectureDashboard'
 import LectureTasksC from '@/app/studio/lectures/[id]/LectureTasks'
 import LectureUsers from '@/app/studio/lectures/[id]/LectureUsers'
 import If from '@/app/lib/If'
-import {User} from '@prisma/client'
-import {getMyUser} from '@/app/login/login-actions'
+import { User } from '@prisma/client'
+import { getMyUser } from '@/app/login/login-actions'
 
 export default function StudioLecture({ lecture }: { lecture: HydratedLecture }) {
     const { t } = useTranslationClient('studio')
@@ -54,6 +54,9 @@ export default function StudioLecture({ lecture }: { lecture: HydratedLecture })
 
             </TabItem>
             <TabItem title={t('lecture.tabs.content')} icon={HiDocumentText}>
+
+            </TabItem>
+            <TabItem title={t('lecture.tabs.statistics')} icon={HiChartBar}>
 
             </TabItem>
         </Tabs>
