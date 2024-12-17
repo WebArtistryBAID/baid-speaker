@@ -5,6 +5,12 @@ import {requireUser, requireUserPermission} from '@/app/login/login-actions'
 
 const prisma = new PrismaClient()
 
+export interface Paginated<T> {
+    items: T[]
+    page: number
+    pages: number
+}
+
 const HydratedLectureInclude = {
     user: {
         select: {
@@ -110,6 +116,20 @@ export interface HydratedLectureTask {
     updatedAt: Date
     dueAt: Date
     completedAt: Date | null
+}
+
+export interface HydratedLectureAuditLog {
+    id: number
+    time: Date
+    type: LectureAuditLogType
+    user: {
+        id: number
+        name: string
+        phone: string | null
+    }
+    userId: number
+    lectureId: number
+    values: string[]
 }
 
 export async function canCreateLecture(): Promise<boolean> {
@@ -875,4 +895,41 @@ export async function serveSlidesURL(lectureId: number) {
         throw new Error('No poster')
     }
     return `/${process.env.UPLOAD_SERVE_PATH}/${lecture.uploadedSlides}`
+}
+
+export async function getLogs(lectureId: number, page: number): Promise<Paginated<HydratedLectureAuditLog>> {
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        }
+    }))!
+    const pages = Math.ceil(await prisma.lectureAuditLog.count({
+        where: {
+            lectureId: lecture.id
+        }
+    }) / 10)
+    const logs = await prisma.lectureAuditLog.findMany({
+        where: {
+            lectureId: lecture.id
+        },
+        orderBy: {
+            time: 'desc'
+        },
+        include: {
+            user: {
+                select: {
+                    id: true,
+                    name: true,
+                    phone: true
+                }
+            }
+        },
+        skip: page * 10,
+        take: 10
+    })
+    return {
+        items: logs,
+        page,
+        pages
+    }
 }

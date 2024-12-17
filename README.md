@@ -29,7 +29,7 @@ Upon finishing of `schoolApprovePoster`:
 
 Upon finishing of `submitPresentation`:
 
-* `teacherApprovePresentation`: Assigned to lecture TEACHER, deadline 1 day before date
+* `teacherApprovePresentation`: Assigned to lecture host, deadline 1 day before date
 * `createGroupChat`: Assigned to lecture host, deadline 1 day before date
 * `inviteParticipants`: Assigned to lecture owner, deadline 1 day before date
 * If `posterApproved`, `sendAdvertisements`: Assigned to lecture owner, deadline 1 day before date
@@ -47,7 +47,6 @@ Upon completing of lecture:
 
 ## Features to complete
 
-* Show tasks and allow action upon tasks
 * Allow editing location and date of lecture - notice that date of lecture contains more complicated logic with changing
   the task dates as well
 * The host can unassign the teacher and the artist from the lecture. They can change to another host, but not unassign
@@ -64,7 +63,6 @@ Upon completing of lecture:
     * Lecture video likes
     * Lecture presentation
     * Lecture feedback form
-* Show action history on lectures
 * Show all available files on lectures
 * Add a dialog on first open for users, hosts, teachers, and artists to explain how to use the app when they open
   lecture page

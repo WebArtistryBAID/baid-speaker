@@ -141,25 +141,25 @@
   },
   "lectureLogs": {
     "created": "{{user}} created this lecture.",
-    "assignedHost": "{{user}} assigned {{assignee}} as the host for this lecture.",
-    "assignedTeacher": "{{teacher}} accepted the invitation to be the teacher for this lecture.",
+    "assignedHost": "{{user}} assigned {{v0}} as the host for this lecture.",
+    "assignedTeacher": "{{user}} accepted the invitation to be the teacher for this lecture.",
     "confirmedNeedComPoster": "{{user}} confirmed that they need a commissioned poster.",
     "confirmedSelfDesignPoster": "{{user}} confirmed that they will design their own poster.",
-    "assignedPosterDesigner": "{{assignee}} was invited to design a poster for this lecture.",
+    "assignedPosterDesigner": "{{user}} was invited to design a poster for this lecture.",
     "submittedPoster": "{{user}} submitted a poster for this lecture.",
     "submittedPresentation": "{{user}} submitted a presentation for this lecture.",
-    "approvedPoster": "{{external}} approved the poster for this lecture.",
-    "createdGroupChat": "{{assignee}} uploaded the QR code for the group chat for this lecture.",
+    "approvedPoster": "{{user}} approved the poster for this lecture.",
+    "createdGroupChat": "{{user}} uploaded the QR code for the group chat for this lecture.",
     "invitedParticipants": "{{user}} confirmed inviting initial participants to this lecture.",
-    "sentAdvertisements": "{{assignee}} confirmed sending advertisements for this lecture.",
-    "teacherApproved": "{{teacher}} approved the presentation for this lecture.",
-    "confirmedLocation": "{{assignee}} changed the location of this lecture to {{location}}.",
-    "testedDevice": "{{assignee}} confirmed that the device was tested for this lecture.",
-    "updatedLiveAudience": "{{assignee}} updated the live audience amount to {{audience}} for this lecture.",
-    "submittedFeedback": "{{assignee}} uploaded the feedback form for this lecture.",
-    "submittedVideo": "{{assignee}} uploaded the video for this lecture.",
-    "submittedReflection": "{{assignee}} uploaded the reflection video for this lecture.",
-    "modifiedStatus": "{{user}} modified the status of this lecture to {{status}}."
+    "sentAdvertisements": "{{user}} confirmed sending advertisements for this lecture.",
+    "teacherApproved": "{{user}} approved the presentation for this lecture.",
+    "confirmedLocation": "{{user}} changed the location of this lecture to {{v0}}.",
+    "testedDevice": "{{user}} confirmed that the device was tested for this lecture.",
+    "updatedLiveAudience": "{{user}} updated the live audience amount to {{v0}} for this lecture.",
+    "submittedFeedback": "{{user}} uploaded the feedback form for this lecture.",
+    "submittedVideo": "{{user}} uploaded the video for this lecture.",
+    "submittedReflection": "{{user}} uploaded the reflection video for this lecture.",
+    "modifiedStatus": "{{user}} modified the status of this lecture to {{v0}}."
   },
   "lectureStatus": {
     "waiting": {
@@ -287,6 +287,10 @@
       "teacher": "Teacher",
       "poster": "Poster Designer",
       "other": "Other Administrators"
+    },
+    "history": {
+      "action": "Action",
+      "time": "Time"
     }
   },
   "create": {
