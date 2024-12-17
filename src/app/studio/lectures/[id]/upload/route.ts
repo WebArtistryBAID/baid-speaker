@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { getLecture } from '@/app/lib/lecture-actions'
-import { requireUser } from '@/app/login/login-actions'
+import {NextRequest, NextResponse} from 'next/server'
+import {getLecture} from '@/app/lib/lecture-actions'
+import {requireUser} from '@/app/login/login-actions'
 import * as fs from 'fs/promises'
 import path from 'node:path'
-import { createWriteStream } from 'node:fs'
-import { LectureAuditLogType, LectureTasks, PrismaClient } from '@prisma/client'
-import { Readable } from 'node:stream'
+import {createWriteStream} from 'node:fs'
+import {LectureAuditLogType, LectureTasks, PrismaClient} from '@prisma/client'
+import {Readable} from 'node:stream'
 
 const prisma = new PrismaClient()
 
@@ -157,7 +157,7 @@ export async function POST(req: NextRequest, { params }: {
             await prisma.lectureTask.create({
                 data: {
                     type: LectureTasks.teacherApprovePresentation,
-                    assigneeId: lecture.assigneeTeacherId!,
+                    assigneeId: lecture.assigneeId!,
                     lectureId: lecture.id,
                     dueAt: daysBefore(lecture.date!, 1)
                 }

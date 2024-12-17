@@ -1,7 +1,7 @@
 'use server'
 
-import { Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient, User, UserType } from '@prisma/client'
-import { requireUser, requireUserPermission } from '@/app/login/login-actions'
+import {Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient, User, UserType} from '@prisma/client'
+import {requireUser, requireUserPermission} from '@/app/login/login-actions'
 
 const prisma = new PrismaClient()
 
@@ -436,7 +436,7 @@ export async function inviteTeacher(lectureId: number): Promise<HydratedLecture>
         await prisma.lectureTask.create({
             data: {
                 type: LectureTasks.teacherApprovePresentation,
-                assigneeId: user.id,
+                assigneeId: lecture.assigneeId!,
                 lectureId: lecture.id,
                 dueAt: daysBefore(lecture.date!, 1)
             }
@@ -518,14 +518,23 @@ export async function sendAdvertisements(lectureId: number, task: HydratedLectur
     return lecture
 }
 
-export async function teacherApprovePresentation(lectureId: number, task: HydratedLectureTask): Promise<HydratedLecture> {
-    const user = await requireTaskUser(task)
+export async function teacherApprovePresentation(lectureId: number): Promise<HydratedLecture> {
+    const task = await prisma.lectureTask.findFirstOrThrow({
+        where: {
+            lectureId,
+            type: LectureTasks.confirmPosterDesigner
+        }
+    })
+    const user = await requireUser()
     const lecture = (await prisma.lecture.findUnique({
         where: {
             id: lectureId
         },
         include: HydratedLectureInclude
     }))!
+    if (user.id !== lecture.assigneeTeacherId) {
+        throw new Error('Incorrect user')
+    }
     await prisma.lecture.update({
         where: {
             id: lecture.id
@@ -854,4 +863,16 @@ export async function servePosterURL(lectureId: number) {
         throw new Error('No poster')
     }
     return `/${process.env.UPLOAD_SERVE_PATH}/${lecture.uploadedPoster}`
+}
+
+export async function serveSlidesURL(lectureId: number) {
+    const lecture = await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        }
+    })
+    if (lecture == null || lecture.uploadedPoster == null) {
+        throw new Error('No poster')
+    }
+    return `/${process.env.UPLOAD_SERVE_PATH}/${lecture.uploadedSlides}`
 }

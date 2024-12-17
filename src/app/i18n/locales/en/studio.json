@@ -58,8 +58,8 @@
       "name": "Presentation Approval",
       "smallName": "approve presentation",
       "descriptionUser": "Please wait while the teacher approves your presentation.",
-      "descriptionAssignee": "Please approve the presentation for this lecture.",
-      "cta": "View Details"
+      "descriptionAssignee": "Send this link to the assigned teacher for them to approve the presentation.",
+      "cta": "Copy Link"
     },
     "schoolApprovePoster": {
       "name": "Poster Approval",
@@ -335,6 +335,21 @@
     "host": "Host",
     "date": "Date",
     "cta": "Accept Invitation",
+    "unsupported": "Unsupported User Type",
+    "unsupportedMessage": "This action is only available for teacher users."
+  },
+  "slidesApproval": {
+    "title": "Poster Approval",
+    "message": "You have been invited to approve the slides on BAID Speaker for the lecture <1>{{lecture}}</1> by <1>{{speaker}}</1>.",
+    "info": "Lecture Information",
+    "lecture": "Lecture Title",
+    "speaker": "Speaker",
+    "host": "Host",
+    "date": "Date",
+    "view": "Download Slides",
+    "cta": "Approve",
+    "completed": "Completed",
+    "completedMessage": "You can close this page now.",
     "unsupported": "Unsupported User Type",
     "unsupportedMessage": "This action is only available for teacher users."
   },

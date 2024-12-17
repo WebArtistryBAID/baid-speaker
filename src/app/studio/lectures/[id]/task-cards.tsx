@@ -1,8 +1,8 @@
 'use client'
 
-import { LectureTasks } from '@prisma/client'
-import { ReactNode, useRef, useState } from 'react'
-import { useCachedUser } from '@/app/login/login-client'
+import {LectureTasks} from '@prisma/client'
+import {ReactNode, useRef, useState} from 'react'
+import {useCachedUser} from '@/app/login/login-client'
 import {
     Button,
     Card,
@@ -15,9 +15,9 @@ import {
     TextInput,
     Tooltip
 } from 'flowbite-react'
-import { useTranslationClient } from '@/app/i18n/client'
+import {useTranslationClient} from '@/app/i18n/client'
 import If from '@/app/lib/If'
-import { HiArrowRight, HiCalendar, HiCheck, HiClock, HiExclamation, HiLink, HiMicrophone, HiUser } from 'react-icons/hi'
+import {HiArrowRight, HiCalendar, HiCheck, HiClock, HiExclamation, HiLink, HiMicrophone, HiUser} from 'react-icons/hi'
 import {
     confirmDate,
     confirmLocation,
@@ -27,13 +27,12 @@ import {
     sendAdvertisements,
     submitReflection,
     submitVideo,
-    teacherApprovePresentation,
     testDevice,
     updateLiveAudience
 } from '@/app/lib/lecture-actions'
-import { HiArrowUpTray, HiMapPin } from 'react-icons/hi2'
-import { Trans } from 'react-i18next/TransWithoutContext'
-import { useRouter } from 'next/navigation'
+import {HiArrowUpTray, HiMapPin} from 'react-icons/hi2'
+import {Trans} from 'react-i18next/TransWithoutContext'
+import {useRouter} from 'next/navigation'
 
 export default function TaskCard({task}: { task: HydratedLectureTask }) {
     switch (task.type) {
@@ -374,18 +373,17 @@ export function SubmitPresentationCard({task}: { task: HydratedLectureTask }) {
 }
 
 export function TeacherApprovePresentationCard({ task }: { task: HydratedLectureTask }) {
-    // FIXME This one isn't implemented as expected
     const { t } = useTranslationClient('studio')
-    const [loading, setLoading] = useState(false)
-    const router = useRouter()
+    const [copied, setCopied] = useState(false)
     return <BaseCard task={task}>
-        <Button color="blue" disabled={loading}
-                onClick={async () => {
-                    setLoading(true)
-                    await teacherApprovePresentation(task.lectureId, task)
-                    router.refresh()
-                }}
-                fullSized><HiArrowRight className="btn-icon"/>{t('tasks.teacherApprovePresentation.cta')}
+        <Button color="blue" fullSized onClick={async () => {
+            await navigator.clipboard.writeText(`${location.origin}/studio/lectures/${task.lectureId}/slides`)
+            setCopied(true)
+            setTimeout(() => {
+                setCopied(false)
+            }, 3000)
+        }}>
+            <HiLink className="btn-icon"/>{t(copied ? 'copied' : 'tasks.teacherApprovePresentation.cta')}
         </Button>
     </BaseCard>
 }
