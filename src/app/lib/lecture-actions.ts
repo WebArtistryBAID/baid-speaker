@@ -1,7 +1,7 @@
 'use server'
 
-import {Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient, User, UserType} from '@prisma/client'
-import {requireUser, requireUserPermission} from '@/app/login/login-actions'
+import { Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient, User, UserType } from '@prisma/client'
+import { requireUser, requireUserPermission } from '@/app/login/login-actions'
 
 const prisma = new PrismaClient()
 
@@ -170,18 +170,13 @@ export async function createLecture(title: string, contact: string, surveyQ1: st
 }
 
 export async function getLecture(id: number): Promise<HydratedLecture | null> {
-    const user = await requireUser()
-    const lecture = await prisma.lecture.findUnique({
+    await requireUser()
+    return prisma.lecture.findUnique({
         where: {
             id
         },
         include: HydratedLectureInclude
     })
-    if (lecture?.userId !== user.id && lecture?.assigneeId !== user.id && lecture?.assigneeTeacherId !== user.id
-        && lecture?.posterAssigneeId !== user.id && !user.permissions.includes('admin.manage')) {
-        throw new Error('Unauthorized')
-    }
-    return lecture
 }
 
 function daysBefore(d: Date, days: number): Date {
@@ -273,7 +268,7 @@ export async function confirmDate(lectureId: number, task: HydratedLectureTask, 
             type: LectureAuditLogType.confirmedDate,
             userId: user.id,
             lectureId: lecture.id,
-            values: [date.toISOString()]
+            values: [ date.getTime().toString() ]
         }
     })
     await prisma.lectureTask.create({
@@ -542,7 +537,7 @@ export async function teacherApprovePresentation(lectureId: number): Promise<Hyd
     const task = await prisma.lectureTask.findFirstOrThrow({
         where: {
             lectureId,
-            type: LectureTasks.confirmPosterDesigner
+            type: LectureTasks.teacherApprovePresentation
         }
     })
     const user = await requireUser()

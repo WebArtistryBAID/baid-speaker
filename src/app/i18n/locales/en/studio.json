@@ -12,6 +12,7 @@
   "done": "Done",
   "tryAgain": "Try Again",
   "tasks": {
+    "ctaBad": "This task is not assigned to you",
     "confirmDate": {
       "name": "Confirm Date",
       "smallName": "confirm date",
@@ -22,6 +23,7 @@
     "confirmNeedComPoster": {
       "name": "Do you need a commissioned poster?",
       "smallName": "confirm poster requirements",
+      "descriptionUser": "You can choose to have a free commissioned poster for your lecture or to design a poster yourself. Beware: You have no editorial control over commissioned posters.",
       "descriptionAssignee": "You can choose to have a free commissioned poster for your lecture or to design a poster yourself. Beware: You have no editorial control over commissioned posters.",
       "cta1": "Use Commissioned Poster",
       "cta2": "Design My Own Poster"
@@ -141,7 +143,8 @@
   },
   "lectureLogs": {
     "created": "{{user}} created this lecture.",
-    "assignedHost": "{{user}} assigned {{v0}} as the host for this lecture.",
+    "assignedHost": "{{user}} was assigned as the host for this lecture.",
+    "confirmedDate": "{{user}} updated the date of this lecture to {{v0}}.",
     "assignedTeacher": "{{user}} accepted the invitation to be the teacher for this lecture.",
     "confirmedNeedComPoster": "{{user}} confirmed that they need a commissioned poster.",
     "confirmedSelfDesignPoster": "{{user}} confirmed that they will design their own poster.",
@@ -289,6 +292,7 @@
       "other": "Other Administrators"
     },
     "history": {
+      "id": "Log ID",
       "action": "Action",
       "time": "Time"
     }
@@ -343,7 +347,7 @@
     "unsupportedMessage": "This action is only available for teacher users."
   },
   "slidesApproval": {
-    "title": "Poster Approval",
+    "title": "Presentation Approval",
     "message": "You have been invited to approve the slides on BAID Speaker for the lecture <1>{{lecture}}</1> by <1>{{speaker}}</1>.",
     "info": "Lecture Information",
     "lecture": "Lecture Title",

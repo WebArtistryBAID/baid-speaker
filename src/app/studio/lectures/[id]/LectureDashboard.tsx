@@ -51,6 +51,8 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                     } else if (lecture.status === LectureStatus.completingPostTasks) {
                         await markCompleted(lecture.id)
                     }
+                    setChangeStatusModal(false)
+                    setLoading(false)
                     router.refresh()
                 }}>
                     {t('confirm')}

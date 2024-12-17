@@ -1,8 +1,8 @@
 'use client'
 
-import {LectureTasks} from '@prisma/client'
-import {ReactNode, useRef, useState} from 'react'
-import {useCachedUser} from '@/app/login/login-client'
+import { LectureTasks } from '@prisma/client'
+import { ReactNode, useRef, useState } from 'react'
+import { useCachedUser } from '@/app/login/login-client'
 import {
     Button,
     Card,
@@ -15,9 +15,9 @@ import {
     TextInput,
     Tooltip
 } from 'flowbite-react'
-import {useTranslationClient} from '@/app/i18n/client'
+import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
-import {HiArrowRight, HiCalendar, HiCheck, HiClock, HiExclamation, HiLink, HiMicrophone, HiUser} from 'react-icons/hi'
+import { HiArrowRight, HiCalendar, HiCheck, HiClock, HiExclamation, HiLink, HiMicrophone, HiUser } from 'react-icons/hi'
 import {
     confirmDate,
     confirmLocation,
@@ -30,9 +30,9 @@ import {
     testDevice,
     updateLiveAudience
 } from '@/app/lib/lecture-actions'
-import {HiArrowUpTray, HiMapPin} from 'react-icons/hi2'
-import {Trans} from 'react-i18next/TransWithoutContext'
-import {useRouter} from 'next/navigation'
+import { HiArrowUpTray, HiMapPin } from 'react-icons/hi2'
+import { Trans } from 'react-i18next/TransWithoutContext'
+import { useRouter } from 'next/navigation'
 
 export default function TaskCard({task}: { task: HydratedLectureTask }) {
     switch (task.type) {
@@ -161,6 +161,11 @@ export function BaseCard({task, children}: { task: HydratedLectureTask, children
         </Tooltip>
         <If condition={task.assigneeId === user.id}>
             {children}
+        </If>
+        <If condition={task.assigneeId !== user.id}>
+            <Button disabled={true} color="blue">
+                {t('tasks.ctaBad')}
+            </Button>
         </If>
     </Card>
 }
@@ -676,7 +681,8 @@ export function SubmitVideoCard({task}: { task: HydratedLectureTask }) {
                     <p className="mb-3"><Trans t={t} i18nKey="tasks.submitReflection.modalDescription"
                                                components={{
                                                    1: <span className="font-bold" key={123}/>,
-                                                   2: <a href="https://youtube.com/upload" className="inline"/>
+                                                   2: <a href="https://youtube.com/upload" className="inline"
+                                                         key={256}/>
                                                }}/></p>
                     <TextInput type="text" required
                                color={error ? 'failure' : undefined}
@@ -733,7 +739,8 @@ export function SubmitReflectionCard({task}: { task: HydratedLectureTask }) {
                     <p className="mb-3"><Trans t={t} i18nKey="tasks.submitReflection.modalDescription"
                                                components={{
                                                    1: <span className="font-bold" key={123}/>,
-                                                   2: <a href="https://youtube.com/upload" className="inline"/>
+                                                   2: <a href="https://youtube.com/upload" className="inline"
+                                                         key={256}/>
                                                }}/></p>
                     <TextInput type="text" required
                                color={error ? 'failure' : undefined}

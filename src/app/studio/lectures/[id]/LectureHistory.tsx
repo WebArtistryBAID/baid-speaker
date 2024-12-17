@@ -1,7 +1,8 @@
-import {getLogs, HydratedLecture, HydratedLectureAuditLog, Paginated} from '@/app/lib/lecture-actions'
-import {useEffect, useState} from 'react'
-import {Pagination, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from 'flowbite-react'
-import {useTranslationClient} from '@/app/i18n/client'
+import { getLogs, HydratedLecture, HydratedLectureAuditLog, Paginated } from '@/app/lib/lecture-actions'
+import { useEffect, useState } from 'react'
+import { Pagination, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 'flowbite-react'
+import { useTranslationClient } from '@/app/i18n/client'
+import { LectureAuditLogType } from '@prisma/client'
 
 export default function LectureHistory({lecture}: { lecture: HydratedLecture }) {
     const {t} = useTranslationClient('studio')
@@ -25,16 +26,34 @@ export default function LectureHistory({lecture}: { lecture: HydratedLecture }) 
     return <div>
         <Table className="mb-5">
             <TableHead>
+                <TableHeadCell>{t('lecture.history.id')}</TableHeadCell>
                 <TableHeadCell>{t('lecture.history.action')}</TableHeadCell>
                 <TableHeadCell>{t('lecture.history.time')}</TableHeadCell>
             </TableHead>
             <TableBody className="divide-y mb-3">
                 {page.items.map(log => {
+                    let logText
+                    if (log.type === LectureAuditLogType.confirmedDate) {
+                        logText = t(`lectureLogs.${log.type}`, {
+                            user: log.user.name,
+                            v0: new Date(parseInt(log.values[0])).toLocaleDateString().replaceAll('/', '-')
+                        })
+                    } else if (log.type === LectureAuditLogType.confirmedLocation || log.type === LectureAuditLogType.updatedLiveAudience) {
+                        logText = t(`lectureLogs.${log.type}`, {
+                            user: log.user.name,
+                            v0: log.values[0]
+                        })
+                    } else if (log.type === LectureAuditLogType.modifiedStatus) {
+                        logText = t(`lectureLogs.${log.type}`, {
+                            user: log.user.name,
+                            v0: t(`lectureStatus.${log.values[0]}.name`)
+                        })
+                    } else {
+                        logText = t(`lectureLogs.${log.type}`, { user: log.user.name })
+                    }
                     return <TableRow key={log.id} className="tr">
-                        <TableCell className="th">{t(`lectureLogs.${log.type}`, {
-                            ...log.values.map((v, i) => ({[`v${i}`]: v})),
-                            user: log.user.name
-                        })}</TableCell>
+                        <TableCell>{log.id}</TableCell>
+                        <TableCell className="th">{logText}</TableCell>
                         <TableCell>{log.time.toLocaleString()}</TableCell>
                     </TableRow>
                 })}
