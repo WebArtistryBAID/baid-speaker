@@ -1,9 +1,26 @@
 'use client'
 
-import { HydratedLecture, markCompleted, markCompletingPostTasks, markReady } from '@/app/lib/lecture-actions'
+import {
+    changeDate,
+    changeLocation,
+    HydratedLecture,
+    markCompleted,
+    markCompletingPostTasks,
+    markReady
+} from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
 import { LectureStatus } from '@prisma/client'
-import { Button, Card, Modal, ModalBody, ModalFooter, ModalHeader, TabsRef } from 'flowbite-react'
+import {
+    Button,
+    Card,
+    Datepicker,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    TabsRef,
+    TextInput
+} from 'flowbite-react'
 import LectureStatusIcon from '@/app/lib/LectureStatusIcon'
 import { HiArrowRight } from 'react-icons/hi'
 import { useTranslationClient } from '@/app/i18n/client'
@@ -18,6 +35,11 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
     const user = useCachedUser()
 
     const [ changeStatusModal, setChangeStatusModal ] = useState(false)
+    const [ changeDateModal, setChangeDateModal ] = useState(false)
+    const [ changeLocationModal, setChangeLocationModal ] = useState(false)
+    const [ date, setDate ] = useState<Date | null>(null)
+    const [ loc, setLoc ] = useState('')
+    const [ locError, setLocError ] = useState(false)
     const [ loading, setLoading ] = useState(false)
     const router = useRouter()
 
@@ -58,6 +80,62 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                     {t('confirm')}
                 </Button>
                 <Button color="gray" onClick={() => setChangeStatusModal(false)}>
+                    {t('cancel')}
+                </Button>
+            </ModalFooter>
+        </Modal>
+
+        <Modal show={changeDateModal} size="xl" onClose={() => setChangeDateModal(false)}>
+            <ModalHeader>{t('tasks.confirmDate.name')}</ModalHeader>
+            <ModalBody>
+                <div className="p-6 relative">
+                    <p className="mb-3">{t('tasks.confirmDate.descriptionAssignee')}</p>
+                    <div className="w-full flex justify-center items-center">
+                        <Datepicker inline minDate={new Date()} value={date} onChange={e => setDate(e)} weekStart={1}/>
+                    </div>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button disabled={loading} onClick={async () => {
+                    if (date != null) {
+                        setLoading(true)
+                        await changeDate(lecture.id, date)
+                        setLoading(false)
+                        setChangeDateModal(false)
+                        router.refresh()
+                    }
+                }}>{t('tasks.confirmDate.cta')}</Button>
+                <Button color="gray" onClick={() => setChangeDateModal(false)}>
+                    {t('cancel')}
+                </Button>
+            </ModalFooter>
+        </Modal>
+
+        <Modal show={changeLocationModal} size="xl" onClose={() => setChangeLocationModal(false)}>
+            <ModalHeader>{t('tasks.confirmLocation.name')}</ModalHeader>
+            <ModalBody>
+                <div className="p-6 relative">
+                    <p className="mb-3">{t('tasks.confirmLocation.descriptionAssignee')}</p>
+                    <TextInput type="text" required
+                               color={locError ? 'failure' : undefined}
+                               value={loc} onChange={e => setLoc(e.currentTarget.value)}
+                               helperText={locError ? t('tasks.confirmLocation.inputError') : null}/>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button disabled={loading} onClick={async () => {
+                    setLocError(false)
+                    if (loc.length < 1) {
+                        setLocError(true)
+                        return
+                    }
+                    setLoading(true)
+                    await changeLocation(lecture.id, loc)
+                    setLoading(false)
+                    setChangeLocationModal(false)
+                    router.refresh()
+                }}>{t('tasks.confirmLocation.cta')}</Button>
+                <Button color="gray" onClick={() => setChangeLocationModal(false)}>
                     {t('cancel')}
                 </Button>
             </ModalFooter>
@@ -138,6 +216,12 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                                   count={Math.ceil(((lecture.date?.getTime() ?? 0) - new Date().getTime()) / 1000 / 86400)}/>
                         </p>
                         <p className="secondary">{lecture.date?.toLocaleDateString()}</p>
+                        <If condition={user.permissions.includes('admin.manage')}>
+                            <Button color="blue" fullSized className="mt-3" onClick={() => setChangeDateModal(true)}>
+                                {t('change')}
+                                <HiArrowRight className="btn-guide-icon"/>
+                            </Button>
+                        </If>
                     </div>
                 </Card>
             </If>
@@ -148,6 +232,12 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                         <p className="text-3xl font-bold text-blue-500 dark:text-white">{lecture.location}</p>
                     </div>
                     <p className="secondary text-sm">{t('lecture.dashboard.locationMessage')}</p>
+                    <If condition={user.permissions.includes('admin.manage')}>
+                        <Button color="blue" fullSized className="mt-3" onClick={() => setChangeLocationModal(true)}>
+                            {t('change')}
+                            <HiArrowRight className="btn-guide-icon"/>
+                        </Button>
+                    </If>
                 </Card>
             </If>
         </div>

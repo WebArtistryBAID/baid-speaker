@@ -185,7 +185,7 @@ export function ConfirmDateCard({task}: { task: HydratedLectureTask }) {
                 <div className="p-6 relative">
                     <p className="mb-3">{t('tasks.confirmDate.descriptionAssignee')}</p>
                     <div className="w-full flex justify-center items-center">
-                        <Datepicker inline value={date} onChange={e => setDate(e)} weekStart={1}/>
+                        <Datepicker inline minDate={new Date()} value={date} onChange={e => setDate(e)} weekStart={1}/>
                     </div>
                 </div>
             </ModalBody>

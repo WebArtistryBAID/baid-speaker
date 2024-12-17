@@ -47,10 +47,6 @@ Upon completing of lecture:
 
 ## Features to complete
 
-* Allow editing location and date of lecture - notice that date of lecture contains more complicated logic with changing
-  the task dates as well
-* The host can unassign the teacher and the artist from the lecture. They can change to another host, but not unassign
-  themselves, because that would cause complication.
 * Show the following on the lecture dashboard
   * Lecture poster (if available)
   * Lecture presentation (if available)

@@ -109,7 +109,9 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                     <TableCell className="th">{lecture.user.name}</TableCell>
                     <TableCell>{lecture.contactWeChat}</TableCell>
                     <TableCell>{t('lecture.people.speaker')}</TableCell>
-                    <TableCell/>
+                    <If condition={user.permissions.includes('admin.manage')}>
+                        <TableCell/>
+                    </If>
                 </TableRow>
                 <If condition={lecture.assigneeId != null}>
                     <TableRow className="tr">
@@ -117,8 +119,13 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                         <TableCell>{lecture.assignee?.phone}</TableCell>
                         <TableCell>{t('lecture.people.host')}</TableCell>
                         <If condition={user.permissions.includes('admin.manage')}>
-                            <TableCell><Button disabled={loading} onClick={() => setRemoveHost(true)} pill
-                                               size="xs">{t('lecture.people.remove')}</Button></TableCell>
+                            <If condition={lecture.reclaimable}>
+                                <TableCell/>
+                            </If>
+                            <If condition={!lecture.reclaimable}>
+                                <TableCell><Button disabled={loading} onClick={() => setRemoveHost(true)} pill
+                                                   size="xs">{t('lecture.people.remove')}</Button></TableCell>
+                            </If>
                         </If>
                     </TableRow>
                 </If>
@@ -148,6 +155,9 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                     <TableCell className="th">{t('lecture.people.other')}</TableCell>
                     <TableCell className="th"></TableCell>
                     <TableCell className="th"></TableCell>
+                    <If condition={user.permissions.includes('admin.manage')}>
+                        <TableCell/>
+                    </If>
                 </TableRow>
             </TableBody>
         </Table>

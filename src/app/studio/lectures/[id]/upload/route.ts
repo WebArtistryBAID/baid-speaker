@@ -1,11 +1,11 @@
-import {NextRequest, NextResponse} from 'next/server'
-import {getLecture} from '@/app/lib/lecture-actions'
-import {requireUser} from '@/app/login/login-actions'
+import { NextRequest, NextResponse } from 'next/server'
+import { getLecture } from '@/app/lib/lecture-actions'
+import { requireUser } from '@/app/login/login-actions'
 import * as fs from 'fs/promises'
 import path from 'node:path'
-import {createWriteStream} from 'node:fs'
-import {LectureAuditLogType, LectureTasks, PrismaClient} from '@prisma/client'
-import {Readable} from 'node:stream'
+import { createWriteStream } from 'node:fs'
+import { LectureAuditLogType, LectureTasks, PrismaClient } from '@prisma/client'
+import { Readable } from 'node:stream'
 
 const prisma = new PrismaClient()
 
@@ -43,13 +43,17 @@ export async function POST(req: NextRequest, { params }: {
         return NextResponse.error()
     }
     // Validate if this target is acceptable
-    if (target === 'poster' && lecture.posterAssigneeId === user.id) {
+    if (target === 'poster') {
         const task = await prisma.lectureTask.findFirst({
             where: {
                 lectureId: lecture.id,
                 type: LectureTasks.submitPoster
             }
         })
+
+        if (task?.assigneeId !== user.id) {
+            return NextResponse.error()
+        }
 
         if (lecture.uploadedPoster != null) {
             await fs.unlink(getPath(lecture.uploadedPoster))

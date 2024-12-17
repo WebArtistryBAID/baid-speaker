@@ -73,6 +73,7 @@ export interface HydratedLecture {
         phone: string | null
     } | null
     assigneeId: number | null
+    reclaimable: boolean
     assigneeTeacher: {
         id: number
         name: string
@@ -194,13 +195,15 @@ export async function claimLecture(id: number): Promise<void> {
     if (lecture?.status !== LectureStatus.waiting && !lecture?.reclaimable) {
         throw new Error('Cannot claim lecture')
     }
+    const fromReclaimable = lecture.reclaimable
     await prisma.lecture.update({
         where: {
             id
         },
         data: {
             status: LectureStatus.completingPreTasks,
-            assigneeId: user.id
+            assigneeId: user.id,
+            reclaimable: false
         }
     })
     await prisma.lectureAuditLog.create({
@@ -210,15 +213,17 @@ export async function claimLecture(id: number): Promise<void> {
             lectureId: lecture.id
         }
     })
-    await prisma.lectureTask.create({
-        data: {
-            type: LectureTasks.confirmDate,
-            assigneeId: user.id,
-            lectureId: lecture.id,
-            // Due in 14 days
-            dueAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
-        }
-    })
+    if (!fromReclaimable) {
+        await prisma.lectureTask.create({
+            data: {
+                type: LectureTasks.confirmDate,
+                assigneeId: user.id,
+                lectureId: lecture.id,
+                // Due in 14 days
+                dueAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
+            }
+        })
+    }
 }
 
 export async function getUnassignedLectures(): Promise<HydratedLecture[]> {
@@ -934,6 +939,33 @@ export async function getLogs(lectureId: number, page: number): Promise<Paginate
         page,
         pages
     }
+}
+
+export async function changeLocation(lectureId: number, location: string): Promise<HydratedLecture> {
+    const user = await requireUserPermission('admin.manage')
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
+    await prisma.lecture.update({
+        where: {
+            id: lecture.id
+        },
+        data: {
+            location
+        }
+    })
+    await prisma.lectureAuditLog.create({
+        data: {
+            type: LectureAuditLogType.confirmedLocation,
+            userId: user.id,
+            lectureId: lecture.id,
+            values: [ location ]
+        }
+    })
+    return lecture
 }
 
 export async function changeDate(lectureId: number, date: Date): Promise<HydratedLecture> {
