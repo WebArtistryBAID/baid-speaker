@@ -191,7 +191,7 @@ export async function claimLecture(id: number): Promise<void> {
         },
         include: HydratedLectureInclude
     })
-    if (lecture?.status !== LectureStatus.waiting) {
+    if (lecture?.status !== LectureStatus.waiting && !lecture?.reclaimable) {
         throw new Error('Cannot claim lecture')
     }
     await prisma.lecture.update({
@@ -225,7 +225,14 @@ export async function getUnassignedLectures(): Promise<HydratedLecture[]> {
     await requireUserPermission('admin.manage')
     return prisma.lecture.findMany({
         where: {
-            status: LectureStatus.waiting
+            OR: [
+                {
+                    status: LectureStatus.waiting
+                },
+                {
+                    reclaimable: true
+                }
+            ]
         },
         include: HydratedLectureInclude
     })
@@ -927,4 +934,153 @@ export async function getLogs(lectureId: number, page: number): Promise<Paginate
         page,
         pages
     }
+}
+
+export async function changeDate(lectureId: number, date: Date): Promise<HydratedLecture> {
+    const user = await requireUserPermission('admin.manage')
+    const lecture = (await prisma.lecture.findUnique({
+        where: {
+            id: lectureId
+        },
+        include: HydratedLectureInclude
+    }))!
+    const currentDate = lecture.date
+    const deltaDays = Math.floor((date.getTime() - currentDate!.getTime()) / (24 * 60 * 60 * 1000))
+    if (deltaDays < 0) {
+        throw new Error('Cannot change to past')
+    }
+    for (const task of lecture.tasks) {
+        await prisma.lectureTask.update({
+            where: {
+                id: task.id
+            },
+            data: {
+                dueAt: new Date(task.dueAt.getTime() + deltaDays * 24 * 60 * 60 * 1000)
+            }
+        })
+    }
+    await prisma.lecture.update({
+        where: {
+            id: lectureId
+        },
+        data: {
+            date
+        }
+    })
+    await prisma.lectureAuditLog.create({
+        data: {
+            type: LectureAuditLogType.confirmedDate,
+            userId: user.id,
+            lectureId: lecture.id,
+            values: [ date.getTime().toString() ]
+        }
+    })
+    return lecture
+}
+
+export async function markReclaimable(lectureId: number): Promise<void> {
+    const user = await requireUserPermission('admin.manage')
+    const lecture = await prisma.lecture.findUniqueOrThrow({
+        where: {
+            id: lectureId
+        }
+    })
+    await prisma.lecture.update({
+        where: {
+            id: lecture.id
+        },
+        data: {
+            reclaimable: true
+        }
+    })
+    await prisma.lectureAuditLog.create({
+        data: {
+            type: LectureAuditLogType.markedReclaimable,
+            userId: user.id,
+            lectureId: lecture.id
+        }
+    })
+}
+
+export async function removeTeacher(lectureId: number): Promise<void> {
+    const user = await requireUserPermission('admin.manage')
+    const lecture = await prisma.lecture.findUniqueOrThrow({
+        where: {
+            id: lectureId
+        }
+    })
+    await prisma.lecture.update({
+        where: {
+            id: lecture.id
+        },
+        data: {
+            assigneeTeacherId: null
+        }
+    })
+    await prisma.lectureTask.deleteMany({
+        where: {
+            lectureId,
+            type: LectureTasks.teacherApprovePresentation
+        }
+    })
+    await prisma.lectureTask.create({
+        data: {
+            type: LectureTasks.inviteTeacher,
+            assigneeId: lecture.assigneeId!,
+            lectureId: lecture.id,
+            dueAt: daysBefore(lecture.date!, 5)
+        }
+    })
+    await prisma.lectureAuditLog.create({
+        data: {
+            type: LectureAuditLogType.removedTeacher,
+            userId: user.id,
+            lectureId: lecture.id
+        }
+    })
+}
+
+export async function removeArtist(lectureId: number): Promise<void> {
+    const user = await requireUserPermission('admin.manage')
+    const lecture = await prisma.lecture.findUniqueOrThrow({
+        where: {
+            id: lectureId
+        }
+    })
+    await prisma.lecture.update({
+        where: {
+            id: lecture.id
+        },
+        data: {
+            posterAssigneeId: null,
+            needComPoster: null
+        }
+    })
+    await prisma.lectureTask.deleteMany({
+        where: {
+            lectureId,
+            type: LectureTasks.submitPoster
+        }
+    })
+    await prisma.lectureTask.deleteMany({
+        where: {
+            lectureId,
+            type: LectureTasks.schoolApprovePoster
+        }
+    })
+    await prisma.lectureTask.create({
+        data: {
+            type: LectureTasks.confirmNeedComPoster,
+            assigneeId: user.id,
+            lectureId: lecture.id,
+            dueAt: daysBefore(lecture.date!, 5)
+        }
+    })
+    await prisma.lectureAuditLog.create({
+        data: {
+            type: LectureAuditLogType.removedArtist,
+            userId: user.id,
+            lectureId: lecture.id
+        }
+    })
 }

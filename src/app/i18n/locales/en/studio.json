@@ -162,7 +162,10 @@
     "submittedFeedback": "{{user}} uploaded the feedback form for this lecture.",
     "submittedVideo": "{{user}} uploaded the video for this lecture.",
     "submittedReflection": "{{user}} uploaded the reflection video for this lecture.",
-    "modifiedStatus": "{{user}} modified the status of this lecture to {{v0}}."
+    "modifiedStatus": "{{user}} modified the status of this lecture to {{v0}}.",
+    "markedReclaimable": "{{user}} marked this lecture as reclaimable by another host.",
+    "removedTeacher": "{{user}} removed the teacher from this lecture.",
+    "removedArtist": "{{user}} removed the poster designer from this lecture."
   },
   "lectureStatus": {
     "waiting": {
@@ -285,6 +288,12 @@
       "name": "Name",
       "phone": "Phone Number / WeChat",
       "role": "Role",
+      "action": "Action",
+      "remove": "Remove",
+      "removeConfirm": "Are you sure?",
+      "removeHostConfirm": "This will allow other administrators to claim the lecture. The current host will remain assigned before another host claims the lecture.",
+      "removeTeacherConfirm": "Removing the teacher will cause irreversible side effects. You will need to invite another teacher to the lecture.",
+      "removeArtistConfirm": "Removing the poster designer will cause irreversible side effects. The lecture will be reverted to an earlier stage.",
       "speaker": "Speaker",
       "host": "Host",
       "teacher": "Teacher",

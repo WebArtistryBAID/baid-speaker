@@ -102,6 +102,9 @@ enum LectureAuditLogType {
   submittedVideo
   submittedReflection
   modifiedStatus
+  markedReclaimable
+  removedTeacher
+  removedArtist
 }
 
 enum LectureStatus {
@@ -135,6 +138,7 @@ model Lecture {
   userId            Int
   assignee          User?             @relation("assignedLectures", fields: [assigneeId], references: [id])
   assigneeId        Int?
+  reclaimable Boolean @default(false)
   posterAssignee    User?             @relation("assignedPosters", fields: [posterAssigneeId], references: [id])
   posterAssigneeId  Int?
   needComPoster     Boolean?
