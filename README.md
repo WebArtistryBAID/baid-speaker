@@ -48,10 +48,6 @@ Upon completing of lecture:
 ## Features to complete
 
 * Show the following on the lecture dashboard
-  * Lecture poster (if available)
-  * Lecture presentation (if available)
-  * Lecture group QR code (if available)
-  * Teacher feedback (if given)
   * After lecture completion, show the following
     * Teacher rating
     * Lecture video (with link to main video page)

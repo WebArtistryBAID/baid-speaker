@@ -63,7 +63,7 @@ function ImageCard({ lecture, uploadServePath, name, target }: {
             <img src={`${uploadServePath}${name}`} alt={t(`lecture.content.${target}`)}
                  className="w-full h-auto rounded-t-3xl"/>
         </a>
-        <div className="flex w-full p-5 bg-gray-50 rounded-b-3xl">
+        <div className="flex w-full p-5 bg-gray-50 dark:bg-gray-700 dark:text-white rounded-b-3xl">
             <p className="text-xl font-display mr-auto">
                 <If condition={loading}>
                     {progress}%
@@ -140,10 +140,11 @@ function SlidesCard({ lecture, uploadServePath }: { lecture: HydratedLecture, up
         <input type="file" onChange={upload}
                accept="application/x-iwork-keynote-sffkey,application/pdf,application/vnd.ms-powerpoint,text/plain,text/html,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint.presentation.macroEnabled.12,application/vnd.openxmlformats-officedocument.presentationml.slideshow,application/vnd.ms-pps"
                className="hidden" ref={ref}/>
-        <div className="bg-sky-50 w-full text-center flex flex-col justify-center items-center rounded-t-3xl min-h-36">
+        <div
+            className="bg-sky-50 dark:bg-sky-900 dark:text-white w-full text-center flex flex-col justify-center items-center rounded-t-3xl min-h-36">
             <p>{t('lecture.content.slidesView')}</p>
         </div>
-        <div className="flex w-full p-5 bg-gray-50 rounded-b-3xl">
+        <div className="flex w-full p-5 bg-gray-50 dark:bg-gray-700 dark:text-white rounded-b-3xl">
             <p className="text-xl font-display mr-auto">
                 <If condition={loading}>
                     {progress}%
