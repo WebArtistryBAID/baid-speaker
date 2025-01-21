@@ -295,7 +295,10 @@
       "slides": "Slides",
       "slidesView": "Download to View",
       "groupQR": "Group QR Code",
-      "feedback": "Feedback Form"
+      "feedback": "Feedback Form",
+      "videoTitle": "Video",
+      "videoMessage": "Your lecture video is now publicly available.",
+      "videoCta": "View Video"
     },
     "people": {
       "message": "These people are involved in your lecture. They can access the information associated with your lecture. Feel free to contact them for help.",

@@ -6,6 +6,7 @@ import If from '@/app/lib/If'
 import { HiDownload, HiInbox, HiPencilAlt } from 'react-icons/hi'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Button, Card } from 'flowbite-react'
 
 function ImageCard({ lecture, uploadServePath, name, target }: {
     lecture: HydratedLecture,
@@ -56,10 +57,10 @@ function ImageCard({ lecture, uploadServePath, name, target }: {
         xhr.send(formData)
     }
 
-    return <div className="col-span-1 h-full w-full relative">
+    return <div className="col-span-1 h-full w-full flex flex-col">
         <input type="file" onChange={upload} accept="image/*" className="hidden" ref={ref}/>
 
-        <a className="block" href={`${uploadServePath}${name}`}>
+        <a className="block flex-grow" href={`${uploadServePath}${name}`}>
             <img src={`${uploadServePath}${name}`} alt={t(`lecture.content.${target}`)}
                  className="w-full h-auto rounded-t-3xl"/>
         </a>
@@ -136,12 +137,12 @@ function SlidesCard({ lecture, uploadServePath }: { lecture: HydratedLecture, up
         xhr.send(formData)
     }
 
-    return <div className="col-span-1 h-full w-full relative">
+    return <div className="col-span-1 h-full w-full flex flex-col">
         <input type="file" onChange={upload}
                accept="application/x-iwork-keynote-sffkey,application/pdf,application/vnd.ms-powerpoint,text/plain,text/html,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint.presentation.macroEnabled.12,application/vnd.openxmlformats-officedocument.presentationml.slideshow,application/vnd.ms-pps"
                className="hidden" ref={ref}/>
         <div
-            className="bg-sky-50 dark:bg-sky-900 dark:text-white w-full text-center flex flex-col justify-center items-center rounded-t-3xl min-h-36">
+            className="bg-sky-50 dark:bg-sky-900 dark:text-white w-full text-center flex flex-col justify-center items-center rounded-t-3xl flex-grow">
             <p>{t('lecture.content.slidesView')}</p>
         </div>
         <div className="flex w-full p-5 bg-gray-50 dark:bg-gray-700 dark:text-white rounded-b-3xl">
@@ -205,6 +206,16 @@ export default function LectureContent({ lecture, uploadServePath }: {
                 <If condition={lecture.uploadedFeedback != null}>
                     <ImageCard lecture={lecture} uploadServePath={uploadServePath} name={lecture.uploadedFeedback!}
                                target="feedback"/>
+                </If>
+
+                <If condition={lecture.uploadedVideo != null}>
+                    <Card className="col-span-1 h-full w-full relative">
+                        <h2>{t('lecture.content.videoTitle')}</h2>
+                        <p className="secondary">{t('lecture.content.videoMessage')}</p>
+                        <Button color="blue" href={`/watch/${lecture.id}`}>
+                            {t('lecture.content.videoCta')}
+                        </Button>
+                    </Card>
                 </If>
             </div>
         </If>
