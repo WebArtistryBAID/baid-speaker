@@ -284,6 +284,19 @@
         "cta": "Complete Now"
       }
     },
+    "content": {
+      "empty": "No content has been uploaded yet.",
+      "edit": "Edit",
+      "done": "Done!",
+      "error": "Try Again",
+      "download": "Download",
+      "delete": "Delete",
+      "poster": "Poster",
+      "slides": "Slides",
+      "slidesView": "Download to View",
+      "groupQR": "Group QR Code",
+      "feedback": "Feedback Form"
+    },
     "people": {
       "message": "These people are involved in your lecture. They can access the information associated with your lecture. Feel free to contact them for help.",
       "name": "Name",

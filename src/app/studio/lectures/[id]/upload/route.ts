@@ -51,7 +51,7 @@ export async function POST(req: NextRequest, { params }: {
             }
         })
 
-        if (task?.assigneeId !== user.id) {
+        if (task?.assigneeId !== user.id && lecture.userId !== user.id && !user.permissions.includes('admin.manage')) {
             return NextResponse.error()
         }
 
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest, { params }: {
         }
 
         return NextResponse.json({ success: true })
-    } else if (target === 'slides' && lecture.userId === user.id) {
+    } else if (target === 'slides' && (lecture.userId === user.id || user.permissions.includes('admin.manage'))) {
         const task = await prisma.lectureTask.findFirst({
             where: {
                 lectureId: lecture.id,
@@ -198,7 +198,7 @@ export async function POST(req: NextRequest, { params }: {
         }
 
         return NextResponse.json({ success: true })
-    } else if (target === 'groupQR' && lecture.assigneeId === user.id) {
+    } else if (target === 'groupQR' && (lecture.assigneeId === user.id || user.permissions.includes('admin.manage'))) {
         const task = await prisma.lectureTask.findFirst({
             where: {
                 lectureId: lecture.id,
@@ -243,7 +243,7 @@ export async function POST(req: NextRequest, { params }: {
         }
 
         return NextResponse.json({ success: true })
-    } else if (target === 'feedback' && lecture.assigneeId === user.id) {
+    } else if (target === 'feedback' && (lecture.assigneeId === user.id || user.permissions.includes('admin.manage'))) {
         const task = await prisma.lectureTask.findFirst({
             where: {
                 lectureId: lecture.id,

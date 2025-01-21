@@ -1,4 +1,4 @@
-import {getLecture} from '@/app/lib/lecture-actions'
+import { getLecture } from '@/app/lib/lecture-actions'
 import StudioSlidesApproval from '@/app/studio/lectures/[id]/slides/StudioSlidesApproval'
 
 export default async function StudioSlidesApprovalBase({params}: { params: Promise<{ id: string }> }) {
@@ -11,5 +11,5 @@ export default async function StudioSlidesApprovalBase({params}: { params: Promi
     if (lecture.slidesApproved === true || lecture.uploadedSlides == null) {
         return <div>Error</div>
     }
-    return <StudioSlidesApproval lecture={lecture}/>
+    return <StudioSlidesApproval lecture={lecture} uploadServePath={process.env.UPLOAD_SERVE_PATH!}/>
 }

@@ -21,6 +21,10 @@ body {
     @apply w-full rounded-full bg-blue-500 hover:bg-blue-600 hover:shadow-lg transition-all duration-100 p-2 text-white text-center;
 }
 
+.btn-icon-only {
+    @apply rounded-full bg-blue-500 hover:bg-blue-600 hover:shadow-lg transition-all duration-100 p-2 text-white flex justify-center items-center;
+}
+
 a.inline {
     @apply text-blue-500 hover:underline;
 }

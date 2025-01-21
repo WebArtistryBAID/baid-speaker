@@ -1,29 +1,30 @@
 'use client'
 
-import {HydratedLecture, serveSlidesURL, teacherApprovePresentation} from '@/app/lib/lecture-actions'
-import {useTranslationClient} from '@/app/i18n/client'
-import {useEffect, useState} from 'react'
-import {User, UserType} from '@prisma/client'
-import {getMyUser} from '@/app/login/login-actions'
-import {Trans} from 'react-i18next/TransWithoutContext'
-import {Button, Table, TableBody, TableCell, TableRow} from 'flowbite-react'
-import {HiCheckCircle} from 'react-icons/hi'
+import { HydratedLecture, teacherApprovePresentation } from '@/app/lib/lecture-actions'
+import { useTranslationClient } from '@/app/i18n/client'
+import { useEffect, useState } from 'react'
+import { User, UserType } from '@prisma/client'
+import { getMyUser } from '@/app/login/login-actions'
+import { Trans } from 'react-i18next/TransWithoutContext'
+import { Button, Table, TableBody, TableCell, TableRow } from 'flowbite-react'
+import { HiCheckCircle } from 'react-icons/hi'
 
-export default function StudioSlidesApproval({lecture}: { lecture: HydratedLecture }) {
+export default function StudioSlidesApproval({ lecture, uploadServePath }: {
+    lecture: HydratedLecture,
+    uploadServePath: string
+}) {
     const {t} = useTranslationClient('studio')
     const [myUser, setMyUser] = useState<User>()
     const [loading, setLoading] = useState(false)
     const [completed, setCompleted] = useState(false)
-    const [slides, setSlides] = useState<string>()
 
     useEffect(() => {
         (async () => {
             setMyUser((await getMyUser())!)
-            setSlides(await serveSlidesURL(lecture.id))
         })()
     }, [])
 
-    if (myUser == null || slides == null) {
+    if (myUser == null) {
         return <div className="base-studio-page">
             <div className="w-full">
                 <div className="w-1/3 h-8 bg-gray-300 dark:bg-gray-700 rounded-3xl mb-3"/>
@@ -76,7 +77,7 @@ export default function StudioSlidesApproval({lecture}: { lecture: HydratedLectu
                 </TableBody>
             </Table>
             <Button className="max-w-xl mb-3" fullSized onClick={() => {
-                window.open(slides, '_blank')?.focus()
+                window.open(`/${uploadServePath}/${lecture.uploadedSlides}`, '_blank')?.focus()
             }}>
                 {t('slidesApproval.view')}
             </Button>

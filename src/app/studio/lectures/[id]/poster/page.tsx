@@ -11,5 +11,5 @@ export default async function StudioPosterApprovalBase({ params }: { params: Pro
     if (lecture.uploadedPoster == null || lecture.posterApproved === true) {
         return <div>Error</div>
     }
-    return <StudioPosterApproval lecture={lecture}/>
+    return <StudioPosterApproval lecture={lecture} uploadServePath={process.env.UPLOAD_SERVE_PATH!}/>
 }

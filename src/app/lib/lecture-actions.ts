@@ -880,30 +880,6 @@ export async function markCompleted(lectureId: number): Promise<HydratedLecture>
     return lecture
 }
 
-export async function servePosterURL(lectureId: number) {
-    const lecture = await prisma.lecture.findUnique({
-        where: {
-            id: lectureId
-        }
-    })
-    if (lecture == null || lecture.uploadedPoster == null) {
-        throw new Error('No poster')
-    }
-    return `/${process.env.UPLOAD_SERVE_PATH}/${lecture.uploadedPoster}`
-}
-
-export async function serveSlidesURL(lectureId: number) {
-    const lecture = await prisma.lecture.findUnique({
-        where: {
-            id: lectureId
-        }
-    })
-    if (lecture == null || lecture.uploadedPoster == null) {
-        throw new Error('No poster')
-    }
-    return `/${process.env.UPLOAD_SERVE_PATH}/${lecture.uploadedSlides}`
-}
-
 export async function getLogs(lectureId: number, page: number): Promise<Paginated<HydratedLectureAuditLog>> {
     const lecture = (await prisma.lecture.findUnique({
         where: {

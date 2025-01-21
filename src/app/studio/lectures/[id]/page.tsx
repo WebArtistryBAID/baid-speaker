@@ -8,5 +8,5 @@ export default async function StudioLectureBase({ params }: { params: Promise<{ 
     if (lecture == null) {
         return <div>Error</div>
     }
-    return <StudioLecture lecture={lecture}/>
+    return <StudioLecture lecture={lecture} uploadServePath={`/${process.env.UPLOAD_SERVE_PATH}/`}/>
 }
