@@ -47,6 +47,8 @@ Upon completing of lecture:
 
 ## Features to complete
 
+* Show the survey questions on lecture dashboard page
+* Allow deleting a lecture
 * Proper "Dashboard" page
 * Show in-progress lectures, completed lectures, and all lectures in manage page: pagination
 * On-site notifications
