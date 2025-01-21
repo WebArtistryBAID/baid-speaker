@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import {
     Badge,
     Sidebar,
@@ -15,13 +15,19 @@ import { HiAcademicCap, HiChartPie, HiCog, HiCollection, HiInbox, HiLogout, HiUs
 import Link from 'next/link'
 import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
-import { useCachedUser } from '@/app/login/login-client'
 import { useCookies } from 'react-cookie'
+import { User } from '@prisma/client'
+import { getMyUser } from '@/app/login/login-actions'
 
 export default function StudioLayout({ children }: { children: ReactNode }) {
     const { t } = useTranslationClient('studio')
-    const user = useCachedUser()
+    const [ myUser, setMyUser ] = useState<User>()
     const removeCookie = useCookies()[2]
+    useEffect(() => {
+        (async () => {
+            setMyUser((await getMyUser())!)
+        })()
+    }, [])
 
     return <div className="h-screen flex">
         <div className="h-screen">
@@ -39,7 +45,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                         <SidebarItem as={Link} href="/studio/inbox" icon={HiInbox}>
                             {t('nav.inbox')}
                         </SidebarItem>
-                        <If condition={user?.permissions.includes('admin.manage')}>
+                        <If condition={myUser?.permissions.includes('admin.manage')}>
                             <SidebarCollapse label="Management" icon={HiCog}>
                                 <SidebarItem as={Link} href="/studio/manage" icon={HiCollection}>
                                     {t('nav.manage')}
@@ -59,7 +65,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                         }}>
                             <HiLogout/>
                         </button>
-                        <p className="font-display text-xl">{user?.name}</p>
+                        <p className="font-display text-xl">{myUser?.name ?? '...'}</p>
                     </div>
                     <SidebarCTA>
                         <Badge color="warning" className="inline-block mb-3">{t('nav.beta')}</Badge>
