@@ -21,7 +21,7 @@ export default function StudioLectures() {
         })()
     }, [ currentPage ])
 
-    if (page == null) {
+    if (page == null || me == null) {
         return <div className="base-studio-page">
             <h1 className="mb-8">{t('nav.lectures')}</h1>
             <div className="w-full">

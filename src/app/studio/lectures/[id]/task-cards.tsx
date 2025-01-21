@@ -123,7 +123,7 @@ export function NextDueCard({task, tabsRef}: { task: HydratedLectureTask, tabsRe
 
 export function BaseCard({task, children}: { task: HydratedLectureTask, children: ReactNode }) {
     const {t} = useTranslationClient('studio')
-    const user = useCachedUser()
+    const user = useCachedUser()!
     return <Card className="h-full w-full">
         <h2>{t(`tasks.${task.type}.name`)}</h2>
         <p className="secondary">{t(task.assigneeId === user.id ?

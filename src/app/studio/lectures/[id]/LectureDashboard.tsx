@@ -32,7 +32,7 @@ import { useRouter } from 'next/navigation'
 
 export default function LectureDashboard({lecture, tabsRef}: { lecture: HydratedLecture, tabsRef: TabsRef }) {
     const {t} = useTranslationClient('studio')
-    const user = useCachedUser()
+    const user = useCachedUser()!
 
     const [ changeStatusModal, setChangeStatusModal ] = useState(false)
     const [ changeDateModal, setChangeDateModal ] = useState(false)

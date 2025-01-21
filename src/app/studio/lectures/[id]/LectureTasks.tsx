@@ -1,15 +1,15 @@
 'use client'
 
-import {HydratedLecture} from '@/app/lib/lecture-actions'
-import {useTranslationClient} from '@/app/i18n/client'
-import {HiInbox} from 'react-icons/hi'
+import { HydratedLecture } from '@/app/lib/lecture-actions'
+import { useTranslationClient } from '@/app/i18n/client'
+import { HiInbox } from 'react-icons/hi'
 import If from '@/app/lib/If'
 import TaskCard from '@/app/studio/lectures/[id]/task-cards'
-import {useCachedUser} from '@/app/login/login-client'
+import { useCachedUser } from '@/app/login/login-client'
 
 export default function LectureTasksC({lecture}: { lecture: HydratedLecture }) {
     const {t} = useTranslationClient('studio')
-    const user = useCachedUser()
+    const user = useCachedUser()!
 
     const tasks = lecture.tasks.toSorted((a, b) => {
         const aIsNotAssigned = a.assigneeId !== user.id ? 1 : 0

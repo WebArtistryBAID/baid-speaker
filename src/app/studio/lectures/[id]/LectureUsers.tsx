@@ -29,7 +29,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
     const [ loading, setLoading ] = useState(false)
     const router = useRouter()
 
-    const user = useCachedUser()
+    const user = useCachedUser()!
     return <>
         <p className="mb-3">{t('lecture.people.message')}</p>
 

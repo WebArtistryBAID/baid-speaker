@@ -39,7 +39,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                         <SidebarItem as={Link} href="/studio/inbox" icon={HiInbox}>
                             {t('nav.inbox')}
                         </SidebarItem>
-                        <If condition={user.permissions.includes('admin.manage')}>
+                        <If condition={user?.permissions.includes('admin.manage')}>
                             <SidebarCollapse label="Management" icon={HiCog}>
                                 <SidebarItem as={Link} href="/studio/manage" icon={HiCollection}>
                                     {t('nav.manage')}
@@ -59,7 +59,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                         }}>
                             <HiLogout/>
                         </button>
-                        <p className="font-display text-xl">{user.name}</p>
+                        <p className="font-display text-xl">{user?.name}</p>
                     </div>
                     <SidebarCTA>
                         <Badge color="warning" className="inline-block mb-3">{t('nav.beta')}</Badge>
