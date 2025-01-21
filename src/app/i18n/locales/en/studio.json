@@ -196,7 +196,6 @@
     "inbox": "Inbox",
     "manage": "Lecture Management",
     "user": "User Management",
-    "login": "Logged in as {{name}}.",
     "beta": "Beta",
     "betaDetails": "The BAID Speaker platform is in beta testing. Please report any issues you find to Lin."
   },

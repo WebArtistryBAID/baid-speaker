@@ -19,6 +19,7 @@ import If from '@/app/lib/If'
 import { useCachedUser } from '@/app/login/login-client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { LectureStatus } from '@prisma/client'
 
 export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) {
     const { t } = useTranslationClient('studio')
@@ -134,7 +135,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                         <TableCell className="th">{lecture.assigneeTeacher?.name}</TableCell>
                         <TableCell>{lecture.assigneeTeacher?.phone}</TableCell>
                         <TableCell>{t('lecture.people.teacher')}</TableCell>
-                        <If condition={user.permissions.includes('admin.manage')}>
+                        <If condition={user.permissions.includes('admin.manage') && lecture.status === LectureStatus.completingPreTasks}>
                             <TableCell><Button disabled={loading} onClick={() => setRemoveTeacher(true)} pill
                                                size="xs">{t('lecture.people.remove')}</Button></TableCell>
                         </If>
@@ -145,7 +146,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                         <TableCell className="th">{lecture.posterAssignee?.name}</TableCell>
                         <TableCell>{lecture.posterAssignee?.phone}</TableCell>
                         <TableCell>{t('lecture.people.poster')}</TableCell>
-                        <If condition={user.permissions.includes('admin.manage')}>
+                        <If condition={user.permissions.includes('admin.manage') && lecture.status === LectureStatus.completingPreTasks}>
                             <TableCell><Button disabled={loading} onClick={() => setRemoveArtist(true)} pill
                                                size="xs">{t('lecture.people.remove')}</Button></TableCell>
                         </If>

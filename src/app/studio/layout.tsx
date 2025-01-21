@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode } from 'react'
 import {
     Badge,
     Sidebar,
@@ -11,22 +11,17 @@ import {
     SidebarItems,
     SidebarLogo
 } from 'flowbite-react'
-import { HiAcademicCap, HiChartPie, HiCog, HiCollection, HiInbox, HiUsers } from 'react-icons/hi'
+import { HiAcademicCap, HiChartPie, HiCog, HiCollection, HiInbox, HiLogout, HiUsers } from 'react-icons/hi'
 import Link from 'next/link'
 import { useTranslationClient } from '@/app/i18n/client'
-import { getMyUser } from '@/app/login/login-actions'
-import { User } from '@prisma/client'
 import If from '@/app/lib/If'
+import { useCachedUser } from '@/app/login/login-client'
+import { useCookies } from 'react-cookie'
 
 export default function StudioLayout({ children }: { children: ReactNode }) {
     const { t } = useTranslationClient('studio')
-    const [ myUser, setMyUser ] = useState<User>()
-
-    useEffect(() => {
-        (async () => {
-            setMyUser((await getMyUser())!)
-        })()
-    }, [])
+    const user = useCachedUser()
+    const removeCookie = useCookies()[2]
 
     return <div className="h-screen flex">
         <div className="h-screen">
@@ -44,7 +39,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                         <SidebarItem as={Link} href="/studio/inbox" icon={HiInbox}>
                             {t('nav.inbox')}
                         </SidebarItem>
-                        <If condition={myUser?.permissions.includes('admin.manage')}>
+                        <If condition={user.permissions.includes('admin.manage')}>
                             <SidebarCollapse label="Management" icon={HiCog}>
                                 <SidebarItem as={Link} href="/studio/manage" icon={HiCollection}>
                                     {t('nav.manage')}
@@ -57,7 +52,15 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                     </SidebarItemGroup>
                 </SidebarItems>
                 <div className="mr-3 mb-3 absolute bottom-0">
-                    <p className="text-sm">{t('nav.login', { name: myUser?.name })}</p>
+                    <div className="flex items-center gap-3">
+                        <button className="btn-icon-only" onClick={() => {
+                            removeCookie('access_token', { path: '/' })
+                            location.reload() // Special case reload: We aren't using router to force a full reload
+                        }}>
+                            <HiLogout/>
+                        </button>
+                        <p className="font-display text-xl">{user.name}</p>
+                    </div>
                     <SidebarCTA>
                         <Badge color="warning" className="inline-block mb-3">{t('nav.beta')}</Badge>
                         <p className="secondary text-sm">
