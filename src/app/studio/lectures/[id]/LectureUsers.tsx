@@ -119,7 +119,10 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                         <TableCell className="th">{lecture.assignee?.name}</TableCell>
                         <TableCell>{lecture.assignee?.phone}</TableCell>
                         <TableCell>{t('lecture.people.host')}</TableCell>
-                        <If condition={user.permissions.includes('admin.manage')}>
+                        <If condition={user.permissions.includes('admin.manage') &&
+                            (lecture.status === LectureStatus.completingPreTasks ||
+                                lecture.status === LectureStatus.ready ||
+                                lecture.status === LectureStatus.completingPostTasks)}>
                             <If condition={lecture.reclaimable}>
                                 <TableCell/>
                             </If>
