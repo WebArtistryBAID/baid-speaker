@@ -129,6 +129,8 @@ model LectureAuditLog {
 model Lecture {
   id                Int               @id @default(autoincrement())
   title             String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @default(now()) @updatedAt
   contactWeChat     String
   preSurveyQ1       String // 1. Please describe the content of your lecture.
   preSurveyQ2       String // 2. Please describe why you chose this topic.
@@ -138,7 +140,7 @@ model Lecture {
   userId            Int
   assignee          User?             @relation("assignedLectures", fields: [assigneeId], references: [id])
   assigneeId        Int?
-  reclaimable Boolean @default(false)
+  reclaimable       Boolean           @default(false)
   posterAssignee    User?             @relation("assignedPosters", fields: [posterAssigneeId], references: [id])
   posterAssigneeId  Int?
   needComPoster     Boolean?

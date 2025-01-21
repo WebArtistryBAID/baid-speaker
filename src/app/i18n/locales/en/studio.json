@@ -235,6 +235,18 @@
       "rating": "Teacher Rating"
     }
   },
+  "myLectures": {
+    "title": "My Lectures",
+    "empty": "You have no lectures yet. Start your first lecture now!",
+    "startLecture": "Start New Lecture",
+    "status": "Status: ",
+    "role": "Role: ",
+    "speaker": "Speaker",
+    "host": "Host",
+    "teacher": "Teacher",
+    "poster": "Poster Designer",
+    "cta": "View Details"
+  },
   "lecture": {
     "userAlert": "You are viewing this lecture as the speaker. Some actions may not be available.",
     "tabs": {

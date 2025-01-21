@@ -21,7 +21,7 @@ import {
     TabsRef,
     TextInput
 } from 'flowbite-react'
-import LectureStatusIcon from '@/app/lib/LectureStatusIcon'
+import LectureStatusIcon from '@/app/lib/lecture-icons'
 import { HiArrowRight } from 'react-icons/hi'
 import { useTranslationClient } from '@/app/i18n/client'
 import { NextDueCard } from '@/app/studio/lectures/[id]/task-cards'

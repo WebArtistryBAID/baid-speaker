@@ -56,6 +56,8 @@ const HydratedLectureInclude = {
 export interface HydratedLecture {
     id: number
     title: string
+    createdAt: Date
+    updatedAt: Date
     contactWeChat: string
     preSurveyQ1: string
     preSurveyQ2: string
@@ -168,6 +170,57 @@ export async function createLecture(title: string, contact: string, surveyQ1: st
         }
     })
     return lecture
+}
+
+export async function getMyLectures(page: number): Promise<Paginated<HydratedLecture>> {
+    const user = await requireUser()
+    const pages = Math.ceil(await prisma.lecture.count({
+        where: {
+            OR: [
+                {
+                    userId: user.id
+                },
+                {
+                    assigneeId: user.id
+                },
+                {
+                    assigneeTeacherId: user.id
+                },
+                {
+                    posterAssigneeId: user.id
+                }
+            ]
+        }
+    }) / 10)
+    const lectures = await prisma.lecture.findMany({
+        where: {
+            OR: [
+                {
+                    userId: user.id
+                },
+                {
+                    assigneeId: user.id
+                },
+                {
+                    assigneeTeacherId: user.id
+                },
+                {
+                    posterAssigneeId: user.id
+                }
+            ]
+        },
+        orderBy: {
+            updatedAt: 'desc'
+        },
+        include: HydratedLectureInclude,
+        skip: page * 10,
+        take: 10
+    })
+    return {
+        items: lectures,
+        page,
+        pages
+    }
 }
 
 export async function getLecture(id: number): Promise<HydratedLecture | null> {
