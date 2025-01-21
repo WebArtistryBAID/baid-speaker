@@ -301,7 +301,7 @@
       "videoCta": "View Video"
     },
     "people": {
-      "message": "These people are involved in your lecture. They can access the information associated with your lecture. Feel free to contact them for help.",
+      "message": "These people are involved in your lecture. Feel free to contact them for help!",
       "name": "Name",
       "phone": "Phone Number / WeChat",
       "role": "Role",
@@ -321,6 +321,17 @@
       "id": "Log ID",
       "action": "Action",
       "time": "Time"
+    },
+    "statistics": {
+      "empty": "This section will be available after your lecture.",
+      "liveAudience": "Live Audience",
+      "videoViews": "Video Views",
+      "videoLikes": "Video Likes",
+      "feedback": "Feedback Form",
+      "videoTitle": "Video",
+      "videoWaiting": "Your lecture video will be available soon. Please check back later.",
+      "videoAvailable": "Your lecture video is now publicly available.",
+      "videoCta": "View Video"
     }
   },
   "create": {

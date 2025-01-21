@@ -13,6 +13,7 @@ import { User } from '@prisma/client'
 import { getMyUser } from '@/app/login/login-actions'
 import LectureHistory from '@/app/studio/lectures/[id]/LectureHistory'
 import LectureContent from '@/app/studio/lectures/[id]/LectureContent'
+import LectureStatistics from '@/app/studio/lectures/[id]/LectureStatistics'
 
 export default function StudioLecture({ lecture, uploadServePath }: {
     lecture: HydratedLecture,
@@ -62,7 +63,7 @@ export default function StudioLecture({ lecture, uploadServePath }: {
                 <LectureContent lecture={lecture} uploadServePath={uploadServePath}/>
             </TabItem>
             <TabItem title={t('lecture.tabs.statistics')} icon={HiChartBar}>
-
+                <LectureStatistics lecture={lecture} uploadServePath={uploadServePath}/>
             </TabItem>
         </Tabs>
     </div>

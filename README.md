@@ -47,17 +47,11 @@ Upon completing of lecture:
 
 ## Features to complete
 
-* Show the following on the lecture dashboard
-  * After lecture completion, show the following
-    * Teacher rating
-    * Lecture video (with link to main video page)
-    * Lecture video views
-    * Lecture video likes
-    * Lecture presentation
-    * Lecture feedback form
-* Show all available files on lectures
-* Add a dialog on first open for users, hosts, teachers, and artists to explain how to use the app when they open
-  lecture page
+* Show lectures in "My Lectures"
+* Proper "Dashboard" page
 * Show in-progress lectures, completed lectures, and all lectures in manage page: pagination
+* On-site notifications
 * Show users in user management page: pagination
 * Allow editing users (mostly permissions) in user management page
+* Allow watching videos
+* Homepage video feed
