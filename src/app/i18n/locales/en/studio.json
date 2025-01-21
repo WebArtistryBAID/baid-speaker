@@ -241,6 +241,7 @@
     "startLecture": "Start New Lecture",
     "status": "Status: ",
     "role": "Role: ",
+    "lastUpdated": "Last Updated: ",
     "speaker": "Speaker",
     "host": "Host",
     "teacher": "Teacher",

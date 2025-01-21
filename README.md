@@ -49,6 +49,7 @@ Upon completing of lecture:
 
 * Show the survey questions on lecture dashboard page
 * Allow deleting a lecture
+* Add a "tour" to lecture dashboard, as it's a bit complicated
 * Proper "Dashboard" page
 * Show in-progress lectures, completed lectures, and all lectures in manage page: pagination
 * On-site notifications

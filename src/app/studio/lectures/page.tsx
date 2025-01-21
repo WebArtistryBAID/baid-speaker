@@ -8,6 +8,7 @@ import { Button, Card, Pagination } from 'flowbite-react'
 import Link from 'next/link'
 import { LectureRoleIconCircle, LectureStatusIconCircle } from '@/app/lib/lecture-icons'
 import { useCachedUser } from '@/app/login/login-client'
+import { HiRefresh } from 'react-icons/hi'
 
 export default function StudioLectures() {
     const { t } = useTranslationClient('studio')
@@ -50,19 +51,32 @@ export default function StudioLectures() {
                         <div className="mr-3">
                             <LectureStatusIconCircle status={lecture.status}/>
                         </div>
-                        <p>{t('myLectures.status')}{t(`lectureStatus.${lecture.status}.name`)}</p>
+                        <p>{t('myLectures.status')}<span
+                            className="font-bold">{t(`lectureStatus.${lecture.status}.name`)}</span></p>
                     </div>
 
-                    <div className="flex items-center mb-3">
+                    <div className="flex items-center">
                         <div className="mr-3">
                             <LectureRoleIconCircle lecture={lecture} user={me}/>
                         </div>
                         <p>{t('myLectures.role')}
+                            <span className="font-bold">
                             <If condition={lecture.userId === me.id}>{t('myLectures.speaker')}</If>
                             <If condition={lecture.assigneeId === me.id}>{t('myLectures.host')}</If>
                             <If condition={lecture.assigneeTeacherId === me.id}>{t('myLectures.teacher')}</If>
                             <If condition={lecture.posterAssigneeId === me.id}>{t('myLectures.poster')}</If>
+                                </span>
                         </p>
+                    </div>
+
+                    <div className="flex items-center mb-3">
+                        <div className="mr-3">
+                            <div className="rounded-full flex justify-center items-center bg-blue-500 w-8 h-8">
+                                <HiRefresh
+                                    className="text-white"/></div>
+                        </div>
+                        <p>{t('myLectures.lastUpdated')}<span
+                            className="font-bold">{lecture.updatedAt.toLocaleString()}</span></p>
                     </div>
 
                     <Button color="blue" as={Link}
