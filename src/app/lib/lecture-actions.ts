@@ -954,9 +954,6 @@ export async function changeDate(lectureId: number, date: Date): Promise<Hydrate
     }))!
     const currentDate = lecture.date
     const deltaDays = Math.floor((date.getTime() - currentDate!.getTime()) / (24 * 60 * 60 * 1000))
-    if (deltaDays < 0) {
-        throw new Error('Cannot change to past')
-    }
     for (const task of lecture.tasks) {
         await prisma.lectureTask.update({
             where: {

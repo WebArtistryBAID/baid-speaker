@@ -6,6 +6,7 @@ import { LectureStatus } from '@prisma/client'
 import { HiInbox } from 'react-icons/hi'
 import { Button, Card } from 'flowbite-react'
 import If from '@/app/lib/If'
+import Link from 'next/link'
 
 export default function LectureStatistics({ lecture, uploadServePath }: {
     lecture: HydratedLecture,
@@ -25,7 +26,7 @@ export default function LectureStatistics({ lecture, uploadServePath }: {
             <h2>{t('lecture.statistics.videoTitle')}</h2>
             <If condition={lecture.uploadedVideo != null}>
                 <p className="secondary">{t('lecture.statistics.videoAvailable')}</p>
-                <Button color="blue" href={`/watch/${lecture.id}`}>
+                <Button as={Link} color="blue" href={`/watch/${lecture.id}`}>
                     {t('lecture.content.videoCta')}
                 </Button>
             </If>

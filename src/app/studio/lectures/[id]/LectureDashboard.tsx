@@ -216,7 +216,7 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                                   count={Math.ceil(((lecture.date?.getTime() ?? 0) - new Date().getTime()) / 1000 / 86400)}/>
                         </p>
                         <p className="secondary">{lecture.date?.toLocaleDateString()}</p>
-                        <If condition={user.permissions.includes('admin.manage')}>
+                        <If condition={user.permissions.includes('admin.manage') && lecture.status === LectureStatus.completingPreTasks}>
                             <Button color="blue" fullSized className="mt-3" onClick={() => setChangeDateModal(true)}>
                                 {t('change')}
                                 <HiArrowRight className="btn-guide-icon"/>
@@ -232,7 +232,7 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                         <p className="text-3xl font-bold text-blue-500 dark:text-white">{lecture.location}</p>
                     </div>
                     <p className="secondary text-sm">{t('lecture.dashboard.locationMessage')}</p>
-                    <If condition={user.permissions.includes('admin.manage')}>
+                    <If condition={user.permissions.includes('admin.manage') && lecture.status === LectureStatus.completingPreTasks}>
                         <Button color="blue" fullSized className="mt-3" onClick={() => setChangeLocationModal(true)}>
                             {t('change')}
                             <HiArrowRight className="btn-guide-icon"/>

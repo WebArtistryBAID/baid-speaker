@@ -7,6 +7,7 @@ import { HiDownload, HiInbox, HiPencilAlt } from 'react-icons/hi'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button, Card } from 'flowbite-react'
+import Link from 'next/link'
 
 function ImageCard({ lecture, uploadServePath, name, target }: {
     lecture: HydratedLecture,
@@ -212,7 +213,7 @@ export default function LectureContent({ lecture, uploadServePath }: {
                     <Card className="col-span-1 h-full w-full relative">
                         <h2>{t('lecture.content.videoTitle')}</h2>
                         <p className="secondary">{t('lecture.content.videoMessage')}</p>
-                        <Button color="blue" href={`/watch/${lecture.id}`}>
+                        <Button as={Link} color="blue" href={`/watch/${lecture.id}`}>
                             {t('lecture.content.videoCta')}
                         </Button>
                     </Card>
