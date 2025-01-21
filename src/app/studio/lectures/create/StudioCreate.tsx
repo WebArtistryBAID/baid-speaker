@@ -62,44 +62,52 @@ export default function StudioCreate() {
                 2: <span key={2} className="underline"/>
             }}/>
         </p>
-        <div className="flex flex-col gap-4 mb-8">
-            <div className="max-w-md">
-                <div className="mb-2">
-                    <Label htmlFor="title" value={t('create.form.title')}/>
+        <div className="grid grid-cols-2 grid-rows-1 mb-8 gap-4">
+            <div>
+                <div className="flex flex-col gap-4 mb-5">
+                    <div className="w-full">
+                        <div className="mb-2">
+                            <Label htmlFor="title" value={t('create.form.title')}/>
+                        </div>
+                        <TextInput id="title" type="text" required
+                                   color={titleError ? 'failure' : undefined}
+                                   value={title} onChange={e => setTitle(e.currentTarget.value)}
+                                   helperText={titleError ? t('create.form.titleError') : null}/>
+                    </div>
+                    <div className="w-full">
+                        <div className="mb-2">
+                            <Label htmlFor="contact" value={t('create.form.contact')}/>
+                        </div>
+                        <TextInput id="contact" type="text" required
+                                   color={contactError ? 'failure' : undefined}
+                                   value={contact} onChange={e => setContact(e.currentTarget.value)}
+                                   helperText={titleError ? t('create.form.contactError') : null}/>
+                    </div>
+                    <div className="w-full">
+                        <div className="mb-2">
+                            <Label htmlFor="survey-q1" value={t('create.form.preSurveyQ1')}/>
+                        </div>
+                        <Textarea id="survey-q1" rows={5} required
+                                  color={surveyQ1Error ? 'failure' : undefined}
+                                  value={surveyQ1} onChange={e => setSurveyQ1(e.currentTarget.value)}
+                                  helperText={titleError ? t('create.form.surveyQ1Error') : null}/>
+                    </div>
+                    <div className="w-full">
+                        <div className="mb-2">
+                            <Label htmlFor="survey-q2" value={t('create.form.preSurveyQ2')}/>
+                        </div>
+                        <Textarea id="survey-q2" rows={5} required
+                                  color={surveyQ2Error ? 'failure' : undefined}
+                                  value={surveyQ2} onChange={e => setSurveyQ2(e.currentTarget.value)}
+                                  helperText={titleError ? t('create.form.surveyQ2Error') : null}/>
+                    </div>
                 </div>
-                <TextInput id="title" type="text" required
-                           color={titleError ? 'failure' : undefined}
-                           value={title} onChange={e => setTitle(e.currentTarget.value)}
-                           helperText={titleError ? t('create.form.titleError') : null}/>
+                <Button disabled={loading} className="w-full" onClick={submit} fullSized>{t('create.continue')}</Button>
             </div>
-            <div className="max-w-md">
-                <div className="mb-2">
-                    <Label htmlFor="contact" value={t('create.form.contact')}/>
-                </div>
-                <TextInput id="contact" type="text" required
-                           color={contactError ? 'failure' : undefined}
-                           value={contact} onChange={e => setContact(e.currentTarget.value)}
-                           helperText={titleError ? t('create.form.contactError') : null}/>
-            </div>
-            <div className="max-w-xl">
-                <div className="mb-2">
-                    <Label htmlFor="survey-q1" value={t('create.form.preSurveyQ1')}/>
-                </div>
-                <Textarea id="survey-q1" rows={5} required
-                          color={surveyQ1Error ? 'failure' : undefined}
-                          value={surveyQ1} onChange={e => setSurveyQ1(e.currentTarget.value)}
-                          helperText={titleError ? t('create.form.surveyQ1Error') : null}/>
-            </div>
-            <div className="max-w-xl">
-                <div className="mb-2">
-                    <Label htmlFor="survey-q2" value={t('create.form.preSurveyQ2')}/>
-                </div>
-                <Textarea id="survey-q2" rows={5} required
-                          color={surveyQ2Error ? 'failure' : undefined}
-                          value={surveyQ2} onChange={e => setSurveyQ2(e.currentTarget.value)}
-                          helperText={titleError ? t('create.form.surveyQ2Error') : null}/>
+            <div className="flex justify-center items-center h-full">
+                <img src="/assets/illustrations/education-light.png" className="dark:hidden w-96" alt=""/>
+                <img src="/assets/illustrations/education-dark.png" className="hidden dark:block w-96" alt=""/>
             </div>
         </div>
-        <Button disabled={loading} className="max-w-xl" onClick={submit} fullSized>{t('create.continue')}</Button>
     </div>
 }

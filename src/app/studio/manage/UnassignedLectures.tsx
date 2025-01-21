@@ -1,11 +1,10 @@
 'use client'
 
-import {useEffect, useState} from 'react'
-import {claimLecture, getUnassignedLectures, HydratedLecture} from '@/app/lib/lecture-actions'
-import {Button, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from 'flowbite-react'
-import {useTranslationClient} from '@/app/i18n/client'
-import {useRouter} from 'next/navigation'
-import {HiInbox} from 'react-icons/hi'
+import { useEffect, useState } from 'react'
+import { claimLecture, getUnassignedLectures, HydratedLecture } from '@/app/lib/lecture-actions'
+import { Button, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 'flowbite-react'
+import { useTranslationClient } from '@/app/i18n/client'
+import { useRouter } from 'next/navigation'
 import If from '@/app/lib/If'
 
 export default function UnassignedLectures() {
@@ -37,7 +36,8 @@ export default function UnassignedLectures() {
     return <>
         <If condition={unassignedLectures.length < 1}>
             <div className="w-full flex flex-col justify-center items-center">
-                <HiInbox className="text-7xl mb-3 secondary"/>
+                <img src="/assets/illustrations/good-job-light.png" className="dark:hidden w-72 mb-3" alt=""/>
+                <img src="/assets/illustrations/good-job-dark.png" className="hidden dark:block w-72 mb-3" alt=""/>
                 <p>{t('manage.unassigned.empty')}</p>
             </div>
         </If>

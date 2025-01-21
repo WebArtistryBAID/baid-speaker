@@ -3,7 +3,7 @@
 import { HydratedLecture } from '@/app/lib/lecture-actions'
 import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
-import { HiDownload, HiInbox, HiPencilAlt } from 'react-icons/hi'
+import { HiDownload, HiPencilAlt } from 'react-icons/hi'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button, Card } from 'flowbite-react'
@@ -184,7 +184,8 @@ export default function LectureContent({ lecture, uploadServePath }: {
     return <>
         <If condition={lecture.uploadedPoster == null && lecture.uploadedVideo == null && lecture.uploadedFeedback == null && lecture.uploadedSlides == null && lecture.uploadedGroupQR == null}>
             <div className="w-full flex flex-col justify-center items-center">
-                <HiInbox className="text-7xl mb-3 secondary"/>
+                <img src="/assets/illustrations/media-light.png" className="dark:hidden w-72 mb-3" alt=""/>
+                <img src="/assets/illustrations/media-dark.png" className="hidden dark:block w-72 mb-3" alt=""/>
                 <p>{t('lecture.content.empty')}</p>
             </div>
         </If>

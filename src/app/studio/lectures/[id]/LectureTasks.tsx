@@ -2,7 +2,6 @@
 
 import { HydratedLecture } from '@/app/lib/lecture-actions'
 import { useTranslationClient } from '@/app/i18n/client'
-import { HiInbox } from 'react-icons/hi'
 import If from '@/app/lib/If'
 import TaskCard from '@/app/studio/lectures/[id]/task-cards'
 import { useCachedUser } from '@/app/login/login-client'
@@ -25,7 +24,8 @@ export default function LectureTasksC({lecture}: { lecture: HydratedLecture }) {
     return <>
         <If condition={tasks.length < 1}>
             <div className="w-full flex flex-col justify-center items-center">
-                <HiInbox className="text-7xl mb-3 secondary"/>
+                <img src="/assets/illustrations/good-job-light.png" className="dark:hidden w-72 mb-3" alt=""/>
+                <img src="/assets/illustrations/good-job-dark.png" className="hidden dark:block w-72 mb-3" alt=""/>
                 <p>{t('lecture.tasks.empty')}</p>
             </div>
         </If>

@@ -3,7 +3,6 @@
 import { HydratedLecture } from '@/app/lib/lecture-actions'
 import { useTranslationClient } from '@/app/i18n/client'
 import { LectureStatus } from '@prisma/client'
-import { HiInbox } from 'react-icons/hi'
 import { Button, Card } from 'flowbite-react'
 import If from '@/app/lib/If'
 import Link from 'next/link'
@@ -16,7 +15,8 @@ export default function LectureStatistics({ lecture, uploadServePath }: {
 
     if (lecture.status !== LectureStatus.completingPostTasks && lecture.status !== LectureStatus.completed) {
         return <div className="w-full flex flex-col justify-center items-center">
-            <HiInbox className="text-7xl mb-3 secondary"/>
+            <img src="/assets/illustrations/build-light.png" className="dark:hidden w-72 mb-3" alt=""/>
+            <img src="/assets/illustrations/build-dark.png" className="hidden dark:block w-72 mb-3" alt=""/>
             <p>{t('lecture.statistics.empty')}</p>
         </div>
     }

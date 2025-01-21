@@ -36,8 +36,8 @@ export default function StudioLectures() {
         <h1 className="mb-8">{t('nav.lectures')}</h1>
         <If condition={page.pages < 1}>
             <div className="w-full h-[60dvh] flex flex-col justify-center items-center">
-                <img src="/assets/illustrations/hi-light.png" className="dark:hidden" alt=""/>
-                <img src="/assets/illustrations/hi-dark.png" className="hidden dark:block" alt=""/>
+                <img src="/assets/illustrations/hi-light.png" className="dark:hidden w-72" alt=""/>
+                <img src="/assets/illustrations/hi-dark.png" className="hidden dark:block w-72" alt=""/>
                 <p className="mb-3">{t('myLectures.empty')}</p>
                 <Button color="blue" as={Link} href="/studio/lectures/create">{t('myLectures.startLecture')}</Button>
             </div>
