@@ -1,15 +1,15 @@
 import { getLecture } from '@/app/lib/lecture-actions'
-import StudioArtist from '@/app/studio/lectures/[id]/artist/StudioArtist'
+import StudioTeacher from '@/app/invitations/[id]/teacher/StudioTeacher'
 
-export default async function StudioArtistBase({ params }: { params: Promise<{ id: string }> }) {
+export default async function StudioTeacherBase({ params }: { params: Promise<{ id: string }> }) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const id = (await params).id
     const lecture = await getLecture(parseInt(id as string))
     if (lecture == null) {
         return <div>Error</div>
     }
-    if (lecture.posterAssigneeId != null) {
+    if (lecture.assigneeTeacherId != null) {
         return <div>Error</div>
     }
-    return <StudioArtist lecture={lecture}/>
+    return <StudioTeacher lecture={lecture}/>
 }

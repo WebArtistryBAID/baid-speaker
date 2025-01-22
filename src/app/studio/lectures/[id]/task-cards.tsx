@@ -235,7 +235,7 @@ export function ConfirmPosterDesignerCard({ task }: { task: HydratedLectureTask 
     const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
         <Button color="blue" fullSized onClick={async () => {
-            await navigator.clipboard.writeText(`${location.origin}/studio/lectures/${task.lectureId}/artist`)
+            await navigator.clipboard.writeText(`${location.origin}/invitations/${task.lectureId}/artist`)
             setCopied(true)
             setTimeout(() => {
                 setCopied(false)
@@ -311,7 +311,7 @@ export function InviteTeacherCard({ task }: { task: HydratedLectureTask }) {
     const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
         <Button color="blue" fullSized onClick={async () => {
-            await navigator.clipboard.writeText(`${location.origin}/studio/lectures/${task.lectureId}/teacher`)
+            await navigator.clipboard.writeText(`${location.origin}/invitations/${task.lectureId}/teacher`)
             setCopied(true)
             setTimeout(() => {
                 setCopied(false)
@@ -389,7 +389,7 @@ export function TeacherApprovePresentationCard({ task }: { task: HydratedLecture
     const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
         <Button color="blue" fullSized onClick={async () => {
-            await navigator.clipboard.writeText(`${location.origin}/studio/lectures/${task.lectureId}/slides`)
+            await navigator.clipboard.writeText(`${location.origin}/invitations/${task.lectureId}/slides`)
             setCopied(true)
             setTimeout(() => {
                 setCopied(false)
@@ -405,7 +405,7 @@ export function SchoolApprovePosterCard({ task }: { task: HydratedLectureTask })
     const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
         <Button color="blue" fullSized onClick={async () => {
-            await navigator.clipboard.writeText(`${location.origin}/studio/lectures/${task.lectureId}/poster`)
+            await navigator.clipboard.writeText(`${location.origin}/invitations/${task.lectureId}/poster`)
             setCopied(true)
             setTimeout(() => {
                 setCopied(false)
