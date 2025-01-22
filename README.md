@@ -47,7 +47,6 @@ Upon completing of lecture:
 
 ## Features to complete
 
-* Show the survey questions on lecture dashboard page
 * Allow deleting a lecture
 * Add a "tour" to lecture dashboard, as it's a bit complicated
 * Proper "Dashboard" page

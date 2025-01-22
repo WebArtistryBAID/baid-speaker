@@ -241,5 +241,17 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
                 </Card>
             </If>
         </div>
+
+        <p className="secondary font-display mb-3">{t('lecture.dashboard.surveyQuestions')}</p>
+        <div className="grid grid-cols-2 gap-4">
+            <div>
+                <p className="font-display font-bold">{t('lecture.dashboard.preSurveyQ1')}</p>
+                <p>{lecture.preSurveyQ1}</p>
+            </div>
+            <div>
+                <p className="font-display font-bold">{t('lecture.dashboard.preSurveyQ2')}</p>
+                <p>{lecture.preSurveyQ2}</p>
+            </div>
+        </div>
     </>
 }

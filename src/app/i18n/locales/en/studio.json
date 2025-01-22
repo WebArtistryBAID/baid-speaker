@@ -282,7 +282,10 @@
       "location": "Location",
       "locationMessage": "This is where your lecture will take place.",
       "changeStatus": "Move to Next Stage",
-      "changeStatusMessage": "Are you sure you want to move this lecture to the next stage? This action is irreversible."
+      "changeStatusMessage": "Are you sure you want to move this lecture to the next stage? This action is irreversible.",
+      "surveyQuestions": "Pre-Lecture Survey Answers",
+      "preSurveyQ1": "Please tell us about the content of your lecture.",
+      "preSurveyQ2": "Why did you choose this topic?"
     },
     "tasks": {
       "empty": "You have no tasks to complete right now. Congratulations!",
