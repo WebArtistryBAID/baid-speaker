@@ -1,7 +1,17 @@
 'use server'
 
-import { Lecture, LectureAuditLogType, LectureStatus, LectureTasks, PrismaClient, User, UserType } from '@prisma/client'
+import {
+    Lecture,
+    LectureAuditLogType,
+    LectureStatus,
+    LectureTasks,
+    Prisma,
+    PrismaClient,
+    User,
+    UserType
+} from '@prisma/client'
 import { requireUser, requireUserPermission } from '@/app/login/login-actions'
+import LectureWhereInput = Prisma.LectureWhereInput
 
 const prisma = new PrismaClient()
 
@@ -183,6 +193,25 @@ export async function getMyOwnLatestLecture(): Promise<HydratedLecture | null> {
         },
         include: HydratedLectureInclude
     })
+}
+
+export async function getLectures(page: number, filter: LectureWhereInput): Promise<Paginated<HydratedLecture>> {
+    await requireUserPermission('admin.manage')
+    const pages = Math.ceil(await prisma.lecture.count({ where: filter }) / 10)
+    const lectures = await prisma.lecture.findMany({
+        where: filter,
+        orderBy: {
+            updatedAt: 'desc'
+        },
+        include: HydratedLectureInclude,
+        skip: page * 10,
+        take: 10
+    })
+    return {
+        items: lectures,
+        page,
+        pages
+    }
 }
 
 export async function getMyLectures(page: number): Promise<Paginated<HydratedLecture>> {

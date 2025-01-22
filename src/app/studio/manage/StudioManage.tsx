@@ -5,6 +5,8 @@ import { TabItem, Tabs } from 'flowbite-react'
 import { HiCheckCircle, HiClock } from 'react-icons/hi'
 import { HiEllipsisHorizontalCircle, HiListBullet } from 'react-icons/hi2'
 import UnassignedLectures from '@/app/studio/manage/UnassignedLectures'
+import TypicalLectures from '@/app/studio/manage/TypicalLectures'
+import { LectureStatus } from '@prisma/client'
 
 export default function StudioManage() {
     const { t } = useTranslationClient('studio')
@@ -15,13 +17,17 @@ export default function StudioManage() {
                 <UnassignedLectures/>
             </TabItem>
             <TabItem title={t('manage.tabs.inProgress')} icon={HiEllipsisHorizontalCircle}>
-
+                <TypicalLectures filter={{
+                    NOT: {
+                        status: LectureStatus.completed
+                    }
+                }}/>
             </TabItem>
             <TabItem title={t('manage.tabs.completed')} icon={HiCheckCircle}>
-
+                <TypicalLectures filter={{ status: LectureStatus.completed }}/>
             </TabItem>
             <TabItem title={t('manage.tabs.all')} icon={HiListBullet}>
-
+                <TypicalLectures filter={{}}/>
             </TabItem>
         </Tabs>
     </div>

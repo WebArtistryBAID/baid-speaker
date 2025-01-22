@@ -446,16 +446,20 @@
     "title": "Lectures Management",
     "tabs": {
       "title": "Management",
-      "unassigned": "Unassigned Lectures",
-      "inProgress": "In Progress Lectures",
-      "completed": "Completed Lectures",
-      "all": "All Lectures"
+      "unassigned": "Unassigned",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "all": "All"
     },
+    "speaker": "Speaker: ",
+    "lastUpdated": "Last Updated: ",
+    "claim": "Claim Lecture",
     "unassigned": {
-      "name": "Title",
-      "speaker": "Speaker",
-      "empty": "Congrats! No unassigned lectures.",
-      "claim": "Claim Lecture"
+      "empty": "Congrats! No unassigned lectures."
+    },
+    "typical": {
+      "empty": "No lectures yet.",
+      "view": "View Details"
     }
   }
 }

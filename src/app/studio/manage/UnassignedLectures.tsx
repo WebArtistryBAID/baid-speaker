@@ -2,15 +2,19 @@
 
 import { useEffect, useState } from 'react'
 import { claimLecture, getUnassignedLectures, HydratedLecture } from '@/app/lib/lecture-actions'
-import { Button, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 'flowbite-react'
+import { Button, Card } from 'flowbite-react'
 import { useTranslationClient } from '@/app/i18n/client'
 import { useRouter } from 'next/navigation'
 import If from '@/app/lib/If'
+import { HiRefresh, HiSpeakerphone } from 'react-icons/hi'
+import { getMyUser } from '@/app/login/login-actions'
+import { User } from '@prisma/client'
 
 export default function UnassignedLectures() {
     const {t} = useTranslationClient('studio')
     const [unassignedLectures, setUnassignedLectures] = useState<HydratedLecture[] | null>(null)
     const [loading, setLoading] = useState(false)
+    const [ me, setMe ] = useState<User | null>(null)
     const router = useRouter()
 
     function claim(lecture: HydratedLecture) {
@@ -24,9 +28,10 @@ export default function UnassignedLectures() {
     useEffect(() => {
         (async () => {
             setUnassignedLectures(await getUnassignedLectures())
+            setMe(await getMyUser())
         })()
     }, [])
-    if (unassignedLectures == null) {
+    if (unassignedLectures == null || me == null) {
         return <div className="w-full">
             <div className="w-1/3 h-8 bg-gray-300 dark:bg-gray-700 rounded-3xl mb-3"/>
             <div className="w-1/2 h-8 bg-gray-300 dark:bg-gray-700 rounded-3xl mb-3"/>
@@ -42,23 +47,32 @@ export default function UnassignedLectures() {
             </div>
         </If>
         <If condition={unassignedLectures.length > 0}>
-            <Table>
-                <TableHead>
-                    <TableHeadCell>{t('manage.unassigned.name')}</TableHeadCell>
-                    <TableHeadCell>{t('manage.unassigned.speaker')}</TableHeadCell>
-                    <TableHeadCell></TableHeadCell>
-                </TableHead>
-                <TableBody className="divide-y">
-                    {unassignedLectures.map(lecture => <TableRow className="tr" key={lecture.id}>
-                        <TableCell className="th">{lecture.title}</TableCell>
-                        <TableCell>{lecture.user.name}</TableCell>
-                        <TableCell>
-                            <Button color="blue" disabled={loading} onClick={() => claim(lecture)} pill
-                                    size="xs">{t('manage.unassigned.claim')}</Button>
-                        </TableCell>
-                    </TableRow>)}
-                </TableBody>
-            </Table>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
+                {unassignedLectures.map(lecture => <Card key={lecture.id} className="col-span-2">
+                    <h2>{lecture.title}</h2>
+                    <div className="flex items-center">
+                        <div className="mr-3">
+                            <div className="rounded-full flex justify-center items-center bg-blue-500 w-8 h-8">
+                                <HiSpeakerphone
+                                    className="text-white"/></div>
+                        </div>
+                        <p>{t('manage.speaker')}<span className="font-bold">{lecture.user.name}</span></p>
+                    </div>
+
+                    <div className="flex items-center mb-3">
+                        <div className="mr-3">
+                            <div className="rounded-full flex justify-center items-center bg-blue-500 w-8 h-8">
+                                <HiRefresh
+                                    className="text-white"/></div>
+                        </div>
+                        <p>{t('manage.lastUpdated')}<span
+                            className="font-bold">{lecture.updatedAt.toLocaleString()}</span></p>
+                    </div>
+
+                    <Button disabled={loading} color="blue"
+                            onClick={() => claim(lecture)}>{t('manage.unassigned.claim')}</Button>
+                </Card>)}
+            </div>
         </If>
     </>
 }
