@@ -308,6 +308,14 @@ export async function claimLecture(id: number): Promise<void> {
             lectureId: lecture.id
         }
     })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.createdGroupChat,
+            values: [ user.id ]
+        }
+    })
     if (!fromReclaimable) {
         await prisma.lectureTask.create({
             data: {
@@ -376,6 +384,14 @@ export async function confirmDate(lectureId: number, task: HydratedLectureTask, 
             userId: user.id,
             lectureId: lecture.id,
             values: [ date.getTime().toString() ]
+        }
+    })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.confirmedDate,
+            values: [ user.id, date.getTime().toString() ]
         }
     })
     await prisma.lectureTask.create({
@@ -502,6 +518,14 @@ export async function confirmPosterDesigner(lectureId: number): Promise<Hydrated
             lectureId: lecture.id
         }
     })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.assignedPosterDesigner,
+            values: [ user.id ]
+        }
+    })
     await prisma.lectureTask.create({
         data: {
             type: LectureTasks.submitPoster,
@@ -554,6 +578,14 @@ export async function inviteTeacher(lectureId: number): Promise<HydratedLecture>
             lectureId: lecture.id
         }
     })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.assignedTeacher,
+            values: [ user.id ]
+        }
+    })
     if (lecture.uploadedSlides != null) {
         await prisma.lectureTask.create({
             data: {
@@ -604,6 +636,14 @@ export async function schoolApprovePoster(lectureId: number): Promise<HydratedLe
             lectureId: lecture.id
         }
     })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.approvedPoster,
+            values: [ user.id ]
+        }
+    })
     if (lecture.uploadedSlides != null) {
         await prisma.lectureTask.create({
             data: {
@@ -635,6 +675,14 @@ export async function sendAdvertisements(lectureId: number, task: HydratedLectur
             type: LectureAuditLogType.sentAdvertisements,
             userId: user.id,
             lectureId: lecture.id
+        }
+    })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.sentAdvertisements,
+            values: [ user.id ]
         }
     })
     return lecture
@@ -675,6 +723,14 @@ export async function teacherApprovePresentation(lectureId: number): Promise<Hyd
             type: LectureAuditLogType.teacherApproved,
             userId: user.id,
             lectureId: lecture.id
+        }
+    })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.teacherApproved,
+            values: [ user.id ]
         }
     })
     return lecture
@@ -730,6 +786,14 @@ export async function confirmLocation(lectureId: number, task: HydratedLectureTa
             userId: user.id,
             lectureId: lecture.id,
             values: [location]
+        }
+    })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.confirmedLocation,
+            values: [ user.id, location ]
         }
     })
     await prisma.lectureTask.create({
@@ -790,6 +854,14 @@ export async function markReady(lectureId: number): Promise<HydratedLecture> {
             values: ['ready']
         }
     })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.modifiedStatus,
+            values: [ user.id, 'ready' ]
+        }
+    })
     return lecture
 }
 
@@ -815,6 +887,14 @@ export async function markCompletingPostTasks(lectureId: number): Promise<Hydrat
             userId: user.id,
             lectureId: lecture.id,
             values: ['completingPostTasks']
+        }
+    })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.modifiedStatus,
+            values: [ user.id, 'completingPostTasks' ]
         }
     })
     await prisma.lectureTask.create({
@@ -881,6 +961,14 @@ export async function updateLiveAudience(lectureId: number, task: HydratedLectur
             values: [liveAudience.toString()]
         }
     })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.updatedLiveAudience,
+            values: [ user.id, liveAudience.toString() ]
+        }
+    })
     return lecture
 }
 
@@ -911,6 +999,14 @@ export async function submitVideo(lectureId: number, task: HydratedLectureTask, 
             userId: user.id,
             lectureId: lecture.id,
             values: [video]
+        }
+    })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.submittedVideo,
+            values: [ user.id ]
         }
     })
     return lecture
@@ -945,6 +1041,14 @@ export async function submitReflection(lectureId: number, task: HydratedLectureT
             values: [reflection]
         }
     })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.submittedReflection,
+            values: [ user.id ]
+        }
+    })
     return lecture
 }
 
@@ -970,6 +1074,14 @@ export async function markCompleted(lectureId: number): Promise<HydratedLecture>
             userId: user.id,
             lectureId: lecture.id,
             values: ['completed']
+        }
+    })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.modifiedStatus,
+            values: [ user.id, 'completed' ]
         }
     })
     return lecture
@@ -1036,6 +1148,14 @@ export async function changeLocation(lectureId: number, location: string): Promi
             values: [ location ]
         }
     })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.confirmedLocation,
+            values: [ user.id, location ]
+        }
+    })
     return lecture
 }
 
@@ -1073,6 +1193,14 @@ export async function changeDate(lectureId: number, date: Date): Promise<Hydrate
             userId: user.id,
             lectureId: lecture.id,
             values: [ date.getTime().toString() ]
+        }
+    })
+    await prisma.notification.create({
+        data: {
+            lectureId: lecture.id,
+            userId: lecture.userId,
+            type: LectureAuditLogType.confirmedDate,
+            values: [ user.id, date.getTime().toString() ]
         }
     })
     return lecture

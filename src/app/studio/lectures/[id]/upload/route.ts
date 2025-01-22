@@ -83,6 +83,16 @@ export async function POST(req: NextRequest, { params }: {
                 values: [ filename ]
             }
         })
+        if (lecture.userId !== user.id) {
+            await prisma.notification.create({
+                data: {
+                    lectureId: lecture.id,
+                    userId: lecture.userId,
+                    type: LectureAuditLogType.submittedPoster,
+                    values: [ user.id ]
+                }
+            })
+        }
         if (task != null) {
             await prisma.lectureTask.delete({
                 where: {
@@ -233,6 +243,14 @@ export async function POST(req: NextRequest, { params }: {
                 values: [ filename ]
             }
         })
+        await prisma.notification.create({
+            data: {
+                lectureId: lecture.id,
+                userId: lecture.userId,
+                type: LectureAuditLogType.createdGroupChat,
+                values: [ user.id ]
+            }
+        })
 
         if (task != null) {
             await prisma.lectureTask.delete({
@@ -276,6 +294,14 @@ export async function POST(req: NextRequest, { params }: {
                 userId: user.id,
                 type: LectureAuditLogType.submittedFeedback,
                 values: [ filename ]
+            }
+        })
+        await prisma.notification.create({
+            data: {
+                lectureId: lecture.id,
+                userId: lecture.userId,
+                type: LectureAuditLogType.submittedFeedback,
+                values: [ user.id ]
             }
         })
         if (task != null) {

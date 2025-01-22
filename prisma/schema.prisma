@@ -28,6 +28,8 @@ model User {
 
   lectureLogs   LectureAuditLog[]
   assignedTasks LectureTask[]
+
+  notifications Notification[]
 }
 
 enum UserAuditLogType {
@@ -41,6 +43,37 @@ model UserAuditLog {
   user   User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
   values String[]
+}
+
+enum NotificationType {
+  assignedHost
+  confirmedDate
+  assignedTeacher
+  assignedPosterDesigner
+  submittedPoster
+  approvedPoster
+  createdGroupChat
+  sentAdvertisements
+  teacherApproved
+  confirmedLocation
+  testedDevice
+  updatedLiveAudience
+  submittedFeedback
+  submittedVideo
+  submittedReflection
+  modifiedStatus
+}
+
+model Notification {
+  id        Int              @id @default(autoincrement())
+  createdAt DateTime         @default(now())
+  type      NotificationType
+  values    String[]
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  lecture   Lecture? @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  lectureId Int?
 }
 
 model AvailableDate {
@@ -161,4 +194,6 @@ model Lecture {
   videoViews        Int               @default(0)
   videoLikes        Int               @default(0)
   logs              LectureAuditLog[]
+
+  relatedNotis Notification[]
 }

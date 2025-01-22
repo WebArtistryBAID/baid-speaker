@@ -442,6 +442,10 @@
     "unsupported": "Unsupported User Type",
     "unsupportedMessage": "This action is only available for teacher users."
   },
+  "inbox": {
+    "title": "Inbox",
+    "empty": "Congrats! No notifications for now."
+  },
   "manage": {
     "title": "Lectures Management",
     "tabs": {

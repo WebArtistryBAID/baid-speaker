@@ -1,3 +1,5 @@
+import StudioInboxClient from '@/app/studio/inbox/StudioInboxClient'
+
 export default async function StudioInbox() {
-    return <div>Inbox</div>
+    return <StudioInboxClient/>
 }
