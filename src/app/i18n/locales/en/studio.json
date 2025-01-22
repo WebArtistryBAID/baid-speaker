@@ -12,6 +12,11 @@
   "uploadMessage": "Do not close this page while uploading.",
   "done": "Done",
   "tryAgain": "Try Again",
+  "next": "Next",
+  "back": "Back",
+  "close": "Close",
+  "skip": "Skip",
+  "continue": "Continue",
   "tasks": {
     "ctaBad": "This task is not assigned to you",
     "confirmDate": {
@@ -258,7 +263,17 @@
       "history": "History",
       "content": "Content",
       "statistics": "Statistics",
-      "others": "Others"
+      "others": "Danger Zone"
+    },
+    "onboarding": {
+      "title": "Welcome to BAID Speaker!",
+      "message": "The new BAID Speaker platform streamlines the process of creating and hosting lectures. Take a look!",
+      "step1": "In At a Glance, you can get an overview of your lecture's status.",
+      "step2": "In Tasks, you can see what you need to do next.",
+      "step3": "In People, you can see who is involved in your lecture.",
+      "step4": "In Content, you can upload and manage your lecture materials.",
+      "step5": "BAID Speaker is a transformative experience, and it all starts with a lecture. Good luck!",
+      "step5Title": "Let's go!"
     },
     "dashboard": {
       "message": "Good luck on your lecture! We can't wait to see what you have to offer.",

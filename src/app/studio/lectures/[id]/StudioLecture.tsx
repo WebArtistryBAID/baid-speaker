@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslationClient } from '@/app/i18n/client'
-import { Alert, TabItem, Tabs, TabsRef } from 'flowbite-react'
+import { Alert, Button, Modal, ModalBody, ModalFooter, ModalHeader, TabItem, Tabs, TabsRef } from 'flowbite-react'
 import { HiCalendar, HiChartBar, HiChartPie, HiChip, HiDocumentText, HiRefresh, HiUsers } from 'react-icons/hi'
 import { HydratedLecture } from '@/app/lib/lecture-actions'
 import { useEffect, useRef, useState } from 'react'
@@ -15,6 +15,26 @@ import LectureHistory from '@/app/studio/lectures/[id]/LectureHistory'
 import LectureContent from '@/app/studio/lectures/[id]/LectureContent'
 import LectureStatistics from '@/app/studio/lectures/[id]/LectureStatistics'
 import LectureOthers from '@/app/studio/lectures/[id]/LectureOthers'
+import { Joyride, TooltipRenderProps } from 'react-joyride'
+
+function JoyrideTooltip(props: TooltipRenderProps) {
+    const { backProps, index, primaryProps, step, tooltipProps } = props
+
+    return <div className="p-5 max-w-md bg-white rounded-3xl dark:bg-gray-700" {...tooltipProps}>
+        <h3 className="mb-3">{step.title}</h3>
+        <p className="mb-5">{step.content}</p>
+        <div className="flex gap-3 items-center">
+            <If condition={index > 0}>
+                <Button {...backProps} color="gray">
+                    {backProps.title}
+                </Button>
+            </If>
+            <Button {...primaryProps} color="blue">
+                {primaryProps.title}
+            </Button>
+        </div>
+    </div>
+}
 
 export default function StudioLecture({ lecture, uploadServePath }: {
     lecture: HydratedLecture,
@@ -24,11 +44,83 @@ export default function StudioLecture({ lecture, uploadServePath }: {
     const tabsRef = useRef<TabsRef>(null)
 
     const [ myUser, setMyUser ] = useState<User>()
+    const [ onboardingModal, setOnboardingModal ] = useState(false)
+    const [ runJoyride, setRunJoyride ] = useState(false)
+    const [ joyrideSteps, setJoyrideSteps ] = useState([ {
+        title: '...',
+        target: '[role=tablist]>button:nth-child(1)',
+        content: '...',
+        disableBeacon: true
+    },
+        {
+            title: '...',
+            target: '[role=tablist]>button:nth-child(2)',
+            content: '...',
+            disableBeacon: true
+        },
+        {
+            title: '...',
+            target: '[role=tablist]>button:nth-child(3)',
+            content: '...',
+            disableBeacon: true
+        },
+        {
+            title: '...',
+            target: '[role=tablist]>button:nth-child(5)',
+            content: '...',
+            disableBeacon: true
+        },
+        {
+            title: '...',
+            target: 'body',
+            placement: 'center' as const,
+            content: '...',
+            disableBeacon: true
+        } ])
 
     useEffect(() => {
         (async () => {
             setMyUser((await getMyUser())!)
         })()
+        setJoyrideSteps(
+            [
+                {
+                    title: t('lecture.tabs.dashboard'),
+                    target: '[role=tablist]>button:nth-child(1)',
+                    content: t('lecture.onboarding.step1'),
+                    disableBeacon: true
+                },
+                {
+                    title: t('lecture.tabs.tasks'),
+                    target: '[role=tablist]>button:nth-child(2)',
+                    content: t('lecture.onboarding.step2'),
+                    disableBeacon: true
+                },
+                {
+                    title: t('lecture.tabs.users'),
+                    target: '[role=tablist]>button:nth-child(3)',
+                    content: t('lecture.onboarding.step3'),
+                    disableBeacon: true
+                },
+                {
+                    title: t('lecture.tabs.content'),
+                    target: '[role=tablist]>button:nth-child(5)',
+                    content: t('lecture.onboarding.step4'),
+                    disableBeacon: true
+                },
+                {
+                    title: t('lecture.onboarding.step5Title'),
+                    target: 'body',
+                    placement: 'center',
+                    content: t('lecture.onboarding.step5'),
+                    disableBeacon: true
+                }
+            ]
+        )
+        if (localStorage.getItem('onboarding') == null) {
+            setOnboardingModal(true)
+            localStorage.setItem('onboarding', 'done')
+        }
     }, [])
 
     if (myUser == null) {
@@ -42,6 +134,27 @@ export default function StudioLecture({ lecture, uploadServePath }: {
     }
 
     return <div className="base-studio-page">
+        <Modal show={onboardingModal} size="xl" onClose={() => setOnboardingModal(false)}>
+            <ModalHeader>{t('lecture.onboarding.title')}</ModalHeader>
+            <ModalBody>
+                <p className="mb-3">{t('lecture.onboarding.message')}</p>
+                <div className="w-full flex flex-col justify-center items-center">
+                    <img src="/assets/illustrations/location-map-light.png" className="dark:hidden w-72 mb-3" alt=""/>
+                    <img src="/assets/illustrations/location-map-dark.png" className="hidden dark:block w-72 mb-3"
+                         alt=""/>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button color="blue" onClick={() => {
+                    setRunJoyride(true)
+                    setOnboardingModal(false)
+                }}>{t('continue')}</Button>
+                <Button color="gray" onClick={() => setOnboardingModal(false)}>
+                    {t('skip')}
+                </Button>
+            </ModalFooter>
+        </Modal>
+
         <h1 className="mb-3">{lecture.title}</h1>
         <p className="text-xl mb-5 secondary">{lecture.user.name}</p>
         <If condition={myUser.id !== lecture.user.id}>
@@ -70,5 +183,12 @@ export default function StudioLecture({ lecture, uploadServePath }: {
                 <LectureOthers lecture={lecture}/>
             </TabItem>
         </Tabs>
+        <Joyride run={runJoyride} continuous={true} tooltipComponent={JoyrideTooltip} steps={joyrideSteps} locale={{
+            back: t('back'),
+            close: t('close'),
+            last: t('close'),
+            next: t('next'),
+            skip: t('skip')
+        }}/>
     </div>
 }
