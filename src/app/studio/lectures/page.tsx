@@ -4,11 +4,11 @@ import { useTranslationClient } from '@/app/i18n/client'
 import { useEffect, useState } from 'react'
 import { getMyLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
-import { Button, Card, Pagination } from 'flowbite-react'
+import { Breadcrumb, BreadcrumbItem, Button, Card, Pagination } from 'flowbite-react'
 import Link from 'next/link'
 import { LectureRoleIconCircle, LectureStatusIconCircle } from '@/app/lib/lecture-icons'
 import { useCachedUser } from '@/app/login/login-client'
-import { HiRefresh } from 'react-icons/hi'
+import { HiColorSwatch, HiRefresh } from 'react-icons/hi'
 
 export default function StudioLectures() {
     const { t } = useTranslationClient('studio')
@@ -34,6 +34,10 @@ export default function StudioLectures() {
     }
 
     return <div className="base-studio-page">
+        <Breadcrumb aria-label={t('breadcrumb.bc')} className="mb-3">
+            <BreadcrumbItem href="/studio" icon={HiColorSwatch}>{t('breadcrumb.studio')}</BreadcrumbItem>
+            <BreadcrumbItem>{t('breadcrumb.lectures')}</BreadcrumbItem>
+        </Breadcrumb>
         <h1 className="mb-8">{t('nav.lectures')}</h1>
         <If condition={page.pages < 1}>
             <div className="w-full h-[60dvh] flex flex-col justify-center items-center">

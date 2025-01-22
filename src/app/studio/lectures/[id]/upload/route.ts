@@ -89,7 +89,7 @@ export async function POST(req: NextRequest, { params }: {
                     lectureId: lecture.id,
                     userId: lecture.userId,
                     type: LectureAuditLogType.submittedPoster,
-                    values: [ user.id ]
+                    values: [ user.name ]
                 }
             })
         }
@@ -248,7 +248,7 @@ export async function POST(req: NextRequest, { params }: {
                 lectureId: lecture.id,
                 userId: lecture.userId,
                 type: LectureAuditLogType.createdGroupChat,
-                values: [ user.id ]
+                values: [ user.name ]
             }
         })
 
@@ -301,7 +301,7 @@ export async function POST(req: NextRequest, { params }: {
                 lectureId: lecture.id,
                 userId: lecture.userId,
                 type: LectureAuditLogType.submittedFeedback,
-                values: [ user.id ]
+                values: [ user.name ]
             }
         })
         if (task != null) {

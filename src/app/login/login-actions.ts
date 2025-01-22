@@ -1,9 +1,20 @@
 'use server'
 
-import { PrismaClient, User } from '@prisma/client'
+import { Lecture, NotificationType, PrismaClient, User } from '@prisma/client'
 import { me } from '@/app/login/login'
+import { Paginated } from '@/app/lib/lecture-actions'
 
 const prisma = new PrismaClient()
+
+export interface HydratedNotification {
+    id: number
+    createdAt: Date
+    type: NotificationType
+    userId: number
+    lecture: Lecture | null
+    lectureId: number | null
+    values: string[]
+}
 
 export async function getLoginTarget(redirect: string): Promise<string> {
     // We are really abusing state here... But it works.
@@ -29,5 +40,43 @@ export async function requireUserPermission(permission: string): Promise<User> {
 export async function getMyUser(): Promise<User | null> {
     return prisma.user.findUnique({
         where: { id: await me() }
+    })
+}
+
+export async function getMyNotificationsCount(): Promise<number> {
+    const user = await requireUser()
+    return prisma.notification.count({ where: { userId: user.id } })
+}
+
+export async function getMyNotifications(page: number): Promise<Paginated<HydratedNotification>> {
+    const user = await requireUser()
+    const pages = Math.ceil(await prisma.notification.count({ where: { userId: user.id } }) / 10)
+    const notifications = await prisma.notification.findMany({
+        where: {
+            userId: user.id
+        },
+        orderBy: {
+            createdAt: 'desc'
+        },
+        include: {
+            lecture: true
+        },
+        skip: page * 10,
+        take: 10
+    })
+    return {
+        items: notifications,
+        page,
+        pages
+    }
+}
+
+export async function dismissNotification(id: number): Promise<void> {
+    const user = await requireUser()
+    await prisma.notification.delete({
+        where: {
+            id,
+            userId: user.id
+        }
     })
 }

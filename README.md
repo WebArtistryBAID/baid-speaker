@@ -47,7 +47,6 @@ Upon completing of lecture:
 
 ## Features to complete
 
-* On-site notifications
 * Show users in user management page: pagination
 * Allow editing users (mostly permissions) in user management page
 * Allow watching videos

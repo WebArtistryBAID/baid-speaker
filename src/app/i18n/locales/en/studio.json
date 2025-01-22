@@ -17,6 +17,19 @@
   "close": "Close",
   "skip": "Skip",
   "continue": "Continue",
+  "mobile": {
+    "message": "Please switch to a computer or a tablet for the best experience."
+  },
+  "breadcrumb": {
+    "bc": "Breadcrumb",
+    "studio": "Studio",
+    "lectures": "My Lectures",
+    "lecture": "Lecture",
+    "inbox": "Inbox",
+    "manage": "Lecture Management",
+    "user": "User Management",
+    "create": "Start New Lecture"
+  },
   "tasks": {
     "ctaBad": "This task is not assigned to you",
     "confirmDate": {
@@ -172,6 +185,24 @@
     "markedReclaimable": "{{user}} marked this lecture as reclaimable by another host.",
     "removedTeacher": "{{user}} removed the teacher from this lecture.",
     "removedArtist": "{{user}} removed the poster designer from this lecture."
+  },
+  "notifications": {
+    "assignedHost": "<1>{{user}}</1> was assigned as the host for <1>{{lecture}}</1>.",
+    "confirmedDate": "<1>{{user}}</1> updated the date of <1>{{lecture}}</1> to <1>{{v0}}</1>.",
+    "assignedTeacher": "<1>{{user}}</1> accepted the invitation to be the teacher for <1>{{lecture}}</1>.",
+    "assignedPosterDesigner": "<1>{{user}}</1> was invited to design a poster for <1>{{lecture}}</1>.",
+    "submittedPoster": "<1>{{user}}</1> submitted a poster for <1>{{lecture}}</1>.",
+    "approvedPoster": "<1>{{user}}</1> approved the poster for <1>{{lecture}}</1>.",
+    "createdGroupChat": "<1>{{user}}</1> uploaded the QR code for the group chat for <1>{{lecture}}</1>.",
+    "sentAdvertisements": "<1>{{user}}</1> confirmed sending advertisements for <1>{{lecture}}</1>.",
+    "teacherApproved": "<1>{{user}}</1> approved the presentation for <1>{{lecture}}</1>.",
+    "confirmedLocation": "<1>{{user}}</1> changed the location of <1>{{lecture}}</1> to <1>{{v0}}</1>.",
+    "testedDevice": "<1>{{user}}</1> confirmed that the device was tested for <1>{{lecture}}</1>.",
+    "updatedLiveAudience": "<1>{{user}}</1> updated the live audience amount to <1>{{v0}}</1> for <1>{{lecture}}</1>.",
+    "submittedFeedback": "<1>{{user}}</1> uploaded the feedback form for <1>{{lecture}}</1>.",
+    "submittedVideo": "<1>{{user}}</1> uploaded the video for <1>{{lecture}}</1>.",
+    "submittedReflection": "<1>{{user}}</1> uploaded the reflection video for <1>{{lecture}}</1>.",
+    "modifiedStatus": "<1>{{user}}</1> modified the status of <1>{{lecture}}</1> to <1>{{v0}}</1>."
   },
   "lectureStatus": {
     "waiting": {
@@ -444,7 +475,8 @@
   },
   "inbox": {
     "title": "Inbox",
-    "empty": "Congrats! No notifications for now."
+    "empty": "Congrats! No notifications for now.",
+    "view": "View Details"
   },
   "manage": {
     "title": "Lectures Management",

@@ -31,7 +31,6 @@ export default function TypicalLectures({ filter }: { filter: LectureWhereInput 
 
     if (page == null || me == null) {
         return <div className="base-studio-page">
-            <h1 className="mb-8">{t('nav.lectures')}</h1>
             <div className="w-full">
                 <div className="w-1/3 h-8 bg-gray-300 dark:bg-gray-700 rounded-3xl mb-3"/>
                 <div className="w-1/2 h-8 bg-gray-300 dark:bg-gray-700 rounded-3xl mb-3"/>

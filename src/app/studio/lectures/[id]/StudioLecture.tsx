@@ -1,8 +1,29 @@
 'use client'
 
 import { useTranslationClient } from '@/app/i18n/client'
-import { Alert, Button, Modal, ModalBody, ModalFooter, ModalHeader, TabItem, Tabs, TabsRef } from 'flowbite-react'
-import { HiCalendar, HiChartBar, HiChartPie, HiChip, HiDocumentText, HiRefresh, HiUsers } from 'react-icons/hi'
+import {
+    Alert,
+    Breadcrumb,
+    BreadcrumbItem,
+    Button,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    TabItem,
+    Tabs,
+    TabsRef
+} from 'flowbite-react'
+import {
+    HiCalendar,
+    HiChartBar,
+    HiChartPie,
+    HiChip,
+    HiColorSwatch,
+    HiDocumentText,
+    HiRefresh,
+    HiUsers
+} from 'react-icons/hi'
 import { HydratedLecture } from '@/app/lib/lecture-actions'
 import { useEffect, useRef, useState } from 'react'
 import LectureDashboard from '@/app/studio/lectures/[id]/LectureDashboard'
@@ -134,6 +155,11 @@ export default function StudioLecture({ lecture, uploadServePath }: {
     }
 
     return <div className="base-studio-page">
+        <Breadcrumb aria-label={t('breadcrumb.bc')} className="mb-3">
+            <BreadcrumbItem href="/studio" icon={HiColorSwatch}>{t('breadcrumb.studio')}</BreadcrumbItem>
+            <BreadcrumbItem href="/studio/lectures">{t('breadcrumb.lectures')}</BreadcrumbItem>
+            <BreadcrumbItem>{t('breadcrumb.lecture')}</BreadcrumbItem>
+        </Breadcrumb>
         <Modal show={onboardingModal} size="xl" onClose={() => setOnboardingModal(false)}>
             <ModalHeader>{t('lecture.onboarding.title')}</ModalHeader>
             <ModalBody>

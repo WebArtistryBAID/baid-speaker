@@ -1,11 +1,12 @@
 'use client'
 
 import { useTranslationClient } from '@/app/i18n/client'
-import { Button, Label, Textarea, TextInput } from 'flowbite-react'
+import { Breadcrumb, BreadcrumbItem, Button, Label, Textarea, TextInput } from 'flowbite-react'
 import { useState } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 import { createLecture } from '@/app/lib/lecture-actions'
 import { useRouter } from 'next/navigation'
+import { HiColorSwatch } from 'react-icons/hi'
 
 export default function StudioCreate() {
     const { t } = useTranslationClient('studio')
@@ -55,6 +56,11 @@ export default function StudioCreate() {
     }
 
     return <div className="base-studio-page">
+        <Breadcrumb aria-label={t('breadcrumb.bc')} className="mb-3">
+            <BreadcrumbItem href="/studio" icon={HiColorSwatch}>{t('breadcrumb.studio')}</BreadcrumbItem>
+            <BreadcrumbItem href="/studio/lectures">{t('breadcrumb.lectures')}</BreadcrumbItem>
+            <BreadcrumbItem>{t('breadcrumb.create')}</BreadcrumbItem>
+        </Breadcrumb>
         <h1 className="mb-3">{t('create.title')}</h1>
         <p className="secondary mb-5">
             <Trans t={t} i18nKey="create.details" components={{
@@ -62,7 +68,7 @@ export default function StudioCreate() {
                 2: <span key={2} className="underline"/>
             }}/>
         </p>
-        <div className="grid grid-cols-2 grid-rows-1 mb-8 gap-4">
+        <div className="grid grid-cols-1 xl:grid-cols-2 grid-rows-1 mb-8 gap-4">
             <div>
                 <div className="flex flex-col gap-4 mb-5">
                     <div className="w-full">
@@ -105,7 +111,7 @@ export default function StudioCreate() {
                 <Button color="blue" disabled={loading} className="w-full" onClick={submit}
                         fullSized>{t('create.continue')}</Button>
             </div>
-            <div className="flex justify-center items-center h-full">
+            <div className="hidden xl:flex justify-center items-center h-full">
                 <img src="/assets/illustrations/education-light.png" className="dark:hidden w-96" alt=""/>
                 <img src="/assets/illustrations/education-dark.png" className="hidden dark:block w-96" alt=""/>
             </div>

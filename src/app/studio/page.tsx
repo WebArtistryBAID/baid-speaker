@@ -1,6 +1,6 @@
 import { serverTranslation } from '@/app/i18n'
-import { Button, Card } from 'flowbite-react'
-import { HiArrowRight } from 'react-icons/hi'
+import { Breadcrumb, BreadcrumbItem, Button, Card } from 'flowbite-react'
+import { HiArrowRight, HiColorSwatch } from 'react-icons/hi'
 import { Trans } from 'react-i18next/TransWithoutContext'
 import { requireUser } from '@/app/login/login-actions'
 import { getMyOwnLatestLecture } from '@/app/lib/lecture-actions'
@@ -17,6 +17,9 @@ export default async function StudioHome() {
     const lecture = await getMyOwnLatestLecture()
 
     return <div className="base-studio-page">
+        <Breadcrumb aria-label={t('breadcrumb.bc')} className="mb-3">
+            <BreadcrumbItem icon={HiColorSwatch}>{t('breadcrumb.studio')}</BreadcrumbItem>
+        </Breadcrumb>
         <h1 className="mb-8">{t('nav.dashboard')}</h1>
         <h2 className="mb-5 font-normal">{t('dashboard.onboarding')}</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
@@ -48,7 +51,7 @@ export default async function StudioHome() {
                     <HiArrowRight className="btn-guide-icon"/>
                 </Button>
             </Card>
-            <Card className="col-span-1 hidden 2xl:block">
+            <Card className="col-span-1 xl:hidden 2xl:block">
                 <h2>{t('dashboard.watchCard.title')}</h2>
                 <p className="secondary">{t('dashboard.watchCard.subtitle')}</p>
                 <Button color="warning">

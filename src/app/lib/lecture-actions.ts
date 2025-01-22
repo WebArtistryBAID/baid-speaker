@@ -313,7 +313,7 @@ export async function claimLecture(id: number): Promise<void> {
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.createdGroupChat,
-            values: [ user.id ]
+            values: [ user.name ]
         }
     })
     if (!fromReclaimable) {
@@ -391,7 +391,7 @@ export async function confirmDate(lectureId: number, task: HydratedLectureTask, 
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.confirmedDate,
-            values: [ user.id, date.getTime().toString() ]
+            values: [ user.name, date.getTime().toString() ]
         }
     })
     await prisma.lectureTask.create({
@@ -523,7 +523,7 @@ export async function confirmPosterDesigner(lectureId: number): Promise<Hydrated
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.assignedPosterDesigner,
-            values: [ user.id ]
+            values: [ user.name ]
         }
     })
     await prisma.lectureTask.create({
@@ -583,7 +583,7 @@ export async function inviteTeacher(lectureId: number): Promise<HydratedLecture>
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.assignedTeacher,
-            values: [ user.id ]
+            values: [ user.name ]
         }
     })
     if (lecture.uploadedSlides != null) {
@@ -641,7 +641,7 @@ export async function schoolApprovePoster(lectureId: number): Promise<HydratedLe
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.approvedPoster,
-            values: [ user.id ]
+            values: [ user.name ]
         }
     })
     if (lecture.uploadedSlides != null) {
@@ -682,7 +682,7 @@ export async function sendAdvertisements(lectureId: number, task: HydratedLectur
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.sentAdvertisements,
-            values: [ user.id ]
+            values: [ user.name ]
         }
     })
     return lecture
@@ -730,7 +730,7 @@ export async function teacherApprovePresentation(lectureId: number): Promise<Hyd
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.teacherApproved,
-            values: [ user.id ]
+            values: [ user.name ]
         }
     })
     return lecture
@@ -793,7 +793,7 @@ export async function confirmLocation(lectureId: number, task: HydratedLectureTa
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.confirmedLocation,
-            values: [ user.id, location ]
+            values: [ user.name, location ]
         }
     })
     await prisma.lectureTask.create({
@@ -859,7 +859,7 @@ export async function markReady(lectureId: number): Promise<HydratedLecture> {
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.modifiedStatus,
-            values: [ user.id, 'ready' ]
+            values: [ user.name, 'ready' ]
         }
     })
     return lecture
@@ -894,7 +894,7 @@ export async function markCompletingPostTasks(lectureId: number): Promise<Hydrat
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.modifiedStatus,
-            values: [ user.id, 'completingPostTasks' ]
+            values: [ user.name, 'completingPostTasks' ]
         }
     })
     await prisma.lectureTask.create({
@@ -966,7 +966,7 @@ export async function updateLiveAudience(lectureId: number, task: HydratedLectur
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.updatedLiveAudience,
-            values: [ user.id, liveAudience.toString() ]
+            values: [ user.name, liveAudience.toString() ]
         }
     })
     return lecture
@@ -1006,7 +1006,7 @@ export async function submitVideo(lectureId: number, task: HydratedLectureTask, 
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.submittedVideo,
-            values: [ user.id ]
+            values: [ user.name ]
         }
     })
     return lecture
@@ -1046,7 +1046,7 @@ export async function submitReflection(lectureId: number, task: HydratedLectureT
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.submittedReflection,
-            values: [ user.id ]
+            values: [ user.name ]
         }
     })
     return lecture
@@ -1081,7 +1081,7 @@ export async function markCompleted(lectureId: number): Promise<HydratedLecture>
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.modifiedStatus,
-            values: [ user.id, 'completed' ]
+            values: [ user.name, 'completed' ]
         }
     })
     return lecture
@@ -1153,7 +1153,7 @@ export async function changeLocation(lectureId: number, location: string): Promi
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.confirmedLocation,
-            values: [ user.id, location ]
+            values: [ user.name, location ]
         }
     })
     return lecture
@@ -1200,7 +1200,7 @@ export async function changeDate(lectureId: number, date: Date): Promise<Hydrate
             lectureId: lecture.id,
             userId: lecture.userId,
             type: LectureAuditLogType.confirmedDate,
-            values: [ user.id, date.getTime().toString() ]
+            values: [ user.name, date.getTime().toString() ]
         }
     })
     return lecture
