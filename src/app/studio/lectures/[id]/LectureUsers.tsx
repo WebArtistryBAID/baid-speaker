@@ -126,6 +126,11 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                                                    size="xs">{t('lecture.people.remove')}</Button></TableCell>
                             </If>
                         </If>
+                        <If condition={user.permissions.includes('admin.manage') && !(lecture.status === LectureStatus.completingPreTasks ||
+                            lecture.status === LectureStatus.ready ||
+                            lecture.status === LectureStatus.completingPostTasks)}>
+                            <TableCell/>
+                        </If>
                     </TableRow>
                 </If>
                 <If condition={lecture.assigneeTeacherId != null}>
@@ -138,6 +143,9 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                                                pill
                                                size="xs">{t('lecture.people.remove')}</Button></TableCell>
                         </If>
+                        <If condition={user.permissions.includes('admin.manage') && lecture.status !== LectureStatus.completingPreTasks}>
+                            <TableCell/>
+                        </If>
                     </TableRow>
                 </If>
                 <If condition={lecture.posterAssigneeId != null}>
@@ -149,6 +157,9 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                             <TableCell><Button color="blue" disabled={loading} onClick={() => setRemoveArtist(true)}
                                                pill
                                                size="xs">{t('lecture.people.remove')}</Button></TableCell>
+                        </If>
+                        <If condition={user.permissions.includes('admin.manage') && lecture.status !== LectureStatus.completingPreTasks}>
+                            <TableCell/>
                         </If>
                     </TableRow>
                 </If>

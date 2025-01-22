@@ -76,6 +76,18 @@ export default async function StudioHome() {
                         <HiArrowRight className="btn-guide-icon"/>
                     </Button>
                 </Card>
+                <If condition={lecture?.date != null && new Date().getTime() <= lecture?.date?.getTime()}>
+                    <Card>
+                        <p className="secondary text-sm font-display">{t('lecture.dashboard.countdown')}</p>
+                        <div className="flex flex-col w-full justify-center items-center h-full">
+                            <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{Math.ceil(((lecture?.date?.getTime() ?? 0) - new Date().getTime()) / 1000 / 86400)}</p>
+                            <p><Trans t={t} i18nKey="lecture.dashboard.days"
+                                      count={Math.ceil(((lecture?.date?.getTime() ?? 0) - new Date().getTime()) / 1000 / 86400)}/>
+                            </p>
+                            <p className="secondary">{lecture?.date?.toLocaleDateString()}</p>
+                        </div>
+                    </Card>
+                </If>
                 <If condition={lecture != null && lecture.tasks.length > 0}>
                     <NextDueCard task={(lecture?.tasks ?? [
                         {
@@ -99,18 +111,6 @@ export default async function StudioHome() {
                         const timeDiffB = b.dueAt.getTime() - new Date().getTime()
                         return timeDiffA - timeDiffB
                     })[0]} tabsRef={null}/>
-                </If>
-                <If condition={lecture?.date != null && new Date().getTime() <= lecture?.date?.getTime()}>
-                    <Card>
-                        <p className="secondary text-sm font-display">{t('lecture.dashboard.countdown')}</p>
-                        <div className="flex flex-col w-full justify-center items-center h-full">
-                            <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{Math.ceil(((lecture?.date?.getTime() ?? 0) - new Date().getTime()) / 1000 / 86400)}</p>
-                            <p><Trans t={t} i18nKey="lecture.dashboard.days"
-                                      count={Math.ceil(((lecture?.date?.getTime() ?? 0) - new Date().getTime()) / 1000 / 86400)}/>
-                            </p>
-                            <p className="secondary">{lecture?.date?.toLocaleDateString()}</p>
-                        </div>
-                    </Card>
                 </If>
             </div>
         </If>

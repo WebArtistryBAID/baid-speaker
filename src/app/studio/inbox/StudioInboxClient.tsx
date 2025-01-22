@@ -49,7 +49,10 @@ export default function StudioInboxClient({ notifications }: { notifications: Pa
                     case NotificationType.confirmedDate:
                         messageData.v0 = new Date(parseInt(notification.values[1])).toLocaleDateString().replaceAll('/', '-')
                         break
-                    case NotificationType.confirmedLocation || NotificationType.updatedLiveAudience:
+                    case NotificationType.confirmedLocation:
+                        messageData.v0 = notification.values[1]
+                        break
+                    case NotificationType.updatedLiveAudience:
                         messageData.v0 = notification.values[1]
                         break
                     case NotificationType.modifiedStatus:
