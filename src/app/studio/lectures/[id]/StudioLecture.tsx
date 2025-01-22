@@ -2,7 +2,7 @@
 
 import { useTranslationClient } from '@/app/i18n/client'
 import { Alert, TabItem, Tabs, TabsRef } from 'flowbite-react'
-import { HiCalendar, HiChartBar, HiChartPie, HiDocumentText, HiRefresh, HiUsers } from 'react-icons/hi'
+import { HiCalendar, HiChartBar, HiChartPie, HiChip, HiDocumentText, HiRefresh, HiUsers } from 'react-icons/hi'
 import { HydratedLecture } from '@/app/lib/lecture-actions'
 import { useEffect, useRef, useState } from 'react'
 import LectureDashboard from '@/app/studio/lectures/[id]/LectureDashboard'
@@ -14,6 +14,7 @@ import { getMyUser } from '@/app/login/login-actions'
 import LectureHistory from '@/app/studio/lectures/[id]/LectureHistory'
 import LectureContent from '@/app/studio/lectures/[id]/LectureContent'
 import LectureStatistics from '@/app/studio/lectures/[id]/LectureStatistics'
+import LectureOthers from '@/app/studio/lectures/[id]/LectureOthers'
 
 export default function StudioLecture({ lecture, uploadServePath }: {
     lecture: HydratedLecture,
@@ -64,6 +65,9 @@ export default function StudioLecture({ lecture, uploadServePath }: {
             </TabItem>
             <TabItem title={t('lecture.tabs.statistics')} icon={HiChartBar}>
                 <LectureStatistics lecture={lecture} uploadServePath={uploadServePath}/>
+            </TabItem>
+            <TabItem title={t('lecture.tabs.others')} icon={HiChip}>
+                <LectureOthers lecture={lecture}/>
             </TabItem>
         </Tabs>
     </div>

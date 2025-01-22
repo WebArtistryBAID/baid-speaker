@@ -1142,3 +1142,20 @@ export async function removeArtist(lectureId: number): Promise<void> {
         }
     })
 }
+
+export async function deleteLecture(lectureId: number): Promise<void> {
+    const user = await requireUser()
+    const lecture = await prisma.lecture.findUniqueOrThrow({
+        where: {
+            id: lectureId
+        }
+    })
+    if (!user.permissions.includes('admin.manage') && lecture.assigneeId !== user.id) {
+        throw new Error('Unauthorized')
+    }
+    await prisma.lecture.delete({
+        where: {
+            id: lectureId
+        }
+    })
+}

@@ -30,8 +30,8 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-export default function LectureDashboard({lecture, tabsRef}: { lecture: HydratedLecture, tabsRef: TabsRef }) {
-    const {t} = useTranslationClient('studio')
+export default function LectureDashboard({ lecture, tabsRef }: { lecture: HydratedLecture, tabsRef: TabsRef }) {
+    const { t } = useTranslationClient('studio')
     const user = useCachedUser()!
 
     const [ changeStatusModal, setChangeStatusModal ] = useState(false)
@@ -59,9 +59,7 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
         <Modal show={changeStatusModal} onClose={() => setChangeStatusModal(false)}>
             <ModalHeader>{t('lecture.dashboard.changeStatus')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3">{t('lecture.dashboard.changeStatusMessage')}</p>
-                </div>
+                <p className="mb-3">{t('lecture.dashboard.changeStatusMessage')}</p>
             </ModalBody>
             <ModalFooter>
                 <Button disabled={loading} onClick={async () => {
@@ -88,11 +86,9 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
         <Modal show={changeDateModal} size="xl" onClose={() => setChangeDateModal(false)}>
             <ModalHeader>{t('tasks.confirmDate.name')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3">{t('tasks.confirmDate.descriptionAssignee')}</p>
-                    <div className="w-full flex justify-center items-center">
-                        <Datepicker inline minDate={new Date()} value={date} onChange={e => setDate(e)} weekStart={1}/>
-                    </div>
+                <p className="mb-3">{t('tasks.confirmDate.descriptionAssignee')}</p>
+                <div className="w-full flex justify-center items-center">
+                    <Datepicker inline minDate={new Date()} value={date} onChange={e => setDate(e)} weekStart={1}/>
                 </div>
             </ModalBody>
             <ModalFooter>
@@ -114,13 +110,11 @@ export default function LectureDashboard({lecture, tabsRef}: { lecture: Hydrated
         <Modal show={changeLocationModal} size="xl" onClose={() => setChangeLocationModal(false)}>
             <ModalHeader>{t('tasks.confirmLocation.name')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3">{t('tasks.confirmLocation.descriptionAssignee')}</p>
-                    <TextInput type="text" required
-                               color={locError ? 'failure' : undefined}
-                               value={loc} onChange={e => setLoc(e.currentTarget.value)}
-                               helperText={locError ? t('tasks.confirmLocation.inputError') : null}/>
-                </div>
+                <p className="mb-3">{t('tasks.confirmLocation.descriptionAssignee')}</p>
+                <TextInput type="text" required
+                           color={locError ? 'failure' : undefined}
+                           value={loc} onChange={e => setLoc(e.currentTarget.value)}
+                           helperText={locError ? t('tasks.confirmLocation.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
                 <Button disabled={loading} onClick={async () => {

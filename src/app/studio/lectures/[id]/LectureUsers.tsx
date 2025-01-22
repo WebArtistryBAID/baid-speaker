@@ -36,9 +36,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
         <Modal show={removeHost} size="xl" onClose={() => setRemoveHost(false)}>
             <ModalHeader>{t('lecture.people.removeConfirm')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3">{t('lecture.people.removeHostConfirm')}</p>
-                </div>
+                <p className="mb-3">{t('lecture.people.removeHostConfirm')}</p>
             </ModalBody>
             <ModalFooter>
                 <Button disabled={loading} onClick={async () => {
@@ -57,9 +55,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
         <Modal show={removeTeacherOpen} size="xl" onClose={() => setRemoveTeacher(false)}>
             <ModalHeader>{t('lecture.people.removeConfirm')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3">{t('lecture.people.removeTeacherConfirm')}</p>
-                </div>
+                <p className="mb-3">{t('lecture.people.removeTeacherConfirm')}</p>
             </ModalBody>
             <ModalFooter>
                 <Button disabled={loading} onClick={async () => {
@@ -78,9 +74,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
         <Modal show={removeArtistOpen} size="xl" onClose={() => setRemoveArtist(false)}>
             <ModalHeader>{t('lecture.people.removeConfirm')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3">{t('lecture.people.removeArtistConfirm')}</p>
-                </div>
+                <p className="mb-3">{t('lecture.people.removeArtistConfirm')}</p>
             </ModalBody>
             <ModalFooter>
                 <Button disabled={loading} onClick={async () => {

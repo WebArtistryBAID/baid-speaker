@@ -34,7 +34,7 @@ import { HiArrowUpTray, HiMapPin } from 'react-icons/hi2'
 import { Trans } from 'react-i18next/TransWithoutContext'
 import { useRouter } from 'next/navigation'
 
-export default function TaskCard({task}: { task: HydratedLectureTask }) {
+export default function TaskCard({ task }: { task: HydratedLectureTask }) {
     switch (task.type) {
         case LectureTasks.confirmDate:
             return <ConfirmDateCard task={task}/>
@@ -79,8 +79,8 @@ function getDueDays(task: HydratedLectureTask) {
     return Math.ceil((task.dueAt.getTime() - new Date().getTime()) / 1000 / 86400)
 }
 
-export function NextDueCard({task, tabsRef}: { task: HydratedLectureTask, tabsRef: TabsRef }) {
-    const {t} = useTranslationClient('studio')
+export function NextDueCard({ task, tabsRef }: { task: HydratedLectureTask, tabsRef: TabsRef }) {
+    const { t } = useTranslationClient('studio')
     return <Card className="col-span-2">
         <p className="secondary text-sm font-display">{t('lecture.tasks.nextDue.title')}</p>
         <p className="text-3xl font-display">
@@ -121,8 +121,8 @@ export function NextDueCard({task, tabsRef}: { task: HydratedLectureTask, tabsRe
     </Card>
 }
 
-export function BaseCard({task, children}: { task: HydratedLectureTask, children: ReactNode }) {
-    const {t} = useTranslationClient('studio')
+export function BaseCard({ task, children }: { task: HydratedLectureTask, children: ReactNode }) {
+    const { t } = useTranslationClient('studio')
     const user = useCachedUser()!
     return <Card className="h-full w-full">
         <h2>{t(`tasks.${task.type}.name`)}</h2>
@@ -132,8 +132,8 @@ export function BaseCard({task, children}: { task: HydratedLectureTask, children
             <div className="flex justify-center items-center w-8 h-8 mr-3 bg-blue-500 rounded-full">
                 <HiUser className="text-white"/>
             </div>
-            <p><Trans t={t} i18nKey="assignedTo" values={{name: task.assignee.name}}
-                      components={{1: <span className="font-bold" key={1919810}/>}}/></p>
+            <p><Trans t={t} i18nKey="assignedTo" values={{ name: task.assignee.name }}
+                      components={{ 1: <span className="font-bold" key={1919810}/> }}/></p>
         </div>
         <Tooltip content={task.dueAt.toLocaleDateString()}>
             <div className="flex items-center mb-3">
@@ -142,7 +142,7 @@ export function BaseCard({task, children}: { task: HydratedLectureTask, children
                         <HiClock className="text-white"/>
                     </div>
                     <p><Trans t={t} i18nKey="dueIn" count={getDueDays(task)}
-                              components={{1: <span className="font-bold" key={188}/>}}/></p>
+                              components={{ 1: <span className="font-bold" key={188}/> }}/></p>
                 </If>
                 <If condition={getDueDays(task) === 0}>
                     <div className="flex justify-center items-center w-8 h-8 mr-3 bg-blue-500 rounded-full">
@@ -155,7 +155,7 @@ export function BaseCard({task, children}: { task: HydratedLectureTask, children
                         <HiExclamation className="text-white"/>
                     </div>
                     <p><Trans t={t} i18nKey="overdue" count={-getDueDays(task)}
-                              components={{1: <span className="font-bold" key={114514}/>}}/></p>
+                              components={{ 1: <span className="font-bold" key={114514}/> }}/></p>
                 </If>
             </div>
         </Tooltip>
@@ -170,11 +170,11 @@ export function BaseCard({task, children}: { task: HydratedLectureTask, children
     </Card>
 }
 
-export function ConfirmDateCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
-    const [open, setOpen] = useState(false)
-    const [date, setDate] = useState<Date | null>(null)
-    const [loading, setLoading] = useState(false)
+export function ConfirmDateCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
+    const [ open, setOpen ] = useState(false)
+    const [ date, setDate ] = useState<Date | null>(null)
+    const [ loading, setLoading ] = useState(false)
     const router = useRouter()
     return <BaseCard task={task}>
         <Button color="blue" onClick={() => setOpen(true)} fullSized><HiCalendar
@@ -182,11 +182,9 @@ export function ConfirmDateCard({task}: { task: HydratedLectureTask }) {
         <Modal show={open} size="xl" onClose={() => setOpen(false)}>
             <ModalHeader>{t('tasks.confirmDate.name')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3">{t('tasks.confirmDate.descriptionAssignee')}</p>
-                    <div className="w-full flex justify-center items-center">
-                        <Datepicker inline minDate={new Date()} value={date} onChange={e => setDate(e)} weekStart={1}/>
-                    </div>
+                <p className="mb-3">{t('tasks.confirmDate.descriptionAssignee')}</p>
+                <div className="w-full flex justify-center items-center">
+                    <Datepicker inline minDate={new Date()} value={date} onChange={e => setDate(e)} weekStart={1}/>
                 </div>
             </ModalBody>
             <ModalFooter>
@@ -205,9 +203,9 @@ export function ConfirmDateCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function ConfirmNeedComPosterCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
-    const [loading, setLoading] = useState(false)
+export function ConfirmNeedComPosterCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
+    const [ loading, setLoading ] = useState(false)
     const router = useRouter()
     return <BaseCard task={task}>
         <Button disabled={loading} color="blue" fullSized onClick={async () => {
@@ -223,8 +221,8 @@ export function ConfirmNeedComPosterCard({task}: { task: HydratedLectureTask }) 
     </BaseCard>
 }
 
-export function ConfirmPosterDesignerCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function ConfirmPosterDesignerCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
         <Button color="blue" fullSized onClick={async () => {
@@ -239,8 +237,8 @@ export function ConfirmPosterDesignerCard({task}: { task: HydratedLectureTask })
     </BaseCard>
 }
 
-export function SubmitPosterCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function SubmitPosterCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ loading, setLoading ] = useState(false)
     const [ complete, setComplete ] = useState(false)
     const [ progress, setProgress ] = useState(0)
@@ -299,8 +297,8 @@ export function SubmitPosterCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function InviteTeacherCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function InviteTeacherCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
         <Button color="blue" fullSized onClick={async () => {
@@ -315,8 +313,8 @@ export function InviteTeacherCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function SubmitPresentationCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function SubmitPresentationCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ loading, setLoading ] = useState(false)
     const [ complete, setComplete ] = useState(false)
     const [ progress, setProgress ] = useState(0)
@@ -379,7 +377,7 @@ export function SubmitPresentationCard({task}: { task: HydratedLectureTask }) {
 
 export function TeacherApprovePresentationCard({ task }: { task: HydratedLectureTask }) {
     const { t } = useTranslationClient('studio')
-    const [copied, setCopied] = useState(false)
+    const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
         <Button color="blue" fullSized onClick={async () => {
             await navigator.clipboard.writeText(`${location.origin}/studio/lectures/${task.lectureId}/slides`)
@@ -393,7 +391,7 @@ export function TeacherApprovePresentationCard({ task }: { task: HydratedLecture
     </BaseCard>
 }
 
-export function SchoolApprovePosterCard({task}: { task: HydratedLectureTask }) {
+export function SchoolApprovePosterCard({ task }: { task: HydratedLectureTask }) {
     const { t } = useTranslationClient('studio')
     const [ copied, setCopied ] = useState(false)
     return <BaseCard task={task}>
@@ -409,8 +407,8 @@ export function SchoolApprovePosterCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function ConfirmLocationCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function ConfirmLocationCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ open, setOpen ] = useState(false)
     const [ location, setLocation ] = useState('')
     const [ loading, setLoading ] = useState(false)
@@ -422,13 +420,11 @@ export function ConfirmLocationCard({task}: { task: HydratedLectureTask }) {
         <Modal show={open} onClose={() => setOpen(false)}>
             <ModalHeader>{t('tasks.confirmLocation.name')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3">{t('tasks.confirmLocation.descriptionAssignee')}</p>
-                    <TextInput type="text" required
-                               color={error ? 'failure' : undefined}
-                               value={location} onChange={e => setLocation(e.currentTarget.value)}
-                               helperText={error ? t('tasks.confirmLocation.inputError') : null}/>
-                </div>
+                <p className="mb-3">{t('tasks.confirmLocation.descriptionAssignee')}</p>
+                <TextInput type="text" required
+                           color={error ? 'failure' : undefined}
+                           value={location} onChange={e => setLocation(e.currentTarget.value)}
+                           helperText={error ? t('tasks.confirmLocation.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
                 <Button disabled={loading} onClick={async () => {
@@ -452,9 +448,9 @@ export function ConfirmLocationCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function TestDeviceCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
-    const [loading, setLoading] = useState(false)
+export function TestDeviceCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
+    const [ loading, setLoading ] = useState(false)
     const router = useRouter()
     return <BaseCard task={task}>
         <Button color="blue" fullSized disabled={loading} onClick={async () => {
@@ -465,8 +461,8 @@ export function TestDeviceCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function CreateGroupChatCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function CreateGroupChatCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ loading, setLoading ] = useState(false)
     const [ complete, setComplete ] = useState(false)
     const [ progress, setProgress ] = useState(0)
@@ -527,9 +523,9 @@ export function CreateGroupChatCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function InviteParticipantsCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
-    const [loading, setLoading] = useState(false)
+export function InviteParticipantsCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
+    const [ loading, setLoading ] = useState(false)
     const router = useRouter()
     return <BaseCard task={task}>
         <Button color="blue" fullSized disabled={loading} onClick={async () => {
@@ -540,9 +536,9 @@ export function InviteParticipantsCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function SendAdvertisementsCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
-    const [loading, setLoading] = useState(false)
+export function SendAdvertisementsCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
+    const [ loading, setLoading ] = useState(false)
     const router = useRouter()
     return <BaseCard task={task}>
         <Button color="blue" fullSized disabled={loading} onClick={async () => {
@@ -553,8 +549,8 @@ export function SendAdvertisementsCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function UpdateLiveAudienceCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function UpdateLiveAudienceCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ open, setOpen ] = useState(false)
     const [ audience, setAudience ] = useState('')
     const [ loading, setLoading ] = useState(false)
@@ -566,13 +562,11 @@ export function UpdateLiveAudienceCard({task}: { task: HydratedLectureTask }) {
         <Modal show={open} onClose={() => setOpen(false)}>
             <ModalHeader>{t('tasks.updateLiveAudience.name')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3">{t('tasks.updateLiveAudience.modalDescription')}</p>
-                    <TextInput type="text" required
-                               color={error ? 'failure' : undefined}
-                               value={audience} onChange={e => setAudience(e.currentTarget.value)}
-                               helperText={error ? t('tasks.updateLiveAudience.inputError') : null}/>
-                </div>
+                <p className="mb-3">{t('tasks.updateLiveAudience.modalDescription')}</p>
+                <TextInput type="text" required
+                           color={error ? 'failure' : undefined}
+                           value={audience} onChange={e => setAudience(e.currentTarget.value)}
+                           helperText={error ? t('tasks.updateLiveAudience.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
                 <Button disabled={loading} onClick={async () => {
@@ -602,8 +596,8 @@ export function UpdateLiveAudienceCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function SubmitFeedbackCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function SubmitFeedbackCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ loading, setLoading ] = useState(false)
     const [ complete, setComplete ] = useState(false)
     const [ progress, setProgress ] = useState(0)
@@ -664,8 +658,8 @@ export function SubmitFeedbackCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function SubmitVideoCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function SubmitVideoCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ open, setOpen ] = useState(false)
     const [ video, setVideo ] = useState('')
     const [ loading, setLoading ] = useState(false)
@@ -677,18 +671,16 @@ export function SubmitVideoCard({task}: { task: HydratedLectureTask }) {
         <Modal show={open} onClose={() => setOpen(false)}>
             <ModalHeader>{t('tasks.submitVideo.name')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3"><Trans t={t} i18nKey="tasks.submitReflection.modalDescription"
-                                               components={{
-                                                   1: <span className="font-bold" key={123}/>,
-                                                   2: <a href="https://youtube.com/upload" className="inline"
-                                                         key={256}/>
-                                               }}/></p>
-                    <TextInput type="text" required
-                               color={error ? 'failure' : undefined}
-                               value={video} onChange={e => setVideo(e.currentTarget.value)}
-                               helperText={error ? t('tasks.submitVideo.inputError') : null}/>
-                </div>
+                <p className="mb-3"><Trans t={t} i18nKey="tasks.submitReflection.modalDescription"
+                                           components={{
+                                               1: <span className="font-bold" key={123}/>,
+                                               2: <a href="https://youtube.com/upload" className="inline"
+                                                     key={256}/>
+                                           }}/></p>
+                <TextInput type="text" required
+                           color={error ? 'failure' : undefined}
+                           value={video} onChange={e => setVideo(e.currentTarget.value)}
+                           helperText={error ? t('tasks.submitVideo.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
                 <Button disabled={loading} onClick={async () => {
@@ -722,8 +714,8 @@ export function SubmitVideoCard({task}: { task: HydratedLectureTask }) {
     </BaseCard>
 }
 
-export function SubmitReflectionCard({task}: { task: HydratedLectureTask }) {
-    const {t} = useTranslationClient('studio')
+export function SubmitReflectionCard({ task }: { task: HydratedLectureTask }) {
+    const { t } = useTranslationClient('studio')
     const [ open, setOpen ] = useState(false)
     const [ video, setVideo ] = useState('')
     const [ loading, setLoading ] = useState(false)
@@ -735,18 +727,16 @@ export function SubmitReflectionCard({task}: { task: HydratedLectureTask }) {
         <Modal show={open} onClose={() => setOpen(false)}>
             <ModalHeader>{t('tasks.submitReflection.name')}</ModalHeader>
             <ModalBody>
-                <div className="p-6 relative">
-                    <p className="mb-3"><Trans t={t} i18nKey="tasks.submitReflection.modalDescription"
-                                               components={{
-                                                   1: <span className="font-bold" key={123}/>,
-                                                   2: <a href="https://youtube.com/upload" className="inline"
-                                                         key={256}/>
-                                               }}/></p>
-                    <TextInput type="text" required
-                               color={error ? 'failure' : undefined}
-                               value={video} onChange={e => setVideo(e.currentTarget.value)}
-                               helperText={error ? t('tasks.submitReflection.inputError') : null}/>
-                </div>
+                <p className="mb-3"><Trans t={t} i18nKey="tasks.submitReflection.modalDescription"
+                                           components={{
+                                               1: <span className="font-bold" key={123}/>,
+                                               2: <a href="https://youtube.com/upload" className="inline"
+                                                     key={256}/>
+                                           }}/></p>
+                <TextInput type="text" required
+                           color={error ? 'failure' : undefined}
+                           value={video} onChange={e => setVideo(e.currentTarget.value)}
+                           helperText={error ? t('tasks.submitReflection.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
                 <Button disabled={loading} onClick={async () => {
