@@ -47,7 +47,6 @@ Upon completing of lecture:
 
 ## Features to complete
 
-* Proper "Dashboard" page
 * Show in-progress lectures, completed lectures, and all lectures in manage page: pagination
 * On-site notifications
 * Show users in user management page: pagination

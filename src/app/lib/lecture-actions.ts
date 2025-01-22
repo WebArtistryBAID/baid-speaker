@@ -172,6 +172,19 @@ export async function createLecture(title: string, contact: string, surveyQ1: st
     return lecture
 }
 
+export async function getMyOwnLatestLecture(): Promise<HydratedLecture | null> {
+    const user = await requireUser()
+    return prisma.lecture.findFirst({
+        where: {
+            userId: user.id
+        },
+        orderBy: {
+            createdAt: 'desc'
+        },
+        include: HydratedLectureInclude
+    })
+}
+
 export async function getMyLectures(page: number): Promise<Paginated<HydratedLecture>> {
     const user = await requireUser()
     const pages = Math.ceil(await prisma.lecture.count({

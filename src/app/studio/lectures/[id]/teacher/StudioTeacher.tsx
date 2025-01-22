@@ -69,7 +69,7 @@ export default function StudioTeacher({ lecture }: { lecture: HydratedLecture })
                     </TableRow>
                 </TableBody>
             </Table>
-            <Button className="max-w-xl" disabled={loading} fullSized onClick={async () => {
+            <Button color="blue" className="max-w-xl" disabled={loading} fullSized onClick={async () => {
                 setLoading(true)
                 await inviteTeacher(lecture.id)
                 router.push(`/studio/lectures/${lecture.id}`)

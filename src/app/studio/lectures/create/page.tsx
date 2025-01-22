@@ -15,6 +15,6 @@ export default async function StudioCreateBasic() {
     return <div className="base-studio-page">
         <h1 className="mb-3">{t('create.createError.title')}</h1>
         <p className="secondary mb-5">{t('create.createError.message')}</p>
-        <Link href="/studio"><Button>{t('create.createError.cta')}</Button></Link>
+        <Link href="/studio"><Button color="blue">{t('create.createError.cta')}</Button></Link>
     </div>
 }

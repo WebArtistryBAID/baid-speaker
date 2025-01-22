@@ -62,7 +62,7 @@ export default function LectureDashboard({ lecture, tabsRef }: { lecture: Hydrat
                 <p className="mb-3">{t('lecture.dashboard.changeStatusMessage')}</p>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     setLoading(true)
                     if (lecture.status === LectureStatus.completingPreTasks) {
                         await markReady(lecture.id)
@@ -92,7 +92,7 @@ export default function LectureDashboard({ lecture, tabsRef }: { lecture: Hydrat
                 </div>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     if (date != null) {
                         setLoading(true)
                         await changeDate(lecture.id, date)
@@ -117,7 +117,7 @@ export default function LectureDashboard({ lecture, tabsRef }: { lecture: Hydrat
                            helperText={locError ? t('tasks.confirmLocation.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     setLocError(false)
                     if (loc.length < 1) {
                         setLocError(true)

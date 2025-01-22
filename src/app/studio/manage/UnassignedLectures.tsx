@@ -53,7 +53,7 @@ export default function UnassignedLectures() {
                         <TableCell className="th">{lecture.title}</TableCell>
                         <TableCell>{lecture.user.name}</TableCell>
                         <TableCell>
-                            <Button disabled={loading} onClick={() => claim(lecture)} pill
+                            <Button color="blue" disabled={loading} onClick={() => claim(lecture)} pill
                                     size="xs">{t('manage.unassigned.claim')}</Button>
                         </TableCell>
                     </TableRow>)}

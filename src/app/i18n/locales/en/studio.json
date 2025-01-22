@@ -205,11 +205,16 @@
     "betaDetails": "The BAID Speaker platform is in beta testing. Please report any issues you find to Lin."
   },
   "dashboard": {
-    "onboarding": "Onboarding",
+    "onboarding": "Get Started",
     "createCard": {
       "title": "Start Your Next Lecture",
-      "subtitle": "It's time to start! BAID Speaker is a transformative experience and your next step to becoming a school influencer. It all starts with a lecture.",
+      "subtitle": "It's time to start! BAID Speaker is a transformative experience and your next step to developing a voice for yourself. It all starts with a lecture.",
       "cta": "Get Started"
+    },
+    "continueCard": {
+      "title": "Continue Your Lecture",
+      "subtitle": "It takes a lot of courage to speak out in front of everyone and to develop a voice for yourself. Keep up the good work!",
+      "cta": "Continue"
     },
     "tutorialCard": {
       "title": "Quick Guide",
@@ -221,23 +226,10 @@
       "subtitle": "Watching some previous BAID Speakers can help you understand what makes a lecture great.",
       "cta": "Watch Now"
     },
-    "upcoming": {
-      "title": "Your Upcoming Lecture",
+    "latest": {
+      "title": "Your Latest Lecture",
       "status": "Status",
-      "viewDetails": "View Details",
-      "lectureIn": "Days Until Lecture",
-      "nextDue": {
-        "title": "Next Due",
-        "template": "You need to <1>{{action}}</1> by <1>{{day}}</1>.",
-        "cta": "Complete Now"
-      }
-    },
-    "statistics": {
-      "title": "Your Last Lecture",
-      "live": "Live Audience",
-      "total": "Total Views",
-      "likes": "Likes",
-      "rating": "Teacher Rating"
+      "viewDetails": "View Details"
     }
   },
   "myLectures": {

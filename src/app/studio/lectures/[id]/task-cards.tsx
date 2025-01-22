@@ -33,6 +33,7 @@ import {
 import { HiArrowUpTray, HiMapPin } from 'react-icons/hi2'
 import { Trans } from 'react-i18next/TransWithoutContext'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function TaskCard({ task }: { task: HydratedLectureTask }) {
     switch (task.type) {
@@ -71,7 +72,7 @@ export default function TaskCard({ task }: { task: HydratedLectureTask }) {
         case LectureTasks.submitReflection:
             return <SubmitReflectionCard task={task}/>
         default:
-            return <div>Error</div>
+            return <div>Wait, that's impossible...</div>
     }
 }
 
@@ -79,7 +80,7 @@ function getDueDays(task: HydratedLectureTask) {
     return Math.ceil((task.dueAt.getTime() - new Date().getTime()) / 1000 / 86400)
 }
 
-export function NextDueCard({ task, tabsRef }: { task: HydratedLectureTask, tabsRef: TabsRef }) {
+export function NextDueCard({ task, tabsRef }: { task: HydratedLectureTask, tabsRef: TabsRef | null }) {
     const { t } = useTranslationClient('studio')
     return <Card className="col-span-2">
         <p className="secondary text-sm font-display">{t('lecture.tasks.nextDue.title')}</p>
@@ -114,10 +115,18 @@ export function NextDueCard({ task, tabsRef }: { task: HydratedLectureTask, tabs
                        }}/>
             </If>
         </p>
-        <Button onClick={() => tabsRef.setActiveTab(1)} color={getDueDays(task) < 0 ? 'failure' : 'blue'}>
-            {t('lecture.tasks.nextDue.cta')}
-            <HiArrowRight className="btn-guide-icon"/>
-        </Button>
+        <If condition={tabsRef == null}>
+            <Button color="blue" as={Link} href={`/studio/lectures/${task.lectureId}`}>
+                {t('dashboard.latest.viewDetails')}
+                <HiArrowRight className="btn-guide-icon"/>
+            </Button>
+        </If>
+        <If condition={tabsRef != null}>
+            <Button onClick={() => tabsRef!.setActiveTab(1)} color={getDueDays(task) < 0 ? 'failure' : 'blue'}>
+                {t('lecture.tasks.nextDue.cta')}
+                <HiArrowRight className="btn-guide-icon"/>
+            </Button>
+        </If>
     </Card>
 }
 
@@ -188,7 +197,7 @@ export function ConfirmDateCard({ task }: { task: HydratedLectureTask }) {
                 </div>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     if (date != null) {
                         setLoading(true)
                         await confirmDate(task.lectureId, task, date)
@@ -427,7 +436,7 @@ export function ConfirmLocationCard({ task }: { task: HydratedLectureTask }) {
                            helperText={error ? t('tasks.confirmLocation.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     setError(false)
                     if (location.length < 1) {
                         setError(true)
@@ -569,7 +578,7 @@ export function UpdateLiveAudienceCard({ task }: { task: HydratedLectureTask }) 
                            helperText={error ? t('tasks.updateLiveAudience.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     setError(false)
                     if (audience.length < 1) {
                         setError(true)
@@ -683,7 +692,7 @@ export function SubmitVideoCard({ task }: { task: HydratedLectureTask }) {
                            helperText={error ? t('tasks.submitVideo.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     setError(false)
                     try {
                         const url = new URL(video)
@@ -739,7 +748,7 @@ export function SubmitReflectionCard({ task }: { task: HydratedLectureTask }) {
                            helperText={error ? t('tasks.submitReflection.inputError') : null}/>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     setError(false)
                     try {
                         const url = new URL(video)

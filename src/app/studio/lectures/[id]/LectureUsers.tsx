@@ -39,7 +39,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                 <p className="mb-3">{t('lecture.people.removeHostConfirm')}</p>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     setLoading(true)
                     await markReclaimable(lecture.id)
                     setLoading(false)
@@ -58,7 +58,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                 <p className="mb-3">{t('lecture.people.removeTeacherConfirm')}</p>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     setLoading(true)
                     await removeTeacher(lecture.id)
                     setLoading(false)
@@ -77,7 +77,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                 <p className="mb-3">{t('lecture.people.removeArtistConfirm')}</p>
             </ModalBody>
             <ModalFooter>
-                <Button disabled={loading} onClick={async () => {
+                <Button color="blue" disabled={loading} onClick={async () => {
                     setLoading(true)
                     await removeArtist(lecture.id)
                     setLoading(false)
@@ -121,7 +121,8 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                                 <TableCell/>
                             </If>
                             <If condition={!lecture.reclaimable}>
-                                <TableCell><Button disabled={loading} onClick={() => setRemoveHost(true)} pill
+                                <TableCell><Button color="blue" disabled={loading} onClick={() => setRemoveHost(true)}
+                                                   pill
                                                    size="xs">{t('lecture.people.remove')}</Button></TableCell>
                             </If>
                         </If>
@@ -133,7 +134,8 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                         <TableCell>{lecture.assigneeTeacher?.phone}</TableCell>
                         <TableCell>{t('lecture.people.teacher')}</TableCell>
                         <If condition={user.permissions.includes('admin.manage') && lecture.status === LectureStatus.completingPreTasks}>
-                            <TableCell><Button disabled={loading} onClick={() => setRemoveTeacher(true)} pill
+                            <TableCell><Button color="blue" disabled={loading} onClick={() => setRemoveTeacher(true)}
+                                               pill
                                                size="xs">{t('lecture.people.remove')}</Button></TableCell>
                         </If>
                     </TableRow>
@@ -144,7 +146,8 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                         <TableCell>{lecture.posterAssignee?.phone}</TableCell>
                         <TableCell>{t('lecture.people.poster')}</TableCell>
                         <If condition={user.permissions.includes('admin.manage') && lecture.status === LectureStatus.completingPreTasks}>
-                            <TableCell><Button disabled={loading} onClick={() => setRemoveArtist(true)} pill
+                            <TableCell><Button color="blue" disabled={loading} onClick={() => setRemoveArtist(true)}
+                                               pill
                                                size="xs">{t('lecture.people.remove')}</Button></TableCell>
                         </If>
                     </TableRow>

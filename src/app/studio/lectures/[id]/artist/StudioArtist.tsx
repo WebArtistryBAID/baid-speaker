@@ -59,7 +59,7 @@ export default function StudioArtist({ lecture }: { lecture: HydratedLecture }) 
                     </TableRow>
                 </TableBody>
             </Table>
-            <Button className="max-w-xl" disabled={loading} fullSized onClick={async () => {
+            <Button color="blue" className="max-w-xl" disabled={loading} fullSized onClick={async () => {
                 setLoading(true)
                 await confirmPosterDesigner(lecture.id)
                 router.push(`/studio/lectures/${lecture.id}`)

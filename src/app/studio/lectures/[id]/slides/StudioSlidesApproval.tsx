@@ -76,7 +76,7 @@ export default function StudioSlidesApproval({ lecture, uploadServePath }: {
                     </TableRow>
                 </TableBody>
             </Table>
-            <Button className="max-w-xl mb-3" fullSized onClick={() => {
+            <Button color="blue" className="max-w-xl mb-3" fullSized onClick={() => {
                 window.open(`/${uploadServePath}/${lecture.uploadedSlides}`, '_blank')?.focus()
             }}>
                 {t('slidesApproval.view')}

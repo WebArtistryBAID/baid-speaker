@@ -102,7 +102,8 @@ export default function StudioCreate() {
                                   helperText={titleError ? t('create.form.surveyQ2Error') : null}/>
                     </div>
                 </div>
-                <Button disabled={loading} className="w-full" onClick={submit} fullSized>{t('create.continue')}</Button>
+                <Button color="blue" disabled={loading} className="w-full" onClick={submit}
+                        fullSized>{t('create.continue')}</Button>
             </div>
             <div className="flex justify-center items-center h-full">
                 <img src="/assets/illustrations/education-light.png" className="dark:hidden w-96" alt=""/>

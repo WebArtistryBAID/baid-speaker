@@ -161,26 +161,40 @@ export default function StudioLecture({ lecture, uploadServePath }: {
             <Alert color="info" className="mb-3">{t('lecture.userAlert')}</Alert>
         </If>
         <Tabs aria-label={t('lecture.tabs.title')} variant="underline" ref={tabsRef}>
-            <TabItem active title={t('lecture.tabs.dashboard')} icon={HiChartPie}>
-                <LectureDashboard lecture={lecture} tabsRef={tabsRef.current!}/>
+            <TabItem active color="blue" title={t('lecture.tabs.dashboard')} icon={HiChartPie}>
+                <div className="h-full min-h-full overflow-y-auto">
+                    <LectureDashboard lecture={lecture} tabsRef={tabsRef.current!}/>
+                </div>
             </TabItem>
-            <TabItem title={t('lecture.tabs.tasks')} icon={HiCalendar}>
-                <LectureTasksC lecture={lecture}/>
+            <TabItem color="blue" title={t('lecture.tabs.tasks')} icon={HiCalendar}>
+                <div className="h-full min-h-full overflow-y-auto">
+                    <LectureTasksC lecture={lecture}/>
+                </div>
             </TabItem>
-            <TabItem title={t('lecture.tabs.users')} icon={HiUsers}>
-                <LectureUsers lecture={lecture}/>
+            <TabItem color="blue" title={t('lecture.tabs.users')} icon={HiUsers}>
+                <div className="h-full min-h-full overflow-y-auto">
+                    <LectureUsers lecture={lecture}/>
+                </div>
             </TabItem>
-            <TabItem title={t('lecture.tabs.history')} icon={HiRefresh}>
-                <LectureHistory lecture={lecture}/>
+            <TabItem color="blue" title={t('lecture.tabs.history')} icon={HiRefresh}>
+                <div className="h-full min-h-full overflow-y-auto">
+                    <LectureHistory lecture={lecture}/>
+                </div>
             </TabItem>
-            <TabItem title={t('lecture.tabs.content')} icon={HiDocumentText}>
-                <LectureContent lecture={lecture} uploadServePath={uploadServePath}/>
+            <TabItem color="blue" title={t('lecture.tabs.content')} icon={HiDocumentText}>
+                <div className="h-full min-h-full overflow-y-auto">
+                    <LectureContent lecture={lecture} uploadServePath={uploadServePath}/>
+                </div>
             </TabItem>
-            <TabItem title={t('lecture.tabs.statistics')} icon={HiChartBar}>
-                <LectureStatistics lecture={lecture} uploadServePath={uploadServePath}/>
+            <TabItem color="blue" title={t('lecture.tabs.statistics')} icon={HiChartBar}>
+                <div className="h-full min-h-full overflow-y-auto">
+                    <LectureStatistics lecture={lecture} uploadServePath={uploadServePath}/>
+                </div>
             </TabItem>
-            <TabItem title={t('lecture.tabs.others')} icon={HiChip}>
-                <LectureOthers lecture={lecture}/>
+            <TabItem color="blue" title={t('lecture.tabs.others')} icon={HiChip}>
+                <div className="h-full min-h-full overflow-y-auto">
+                    <LectureOthers lecture={lecture}/>
+                </div>
             </TabItem>
         </Tabs>
         <Joyride run={runJoyride} continuous={true} tooltipComponent={JoyrideTooltip} steps={joyrideSteps} locale={{
