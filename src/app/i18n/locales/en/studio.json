@@ -453,9 +453,9 @@
     },
     "speaker": "Speaker: ",
     "lastUpdated": "Last Updated: ",
-    "claim": "Claim Lecture",
     "unassigned": {
-      "empty": "Congrats! No unassigned lectures."
+      "empty": "Congrats! No unassigned lectures.",
+      "claim": "Claim Lecture"
     },
     "typical": {
       "empty": "No lectures yet.",
