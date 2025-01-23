@@ -37,6 +37,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         return NextResponse.redirect(`${process.env.HOST}/login/error`)
     }
     const accessToken = json['access_token']
+    const refreshToken = json['refresh_token']
 
     const me = await fetch(`${process.env.ONELOGIN_HOST}/api/v1/me`, {
         headers: {
@@ -61,6 +62,22 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             type: meJson['type']
         }
     })
+
+    await prisma.oATokens.upsert({
+        where: {
+            userId: user.id
+        },
+        update: {
+            accessToken,
+            refreshToken
+        },
+        create: {
+            userId: user.id,
+            accessToken,
+            refreshToken
+        }
+    })
+
     await prisma.userAuditLog.create({
         data: {
             userId: user.id,

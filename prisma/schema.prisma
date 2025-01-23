@@ -21,6 +21,8 @@ model User {
   logs        UserAuditLog[]
   type        UserType
 
+  oaTokens OATokens?
+
   lectures         Lecture[] @relation("lectures")
   assignedLectures Lecture[] @relation("assignedLectures")
   assignedPosters  Lecture[] @relation("assignedPosters")
@@ -45,6 +47,14 @@ model UserAuditLog {
   user   User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
   values String[]
+}
+
+model OATokens {
+  id           Int    @id @default(autoincrement())
+  accessToken  String
+  refreshToken String
+  userId       Int    @unique
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum NotificationType {
