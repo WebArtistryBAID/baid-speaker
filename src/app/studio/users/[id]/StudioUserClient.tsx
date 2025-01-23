@@ -30,7 +30,7 @@ export default function StudioUserClient({ user }: { user: User }) {
         <h1 className="mb-5">{user.name}</h1>
 
         <div className="2xl:w-1/2">
-            <div className="bg-gray-50 dark:bg-gray-600 rounded-3xl p-5">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-3xl p-5">
                 <p className="secondary text-sm font-display">{t('users.name')}</p>
                 <p className="text-xl mb-3">{user.name}</p>
 

@@ -73,7 +73,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                     </SidebarItems>
                     <div className="mr-3 mb-3 absolute bottom-0">
                         <Link href="/studio/settings"
-                              className="flex items-center gap-3 rounded-full p-3 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-600 transition-colors duration-100">
+                              className="flex items-center gap-3 rounded-full p-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-100">
                             <Badge icon={HiUser}/>
                             <div>
                                 <p className="font-bold font-display text-sm">{myUser?.name ?? '...'}</p>

@@ -386,7 +386,7 @@ export async function confirmDate(lectureId: number, task: HydratedLectureTask, 
     await prisma.lectureTask.create({
         data: {
             type: LectureTasks.confirmNeedComPoster,
-            assigneeId: user.id,
+            assigneeId: lecture.userId,
             lectureId: lecture.id,
             dueAt: daysBefore(date, 5)
         }
@@ -402,7 +402,7 @@ export async function confirmDate(lectureId: number, task: HydratedLectureTask, 
     await prisma.lectureTask.create({
         data: {
             type: LectureTasks.submitPresentation,
-            assigneeId: user.id,
+            assigneeId: lecture.userId,
             lectureId: lecture.id,
             dueAt: daysBefore(date, 3)
         }
@@ -460,7 +460,7 @@ export async function confirmNeedComPoster(lectureId: number, task: HydratedLect
         await prisma.lectureTask.create({
             data: {
                 type: LectureTasks.submitPoster,
-                assigneeId: user.id,
+                assigneeId: lecture.userId,
                 lectureId: lecture.id,
                 dueAt: daysBefore(lecture.date!, 3)
             }
@@ -1190,7 +1190,7 @@ export async function removeArtist(lectureId: number): Promise<void> {
     await prisma.lectureTask.create({
         data: {
             type: LectureTasks.confirmNeedComPoster,
-            assigneeId: user.id,
+            assigneeId: lecture.userId,
             lectureId: lecture.id,
             dueAt: daysBefore(lecture.date!, 5)
         }

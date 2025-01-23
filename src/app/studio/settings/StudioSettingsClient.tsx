@@ -35,7 +35,7 @@ export default function StudioSettingsClient({ user }: { user: User }) {
         <div className="2xl:w-1/2">
             <div className="mb-8">
                 <h2 className="text-sm font-normal mb-3">{t('settings.profile.title')}</h2>
-                <div className="bg-gray-50 dark:bg-gray-600 rounded-3xl p-5">
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-3xl p-5">
                     <p className="secondary text-sm font-display">{t('settings.profile.name')}</p>
                     <p className="text-xl mb-3">{user.name}</p>
 
@@ -53,7 +53,7 @@ export default function StudioSettingsClient({ user }: { user: User }) {
 
             <div className="mb-8">
                 <h2 className="text-sm font-normal mb-3">{t('settings.notifications.title')}</h2>
-                <div className="bg-gray-50 dark:bg-gray-600 rounded-3xl p-5">
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-3xl p-5">
                     <table className="w-full mb-5">
                         <thead>
                         <tr>
@@ -103,7 +103,7 @@ export default function StudioSettingsClient({ user }: { user: User }) {
 
             <div className="mb-8">
                 <h2 className="text-sm font-normal mb-3">{t('settings.others.title')}</h2>
-                <div className="bg-gray-50 dark:bg-gray-600 rounded-3xl p-5">
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-3xl p-5">
                     <Button color="blue" className="mb-3" onClick={() => {
                         removeCookie('access_token', { path: '/' })
                         location.reload() // Special case reload: full reload to clear all state, NOT router reload
