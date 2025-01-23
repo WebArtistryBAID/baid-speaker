@@ -7,7 +7,7 @@
   "overdue_other": "已逾期 <1>{{count}}</1> 天",
   "cancel": "取消",
   "confirm": "确认",
-  "copied": "已复制！",
+  "copied": "已复制!",
   "change": "更改",
   "uploadMessage": "上传过程中请勿关闭此页面。",
   "done": "完成",
@@ -41,7 +41,7 @@
       "cta": "确认"
     },
     "confirmNeedComPoster": {
-      "name": "您需要委托海报吗？",
+      "name": "您需要委托海报吗?",
       "smallName": "确认海报需求",
       "descriptionUser": "您可以选择为讲座免费委托海报，或自行设计海报。请注意: 您无法参与委托海报设计。",
       "descriptionAssignee": "您可以选择为讲座免费委托海报，或自行设计海报。请注意: 您无法参与委托海报设计。",
@@ -250,7 +250,7 @@
     },
     "tutorialCard": {
       "title": "快速指南",
-      "subtitle": "不知道从哪里开始？阅读此快速指南，了解北中小讲师的流程。",
+      "subtitle": "不知道从哪里开始? 阅读此快速指南，了解北中小讲师的流程。",
       "cta": "了解更多"
     },
     "watchCard": {
@@ -268,9 +268,9 @@
     "title": "我的讲座",
     "empty": "您还没有任何讲座。现在就开始您的第一个讲座吧!",
     "startLecture": "开始新讲座",
-    "status": "状态：",
-    "role": "角色：",
-    "lastUpdated": "最近更新：",
+    "status": "状态: ",
+    "role": "角色: ",
+    "lastUpdated": "最近更新: ",
     "speaker": "讲师",
     "host": "主持人",
     "teacher": "指导教师",
@@ -309,7 +309,7 @@
       "hostMessage": "您的主持人将在整个北中小讲师旅程中为您提供帮助，并在讲座当天主持。",
       "teacher": "您的指导教师",
       "teacherMessage": "您的指导教师将帮助您审查内容并对讲座提供反馈。",
-      "tasks": "可用任务",
+      "tasks": "待完成任务",
       "tasksSub_one": "项任务待完成",
       "tasksSub_other": "项任务待完成",
       "countdown": "倒计时",
@@ -322,7 +322,7 @@
       "location": "地点",
       "locationMessage": "这是您的讲座举办地点。",
       "changeStatus": "进入下一阶段",
-      "changeStatusMessage": "您确定要将此讲座推进到下一阶段吗？此操作不可逆。",
+      "changeStatusMessage": "您确定要将此讲座推进到下一阶段吗? 此操作不可逆。",
       "surveyQuestions": "调查问卷回答",
       "preSurveyQ1": "请告诉我们您的讲座内容。",
       "preSurveyQ2": "为什么选择这个主题?"
@@ -331,18 +331,18 @@
       "empty": "您目前没有需要完成的任务。太棒了!",
       "nextDue": {
         "title": "下一个截止任务",
-        "template_one": "您需要在 1 天内 <1>{{action}}</1>。",
-        "template_other": "您需要在 {{count}} 天内 <1>{{action}}</1>。",
-        "template_today": "您需要 <1>{{action}}</1> 今天。",
-        "templateOverdue_one": "您应该在 1 天前完成 <1>{{action}}</1>。",
-        "templateOverdue_other": "您应该在 {{count}} 天前完成 <1>{{action}}</1>。",
+        "template_one": "您需要在明天内 <1>{{action}}</1>。",
+        "template_other": "您需要在 <1>{{count}}</1> 天内 <1>{{action}}</1>。",
+        "template_today": "您需要今天 <1>{{action}}</1>。",
+        "templateOverdue_one": "<1>{{action}}</1> 任务已逾期 <1>{{count}} 天。",
+        "templateOverdue_other": "<1>{{action}}</1> 任务已逾期 <1>{{count}} 天。",
         "cta": "立即完成"
       }
     },
     "content": {
       "empty": "尚未上传任何内容。",
       "edit": "编辑",
-      "done": "完成！",
+      "done": "完成!",
       "error": "重试",
       "download": "下载",
       "delete": "删除",
@@ -362,7 +362,7 @@
       "role": "角色",
       "action": "操作",
       "remove": "移除",
-      "removeConfirm": "您确定吗？",
+      "removeConfirm": "您确定吗?",
       "removeHostConfirm": "这将允许其他管理员认领该讲座。在其他人认领之前，当前主持人仍然被分配。",
       "removeTeacherConfirm": "移除指导教师将造成不可逆的影响。您需要为讲座邀请另一位指导教师。",
       "removeArtistConfirm": "移除海报设计师将造成不可逆的影响。讲座将回退到之前阶段。",
@@ -391,7 +391,7 @@
     "others": {
       "delete": "删除讲座",
       "cancelTitle": "删除讲座",
-      "cancelMessage": "您确定要删除此讲座吗？此操作不可逆。",
+      "cancelMessage": "您确定要删除此讲座吗? 此操作不可逆。",
       "cancelDescription": "您可以请您的主持人为您取消讲座。"
     }
   },
@@ -399,7 +399,7 @@
     "title": "开始您的下一个讲座",
     "details": "要开始，请填写以下信息。<1>所有问题均需填写。</1>",
     "form": {
-      "title": "您的讲座标题是什么？",
+      "title": "您的讲座标题是什么?",
       "contact": "请提供您的微信号或微信绑定的手机号以便我们联系您。",
       "preSurveyQ1": "请告诉我们您的讲座内容。",
       "preSurveyQ2": "为什么选择这个主题?",
@@ -431,7 +431,7 @@
   "teacherInvitation": {
     "title": "邀请",
     "message": "您被邀请担任北中小讲师讲座 <1>{{lecture}}</1> 的指导教师，讲师是 <1>{{speaker}}</1>。",
-    "message2": "接受邀请后，您需要完成以下任务：",
+    "message2": "接受邀请后，您需要完成以下任务:",
     "task1": "在讲座前审阅并对讲师的幻灯片提供反馈。",
     "task2": "在讲座当天到达讲座地点并提供反馈。您需要在讲座期间填写反馈表格。",
     "task3": "回答讲师关于其主题的任何问题。",

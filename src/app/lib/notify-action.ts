@@ -47,9 +47,9 @@ export async function sendNotification(user: User, type: NotificationType, value
             params.audience = values[1]
         } else if (type === NotificationType.modifiedStatus) {
             if (values[1] === 'completed') {
-                params.status = '完成'
+                params.status = '已完成'
             } else if (values[1] === 'ready') {
-                params.status = '准备开始'
+                params.status = '准备就绪'
             } else if (values[1] === 'completingPostTasks') {
                 params.status = '完成后续任务'
             }
