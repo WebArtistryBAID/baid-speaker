@@ -1,51 +1,53 @@
-# TEMPORARY: How tasks should be allocated
+# BAID Speaker
 
-Upon lecture creation: Wait for lecture to be assigned to host
+A streamlined platform for BAID Speaker. Built with Next.js.
 
-Upon lecture assigned to host:
+## Get Started
 
-* `confirmDate`: Assigned to host, no deadline
+To run in production:
 
-Upon finishing of `confirmDate`:
+* Using `pm2` allows for proper deployment in production.
 
-* `confirmNeedComPoster`: Assigned to lecture owner, deadline 5 days before date
-* `inviteTeacher`: Assigned to lecture host, deadline 5 days before date
-* `submitPresentation`: Assigned to lecture owner, deadline 3 days before date
-* `confirmLocation`: Assigned to lecture host, deadline 3 days before date
+To run in development:
 
-Upon finishing of `confirmNeedComPoster`:
+* Ensure that you have node.js and npm available.
+* Run `npm install`.
+* Copy `.env.example` to `.env` and fill the following environment variables:
 
-* If user requests com poster, `confirmPosterDesigner`: Assigned to lecture host, deadline 4 days before date
-  * Upon finishing of `confirmPosterDesigner`, `submitPoster`: Assigned to poster designer, deadline 3 days before date
-* If user does not request com poster, `submitPoster`: Assigned to lecture owner, deadline 3 days before date
+| Name                     | Description                                                                                                     |
+|--------------------------|-----------------------------------------------------------------------------------------------------------------|
+| `DATABASE_URL`           | The database URL to use. PostgreSQL is required.                                                                |
+| `JWT_SECRET`             | The JWT secret key to use. You can generate one with `openssl rand -hex 32`.                                    |
+| `HOST`                   | The location where this service is hosted. No trailing slashes.                                                 |
+| `UPLOAD_PATH`            | The directory where uploaded files are stored. In development, this is `public/uploads`.                        |
+| `UPLOAD_SERVE_PATH`      | The path where uploaded files are served. In development, this is `uploads`.                                    |
+| `BOTTOM_TEXT`            | In case you need this.                                                                                          |
+| `ONELOGIN_HOST`          | The location where [OneLogin](https://github.com/WebArtistryBAID/baid-onelogin) is hosted. No trailing slashes. |
+| `ONELOGIN_CLIENT_ID`     | OneLogin client ID. `basic`, `phone`, and `sms` scopes are required.                                            |
+| `ONELOGIN_CLIENT_SECRET` | OneLogin client secret.                                                                                         |
 
-Upon finishing of `submitPoster`:
+* Run `npm run dev`.
 
-* `schoolApprovePoster`: Assigned to lecture host, deadline 1 day before date
+## Contribution
 
-Upon finishing of `schoolApprovePoster`:
+To contribute, simply open a pull request.
 
-* If `uploadedSlides != null`: `sendAdvertisements`: Assigned to lecture owner, deadline 1 day before date
+## License
 
-Upon finishing of `submitPresentation`:
+```
+    A streamlined platform for BAID Speaker.
+    Copyright (C) 2024  Team WebArtistry
 
-* `teacherApprovePresentation`: Assigned to lecture host, deadline 1 day before date
-* `createGroupChat`: Assigned to lecture host, deadline 1 day before date
-* `inviteParticipants`: Assigned to lecture owner, deadline 1 day before date
-* If `posterApproved`, `sendAdvertisements`: Assigned to lecture owner, deadline 1 day before date
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-Upon finishing of `confirmLocation`:
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-* `testDevice`: Assigned to lecture host, deadline 1 day before date
-
-Upon completing of lecture:
-
-* `updateLiveAudience`: Assigned to lecture host, deadline 1 day after date
-* `submitFeedback`: Assigned to lecture host, deadline 1 day after date
-* `submitVideo`: Assigned to lecture host, deadline 1 day after date
-* `submitReflection`: Assigned to lecture host, deadline 7 days after date
-
-## Features to complete
-
-* Allow watching videos
-* Homepage video feed
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+```
