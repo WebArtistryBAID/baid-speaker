@@ -311,7 +311,7 @@ export async function claimLecture(id: number): Promise<void> {
             lectureId: lecture.id
         }
     })
-    await sendNotification(lecture.user, NotificationType.createdGroupChat, [ user.name ], lecture.id)
+    await sendNotification(lecture.user, NotificationType.assignedHost, [ user.name ], lecture.id)
     if (!fromReclaimable) {
         await prisma.lectureTask.create({
             data: {
