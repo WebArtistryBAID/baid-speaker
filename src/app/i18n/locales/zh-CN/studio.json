@@ -1,0 +1,557 @@
+{
+  "assignedTo": "负责人: <1>{{name}}</1>",
+  "dueIn_one": "还有 <1>{{count}}</1> 天截止",
+  "dueIn_other": "还有 <1>{{count}}</1> 天截止",
+  "dueToday": "今天截止!",
+  "overdue_one": "已逾期 <1>{{count}}</1> 天",
+  "overdue_other": "已逾期 <1>{{count}}</1> 天",
+  "cancel": "取消",
+  "confirm": "确认",
+  "copied": "已复制！",
+  "change": "更改",
+  "uploadMessage": "上传过程中请勿关闭此页面。",
+  "done": "完成",
+  "tryAgain": "重试",
+  "next": "下一步",
+  "back": "返回",
+  "close": "关闭",
+  "skip": "跳过",
+  "continue": "继续",
+  "mobile": {
+    "message": "请切换到电脑或平板以获得最佳体验。"
+  },
+  "breadcrumb": {
+    "bc": "导航",
+    "studio": "Studio",
+    "lectures": "我的讲座",
+    "lecture": "讲座",
+    "inbox": "收件箱",
+    "settings": "设置",
+    "manage": "讲座管理",
+    "users": "用户管理",
+    "create": "开始新讲座"
+  },
+  "tasks": {
+    "ctaBad": "此任务无需您的操作",
+    "confirmDate": {
+      "name": "确认日期",
+      "smallName": "确认日期",
+      "descriptionUser": "请与您的主持人沟通，确认讲座日期。",
+      "descriptionAssignee": "请与讲师沟通，确认此讲座的日期。",
+      "cta": "确认"
+    },
+    "confirmNeedComPoster": {
+      "name": "您需要委托海报吗？",
+      "smallName": "确认海报需求",
+      "descriptionUser": "您可以选择为讲座免费委托海报，或自行设计海报。请注意: 您无法参与委托海报设计。",
+      "descriptionAssignee": "您可以选择为讲座免费委托海报，或自行设计海报。请注意: 您无法参与委托海报设计。",
+      "cta1": "使用委托海报",
+      "cta2": "自行设计海报"
+    },
+    "confirmPosterDesigner": {
+      "name": "邀请海报设计师",
+      "smallName": "邀请海报设计师",
+      "descriptionUser": "我们将邀请一位海报设计师为您的讲座设计海报。请注意: 您无法参与委托海报设计。",
+      "descriptionAssignee": "请邀请一位海报设计师为此讲座设计海报。",
+      "cta": "复制链接"
+    },
+    "submitPoster": {
+      "name": "提交海报",
+      "smallName": "提交海报",
+      "descriptionUser": "请等待我们为您制作海报。",
+      "descriptionAssignee": "请上传您设计的海报。文件必须为图片格式。",
+      "cta": "上传"
+    },
+    "inviteTeacher": {
+      "name": "邀请指导教师",
+      "smallName": "邀请指导教师",
+      "descriptionUser": "请等待我们邀请指导教师提供反馈。",
+      "descriptionAssignee": "请将此链接发送给指导教师，邀请他们参与此讲座。指导教师会负责审批幻灯片，并在讲座当天提供反馈。",
+      "cta": "复制链接"
+    },
+    "submitPresentation": {
+      "name": "提交幻灯片",
+      "smallName": "提交幻灯片",
+      "descriptionUser": "请上传您的幻灯片。",
+      "descriptionAssignee": "请上传您的幻灯片。",
+      "cta": "上传"
+    },
+    "teacherApprovePresentation": {
+      "name": "幻灯片审批",
+      "smallName": "审批幻灯片",
+      "descriptionUser": "请等待指导教师审批您的幻灯片。",
+      "descriptionAssignee": "请将此链接发送给分配的指导教师，供其审批幻灯片。",
+      "cta": "复制链接"
+    },
+    "schoolApprovePoster": {
+      "name": "海报审批",
+      "smallName": "请求海报审批",
+      "descriptionUser": "请等待学校审批您的海报。",
+      "descriptionAssignee": "请将此链接发送给一名教职工，以审批此讲座的海报。",
+      "cta": "复制链接"
+    },
+    "confirmLocation": {
+      "name": "确认地点",
+      "smallName": "确认讲座地点",
+      "descriptionUser": "请等待我们为您的讲座分配地点。",
+      "descriptionAssignee": "请确认此讲座的地点。",
+      "inputLocation": "请输入地点。",
+      "cta": "分配"
+    },
+    "testDevice": {
+      "name": "测试设备",
+      "smallName": "测试设备",
+      "descriptionUser": "您与主持人将一起测试您用于讲座的设备。",
+      "descriptionAssignee": "请联系讲师安排设备测试时间。",
+      "cta": "测试完成"
+    },
+    "createGroupChat": {
+      "name": "创建群聊",
+      "smallName": "创建群聊",
+      "descriptionUser": "主持人将为您和听众创建一个群聊，方便您分发材料。",
+      "descriptionAssignee": "请为此讲座创建一个群聊。",
+      "cta": "上传二维码"
+    },
+    "inviteParticipants": {
+      "name": "邀请初始参与者",
+      "smallName": "邀请初始参与者",
+      "descriptionUser": "您需要邀请至少 5 名初始参与者参加您的讲座。考虑邀请您的朋友!",
+      "descriptionAssignee": "您需要邀请至少 5 名初始参与者参加您的讲座。考虑邀请您的朋友!",
+      "cta": "完成"
+    },
+    "sendAdvertisements": {
+      "name": "发送宣传信息",
+      "smallName": "发送宣传信息",
+      "descriptionUser": "主持人将帮助您发送宣传信息，以吸引更多参与者。",
+      "descriptionAssignee": "请在北中学生群和北中校友群中分发宣传信息。",
+      "cta": "完成"
+    },
+    "updateLiveAudience": {
+      "name": "更新现场观众数",
+      "smallName": "更新现场观众数",
+      "descriptionUser": "请等待我们为您的讲座更新现场观众数。",
+      "descriptionAssignee": "请更新此讲座的现场观众数。",
+      "modalDescription": "请输入参加讲座的观众人数。",
+      "inputError": "请输入有效数字。",
+      "cta": "更新"
+    },
+    "submitFeedback": {
+      "name": "提交反馈表格",
+      "smallName": "提交反馈表格",
+      "descriptionUser": "请等待主持人和指导教师提供您的讲座反馈。",
+      "descriptionAssignee": "请上传反馈表格的照片。",
+      "cta": "上传"
+    },
+    "submitVideo": {
+      "name": "提交视频",
+      "smallName": "提交视频",
+      "descriptionUser": "请等待我们上传您的讲座视频。",
+      "descriptionAssignee": "请上传此讲座的视频。",
+      "modalDescription": "请将视频上传至 YouTube，并在此粘贴视频链接。<1>请确保将视频设置为 Unlisted。</1> <2>立即上传。</2>",
+      "inputError": "请输入有效的 YouTube 链接。",
+      "cta": "上传"
+    },
+    "submitReflection": {
+      "name": "提交回顾视频",
+      "smallName": "提交回顾视频",
+      "descriptionUser": "主持人将为您安排时间录制讲座回顾视频。",
+      "descriptionAssignee": "请为讲师安排录制回顾视频的时间，并上传此视频。",
+      "modalDescription": "请将视频上传至 YouTube，并在此粘贴视频链接。<1>请确保将视频设置为 Unlisted。</1> <2>立即上传。</2>",
+      "inputError": "请输入有效的 YouTube 链接。",
+      "cta": "上传"
+    }
+  },
+  "lectureLogs": {
+    "created": "{{user}} 创建了此讲座。",
+    "assignedHost": "{{user}} 被分配为此讲座的主持人。",
+    "confirmedDate": "{{user}} 将此讲座的日期更新为 {{v0}}。",
+    "assignedTeacher": "{{user}} 接受了成为此讲座指导教师的邀请。",
+    "confirmedNeedComPoster": "{{user}} 确认需要委托海报。",
+    "confirmedSelfDesignPoster": "{{user}} 确认将自行设计海报。",
+    "assignedPosterDesigner": "{{user}} 被邀请为此讲座设计海报。",
+    "submittedPoster": "{{user}} 提交了此讲座的海报。",
+    "submittedPresentation": "{{user}} 提交了此讲座的幻灯片。",
+    "approvedPoster": "{{user}} 批准了此讲座的海报。",
+    "createdGroupChat": "{{user}} 上传了此讲座群聊的二维码。",
+    "invitedParticipants": "{{user}} 确认邀请了此讲座的初始参与者。",
+    "sentAdvertisements": "{{user}} 确认发送了此讲座的宣传信息。",
+    "teacherApproved": "{{user}} 批准了此讲座的幻灯片。",
+    "confirmedLocation": "{{user}} 将此讲座的地点更改为 {{v0}}。",
+    "testedDevice": "{{user}} 确认已测试此讲座的设备。",
+    "updatedLiveAudience": "{{user}} 将此讲座的现场观众数更新为 {{v0}}。",
+    "submittedFeedback": "{{user}} 上传了此讲座的反馈表格。",
+    "submittedVideo": "{{user}} 上传了此讲座的视频。",
+    "submittedReflection": "{{user}} 上传了此讲座的回顾视频。",
+    "modifiedStatus": "{{user}} 将此讲座的状态修改为 {{v0}}。",
+    "markedReclaimable": "{{user}} 标记此讲座为可由其他主持人接管。",
+    "removedTeacher": "{{user}} 移除了此讲座的指导教师。",
+    "removedArtist": "{{user}} 移除了此讲座的海报设计师。"
+  },
+  "notifications": {
+    "assignedHost": "<1>{{user}}</1> 被分配为 <1>{{lecture}}</1> 的主持人。",
+    "confirmedDate": "<1>{{user}}</1> 将 <1>{{lecture}}</1> 的日期更新为 <1>{{v0}}</1>。",
+    "assignedTeacher": "<1>{{user}}</1> 接受了成为 <1>{{lecture}}</1> 指导教师的邀请。",
+    "assignedPosterDesigner": "<1>{{user}}</1> 被邀请为 <1>{{lecture}}</1> 设计海报。",
+    "submittedPoster": "<1>{{user}}</1> 提交了 <1>{{lecture}}</1> 的海报。",
+    "approvedPoster": "<1>{{user}}</1> 批准了 <1>{{lecture}}</1> 的海报。",
+    "createdGroupChat": "<1>{{user}}</1> 上传了 <1>{{lecture}}</1> 群聊的二维码。",
+    "sentAdvertisements": "<1>{{user}}</1> 确认发送了 <1>{{lecture}}</1> 的宣传信息。",
+    "teacherApproved": "<1>{{user}}</1> 批准了 <1>{{lecture}}</1> 的幻灯片。",
+    "confirmedLocation": "<1>{{user}}</1> 将 <1>{{lecture}}</1> 的地点更改为 <1>{{v0}}</1>。",
+    "testedDevice": "<1>{{user}}</1> 确认已测试 <1>{{lecture}}</1> 的设备。",
+    "updatedLiveAudience": "<1>{{user}}</1> 将 <1>{{lecture}}</1> 的现场观众数更新为 <1>{{v0}}</1>。",
+    "submittedFeedback": "<1>{{user}}</1> 上传了 <1>{{lecture}}</1> 的反馈表格。",
+    "submittedVideo": "<1>{{user}}</1> 上传了 <1>{{lecture}}</1> 的视频。",
+    "submittedReflection": "<1>{{user}}</1> 上传了 <1>{{lecture}}</1> 的回顾视频。",
+    "modifiedStatus": "<1>{{user}}</1> 将 <1>{{lecture}}</1> 的状态修改为 <1>{{v0}}</1>。"
+  },
+  "lectureStatus": {
+    "waiting": {
+      "name": "等待主持人",
+      "details": "请稍等，我们正在为您的讲座分配主持人。主持人将在您的北中小讲师旅程中为您提供帮助。"
+    },
+    "completingPreTasks": {
+      "name": "完成前期任务",
+      "details": "在此阶段，您将完成准备讲座所需的所有任务。"
+    },
+    "ready": {
+      "name": "准备就绪",
+      "details": "在此阶段，您的讲座已准备就绪!"
+    },
+    "completingPostTasks": {
+      "name": "完成后续任务",
+      "details": "虽然讲座已经结束，但活动尚未完全结束。在此阶段，您将完成讲座结束后所需的所有任务。"
+    },
+    "completed": {
+      "name": "已完成",
+      "details": "感谢您参与北中小讲师!"
+    }
+  },
+  "nav": {
+    "dashboard": "Studio",
+    "lectures": "我的讲座",
+    "inbox": "收件箱",
+    "manage": "讲座管理",
+    "user": "用户管理",
+    "beta": "Beta",
+    "betaDetails": "北中小讲师平台正在测试中。如有任何问题，请向 Lin 报告。"
+  },
+  "dashboard": {
+    "onboarding": "开始",
+    "createCard": {
+      "title": "开始您的下一个讲座",
+      "subtitle": "是时候开始了! 北中小讲师已经准备好让您大展身手。一切从一个讲座开始。",
+      "cta": "开始"
+    },
+    "continueCard": {
+      "title": "继续您的讲座",
+      "subtitle": "北中小讲师已经准备好让您大展身手。一切从一个讲座开始。",
+      "cta": "继续"
+    },
+    "tutorialCard": {
+      "title": "快速指南",
+      "subtitle": "不知道从哪里开始？阅读此快速指南，了解北中小讲师的流程。",
+      "cta": "了解更多"
+    },
+    "watchCard": {
+      "title": "往届讲座",
+      "subtitle": "观看一些往届北中小讲师的讲座，帮助您了解如何打造优秀的讲座。",
+      "cta": "立即观看"
+    },
+    "latest": {
+      "title": "您最近的讲座",
+      "status": "状态",
+      "viewDetails": "查看详情"
+    }
+  },
+  "myLectures": {
+    "title": "我的讲座",
+    "empty": "您还没有任何讲座。现在就开始您的第一个讲座吧!",
+    "startLecture": "开始新讲座",
+    "status": "状态：",
+    "role": "角色：",
+    "lastUpdated": "最近更新：",
+    "speaker": "讲师",
+    "host": "主持人",
+    "teacher": "指导教师",
+    "poster": "海报设计师",
+    "cta": "查看详情"
+  },
+  "lecture": {
+    "userAlert": "您正在以讲师身份查看此讲座。一些操作可能不可用。",
+    "tabs": {
+      "title": "讲座导航",
+      "dashboard": "概览",
+      "tasks": "任务",
+      "users": "参与人员",
+      "history": "历史记录",
+      "content": "内容",
+      "statistics": "统计数据",
+      "others": "其他"
+    },
+    "onboarding": {
+      "title": "欢迎来到北中小讲师!",
+      "message": "全新的北中小讲师平台简化了创建和举办讲座的流程。快来看看吧!",
+      "step1": "在「概览」中，您可以获取讲座状态的总体情况。",
+      "step2": "在「任务」中，您可以查看接下来的任务。",
+      "step3": "在「参与人员」中，您可以查看讲座涉及的人员。",
+      "step4": "在「内容」中，您可以上传并管理讲座材料。",
+      "step5": "北中小讲师已经准备好让您大展身手。一切从一个讲座开始。加油!",
+      "step5Title": "开始吧!"
+    },
+    "dashboard": {
+      "message": "祝您的讲座顺利! 我们期待您的精彩表现。",
+      "messageReady": "一切就绪! 您的讲座已经准备好了。加油!",
+      "messagePost": "感谢您的讲座! 我们希望您度过了愉快的时光。",
+      "basic": "开始",
+      "status": "状态",
+      "host": "您的主持人",
+      "hostMessage": "您的主持人将在整个北中小讲师旅程中为您提供帮助，并在讲座当天主持。",
+      "teacher": "您的指导教师",
+      "teacherMessage": "您的指导教师将帮助您审查内容并对讲座提供反馈。",
+      "tasks": "可用任务",
+      "tasksSub_one": "项任务待完成",
+      "tasksSub_other": "项任务待完成",
+      "countdown": "倒计时",
+      "days_one": "距讲座还有 1 天",
+      "days_other": "距讲座还有 {{count}} 天",
+      "days_today": "就是今天!",
+      "tasksCta": "查看详情",
+      "files": "可用文件",
+      "contact": "联系方式",
+      "location": "地点",
+      "locationMessage": "这是您的讲座举办地点。",
+      "changeStatus": "进入下一阶段",
+      "changeStatusMessage": "您确定要将此讲座推进到下一阶段吗？此操作不可逆。",
+      "surveyQuestions": "调查问卷回答",
+      "preSurveyQ1": "请告诉我们您的讲座内容。",
+      "preSurveyQ2": "为什么选择这个主题?"
+    },
+    "tasks": {
+      "empty": "您目前没有需要完成的任务。太棒了!",
+      "nextDue": {
+        "title": "下一个截止任务",
+        "template_one": "您需要在 1 天内 <1>{{action}}</1>。",
+        "template_other": "您需要在 {{count}} 天内 <1>{{action}}</1>。",
+        "template_today": "您需要 <1>{{action}}</1> 今天。",
+        "templateOverdue_one": "您应该在 1 天前完成 <1>{{action}}</1>。",
+        "templateOverdue_other": "您应该在 {{count}} 天前完成 <1>{{action}}</1>。",
+        "cta": "立即完成"
+      }
+    },
+    "content": {
+      "empty": "尚未上传任何内容。",
+      "edit": "编辑",
+      "done": "完成！",
+      "error": "重试",
+      "download": "下载",
+      "delete": "删除",
+      "poster": "海报",
+      "slides": "幻灯片",
+      "slidesView": "下载查看",
+      "groupQR": "群聊二维码",
+      "feedback": "反馈表格",
+      "videoTitle": "视频",
+      "videoMessage": "您的讲座视频现在已公开。",
+      "videoCta": "查看视频"
+    },
+    "people": {
+      "message": "以下人员参与帮助开展您的讲座。如需帮助，请随时联系他们!",
+      "name": "姓名",
+      "phone": "手机号码 / 微信",
+      "role": "角色",
+      "action": "操作",
+      "remove": "移除",
+      "removeConfirm": "您确定吗？",
+      "removeHostConfirm": "这将允许其他管理员认领该讲座。在其他人认领之前，当前主持人仍然被分配。",
+      "removeTeacherConfirm": "移除指导教师将造成不可逆的影响。您需要为讲座邀请另一位指导教师。",
+      "removeArtistConfirm": "移除海报设计师将造成不可逆的影响。讲座将回退到之前阶段。",
+      "speaker": "讲师",
+      "host": "主持人",
+      "teacher": "指导教师",
+      "poster": "海报设计师",
+      "other": "其他管理员"
+    },
+    "history": {
+      "id": "日志 ID",
+      "action": "操作",
+      "time": "时间"
+    },
+    "statistics": {
+      "empty": "此部分将在您的讲座结束后可用。",
+      "liveAudience": "现场观众数",
+      "videoViews": "视频播放量",
+      "videoLikes": "视频点赞量",
+      "feedback": "反馈表格",
+      "videoTitle": "视频",
+      "videoWaiting": "您的讲座视频即将上线，请稍后查看。",
+      "videoAvailable": "您的讲座视频现在已公开。",
+      "videoCta": "查看视频"
+    },
+    "others": {
+      "delete": "删除讲座",
+      "cancelTitle": "删除讲座",
+      "cancelMessage": "您确定要删除此讲座吗？此操作不可逆。",
+      "cancelDescription": "您可以请您的主持人为您取消讲座。"
+    }
+  },
+  "create": {
+    "title": "开始您的下一个讲座",
+    "details": "要开始，请填写以下信息。<1>所有问题均需填写。</1>",
+    "form": {
+      "title": "您的讲座标题是什么？",
+      "contact": "请提供您的微信号或微信绑定的手机号以便我们联系您。",
+      "preSurveyQ1": "请告诉我们您的讲座内容。",
+      "preSurveyQ2": "为什么选择这个主题?",
+      "titleError": "请输入不超过 100 个字符。",
+      "contactError": "请输入不超过 100 个字符。",
+      "surveyQ1Error": "请输入不超过 1000 个字符。",
+      "surveyQ2Error": "请输入不超过 1000 个字符。"
+    },
+    "continue": "继续",
+    "createError": {
+      "title": "暂时无法开始讲座",
+      "message": "当您完成前一个讲座后，才可以开始下一个讲座。",
+      "cta": "返回"
+    }
+  },
+  "artistInvitation": {
+    "title": "邀请",
+    "message": "您被邀请为北中小讲师讲座 <1>{{lecture}}</1> 设计海报，讲师是 <1>{{speaker}}</1>。",
+    "message2": "接受邀请后，讲座成员将可以看到您的手机号码以便联系您。",
+    "info": "讲座信息",
+    "lecture": "讲座标题",
+    "speaker": "讲师",
+    "host": "主持人",
+    "teacher": "指导教师",
+    "notInvited": "尚未邀请",
+    "date": "日期",
+    "cta": "接受邀请"
+  },
+  "teacherInvitation": {
+    "title": "邀请",
+    "message": "您被邀请担任北中小讲师讲座 <1>{{lecture}}</1> 的指导教师，讲师是 <1>{{speaker}}</1>。",
+    "message2": "接受邀请后，您需要完成以下任务：",
+    "task1": "在讲座前审阅并对讲师的幻灯片提供反馈。",
+    "task2": "在讲座当天到达讲座地点并提供反馈。您需要在讲座期间填写反馈表格。",
+    "task3": "回答讲师关于其主题的任何问题。",
+    "info": "讲座信息",
+    "lecture": "讲座标题",
+    "speaker": "讲师",
+    "host": "主持人",
+    "date": "日期",
+    "cta": "接受邀请",
+    "unsupported": "不支持的用户类型",
+    "unsupportedMessage": "此操作仅对教职工用户可用。"
+  },
+  "slidesApproval": {
+    "title": "幻灯片审批",
+    "message": "您被邀请审批北中小讲师讲座 <1>{{lecture}}</1> 的幻灯片，讲师是 <1>{{speaker}}</1>。",
+    "info": "讲座信息",
+    "lecture": "讲座标题",
+    "speaker": "讲师",
+    "host": "主持人",
+    "date": "日期",
+    "view": "下载幻灯片",
+    "cta": "审批",
+    "completed": "已完成",
+    "completedMessage": "您现在可以关闭此页面。",
+    "unsupported": "不支持的用户类型",
+    "unsupportedMessage": "此操作仅对教职工用户可用。"
+  },
+  "posterApproval": {
+    "title": "海报审批",
+    "message": "您被邀请审批北中小讲师讲座 <1>{{lecture}}</1> 的海报，讲师是 <1>{{speaker}}</1>。",
+    "info": "讲座信息",
+    "lecture": "讲座标题",
+    "speaker": "讲师",
+    "host": "主持人",
+    "date": "日期",
+    "view": "查看海报",
+    "cta": "审批",
+    "completed": "已完成",
+    "completedMessage": "您现在可以关闭此页面。",
+    "unsupported": "不支持的用户类型",
+    "unsupportedMessage": "此操作仅对教职工用户可用。"
+  },
+  "inbox": {
+    "title": "收件箱",
+    "empty": "太棒了! 目前没有通知。",
+    "view": "查看详情"
+  },
+  "manage": {
+    "title": "讲座管理",
+    "tabs": {
+      "title": "管理",
+      "unassigned": "未分配",
+      "inProgress": "进行中",
+      "completed": "已完成",
+      "all": "全部"
+    },
+    "speaker": "讲师: ",
+    "lastUpdated": "最后更新时间: ",
+    "unassigned": {
+      "empty": "恭喜! 没有未分配的讲座。",
+      "claim": "认领讲座"
+    },
+    "typical": {
+      "empty": "尚无讲座。",
+      "view": "查看详情"
+    }
+  },
+  "users": {
+    "title": "用户管理",
+    "view": "查看详情",
+    "search": "按姓名搜索...",
+    "name": "姓名",
+    "pinyin": "拼音",
+    "phone": "手机号码",
+    "type": "类型",
+    "none": "无",
+    "student": "学生",
+    "teacher": "教职工",
+    "permissions": "权限",
+    "admin": "管理权限",
+    "permissionsOwn": "您无法更改自己的权限。"
+  },
+  "settings": {
+    "title": "设置",
+    "profile": {
+      "title": "用户资料",
+      "name": "姓名",
+      "pinyin": "拼音",
+      "phone": "手机号码",
+      "updateInfo": "这些数据与学校系统同步。如需更新，请联系学校管理员。"
+    },
+    "notifications": {
+      "title": "通知",
+      "smsInfo": "如果您未在 OneLogin 中授权，您将无法收到短信通知。",
+      "inbox": "收件箱",
+      "sms": "短信",
+      "type": "类型",
+      "types": {
+        "assignedHost": "主持人更新",
+        "confirmedDate": "日期更新",
+        "assignedTeacher": "指导教师更新",
+        "assignedPosterDesigner": "海报设计师更新",
+        "submittedPoster": "海报提交",
+        "approvedPoster": "海报获得批准",
+        "createdGroupChat": "群聊二维码提交",
+        "sentAdvertisements": "宣传信息发布",
+        "teacherApproved": "幻灯片获得批准",
+        "confirmedLocation": "地点更新",
+        "testedDevice": "设备测试完成",
+        "updatedLiveAudience": "现场观众数更新",
+        "submittedFeedback": "反馈表格提交",
+        "submittedVideo": "视频提交",
+        "submittedReflection": "回顾视频提交",
+        "modifiedStatus": "状态更新"
+      }
+    },
+    "others": {
+      "title": "其他",
+      "logOut": "退出登录",
+      "credits": "北中小讲师平台由 WebArtistry 和北中学委会学术部合作开发。感谢所有贡献者。"
+    }
+  }
+}
