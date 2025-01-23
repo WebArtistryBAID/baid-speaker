@@ -29,7 +29,9 @@ model User {
   lectureLogs   LectureAuditLog[]
   assignedTasks LectureTask[]
 
-  notifications Notification[]
+  inboxNotifications NotificationType[] @default([assignedHost, confirmedDate, assignedTeacher, assignedPosterDesigner, submittedPoster, approvedPoster, createdGroupChat, sentAdvertisements, teacherApproved, confirmedLocation, testedDevice, updatedLiveAudience, submittedFeedback, submittedVideo, submittedReflection, modifiedStatus])
+  smsNotifications   NotificationType[] @default([assignedHost, assignedTeacher, submittedPoster, approvedPoster, teacherApproved, modifiedStatus, submittedVideo])
+  notifications      Notification[]
 }
 
 enum UserAuditLogType {

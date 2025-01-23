@@ -26,6 +26,7 @@
     "lectures": "My Lectures",
     "lecture": "Lecture",
     "inbox": "Inbox",
+    "settings": "Settings",
     "manage": "Lecture Management",
     "user": "User Management",
     "create": "Start New Lecture"
@@ -496,6 +497,46 @@
     "typical": {
       "empty": "No lectures yet.",
       "view": "View Details"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": {
+      "title": "User Profile",
+      "name": "Name",
+      "pinyin": "Pinyin",
+      "phone": "Phone Number",
+      "updateInfo": "These data are synchronized with the school portal. Please contact school administrators to update your information."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "smsInfo": "You will not receive SMS notifications if you did not authorize in OneLogin.",
+      "inbox": "Inbox",
+      "sms": "SMS",
+      "type": "Type",
+      "types": {
+        "assignedHost": "Assigned Host",
+        "confirmedDate": "Confirmed Date",
+        "assignedTeacher": "Assigned Teacher",
+        "assignedPosterDesigner": "Assigned Poster Designer",
+        "submittedPoster": "Submitted Poster",
+        "approvedPoster": "Approved Poster",
+        "createdGroupChat": "Created Group Chat",
+        "sentAdvertisements": "Sent Advertisements",
+        "teacherApproved": "Teacher Approved",
+        "confirmedLocation": "Confirmed Location",
+        "testedDevice": "Tested Device",
+        "updatedLiveAudience": "Updated Live Audience",
+        "submittedFeedback": "Submitted Feedback",
+        "submittedVideo": "Submitted Video",
+        "submittedReflection": "Submitted Reflection",
+        "modifiedStatus": "Modified Status"
+      }
+    },
+    "others": {
+      "title": "Others",
+      "logOut": "Log Out",
+      "credits": "BAID Speaker is developed with a collaboration between WebArtistry and BAID's Academic Sector. Thank you to all contributors."
     }
   }
 }

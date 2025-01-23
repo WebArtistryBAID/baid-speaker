@@ -43,6 +43,52 @@ export async function getMyUser(): Promise<User | null> {
     })
 }
 
+export async function toggleInboxNotification(type: NotificationType): Promise<void> {
+    const user = await requireUser()
+    if (user.inboxNotifications.includes(type)) {
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                inboxNotifications: {
+                    set: user.inboxNotifications.filter(t => t !== type)
+                }
+            }
+        })
+    } else {
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                inboxNotifications: {
+                    set: [ ...user.inboxNotifications, type ]
+                }
+            }
+        })
+    }
+}
+
+export async function toggleSMSNotification(type: NotificationType): Promise<void> {
+    const user = await requireUser()
+    if (user.smsNotifications.includes(type)) {
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                smsNotifications: {
+                    set: user.smsNotifications.filter(t => t !== type)
+                }
+            }
+        })
+    } else {
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                smsNotifications: {
+                    set: [ ...user.smsNotifications, type ]
+                }
+            }
+        })
+    }
+}
+
 export async function getMyNotificationsCount(): Promise<number> {
     const user = await requireUser()
     return prisma.notification.count({ where: { userId: user.id } })

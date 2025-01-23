@@ -11,11 +11,10 @@ import {
     SidebarItems,
     SidebarLogo
 } from 'flowbite-react'
-import { HiAcademicCap, HiChartPie, HiCog, HiCollection, HiInbox, HiLogout, HiUsers } from 'react-icons/hi'
+import { HiAcademicCap, HiChartPie, HiCog, HiCollection, HiInbox, HiUser, HiUsers } from 'react-icons/hi'
 import Link from 'next/link'
 import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
-import { useCookies } from 'react-cookie'
 import { User } from '@prisma/client'
 import { getMyNotificationsCount, getMyUser } from '@/app/login/login-actions'
 
@@ -23,7 +22,6 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
     const { t } = useTranslationClient('studio')
     const [ myUser, setMyUser ] = useState<User>()
     const [ notifications, setNotifications ] = useState(0)
-    const removeCookie = useCookies()[2]
     useEffect(() => {
         (async () => {
             setMyUser((await getMyUser())!)
@@ -74,15 +72,14 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                         </SidebarItemGroup>
                     </SidebarItems>
                     <div className="mr-3 mb-3 absolute bottom-0">
-                        <div className="flex items-center gap-3">
-                            <button className="btn-icon-only" onClick={() => {
-                                removeCookie('access_token', { path: '/' })
-                                location.reload() // Special case reload: We aren't using router to force a full reload
-                            }}>
-                                <HiLogout/>
-                            </button>
-                            <p className="font-display text-xl">{myUser?.name ?? '...'}</p>
-                        </div>
+                        <Link href="/studio/settings"
+                              className="flex items-center gap-3 rounded-full p-3 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-600 transition-colors duration-100">
+                            <Badge icon={HiUser}/>
+                            <div>
+                                <p className="font-bold font-display text-sm">{myUser?.name ?? '...'}</p>
+                                <p className="secondary text-xs">{t('settings.title')}</p>
+                            </div>
+                        </Link>
                         <SidebarCTA>
                             <Badge color="warning" className="inline-block mb-3">{t('nav.beta')}</Badge>
                             <p className="secondary text-sm">
