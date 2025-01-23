@@ -28,7 +28,7 @@
     "inbox": "Inbox",
     "settings": "Settings",
     "manage": "Lecture Management",
-    "user": "User Management",
+    "users": "User Management",
     "create": "Start New Lecture"
   },
   "tasks": {
@@ -498,6 +498,11 @@
       "empty": "No lectures yet.",
       "view": "View Details"
     }
+  },
+  "users": {
+    "title": "Users Management",
+    "view": "View Details",
+    "search": "Search by name..."
   },
   "settings": {
     "title": "Settings",

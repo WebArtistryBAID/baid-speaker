@@ -32,7 +32,7 @@ model User {
   assignedTasks LectureTask[]
 
   inboxNotifications NotificationType[] @default([assignedHost, confirmedDate, assignedTeacher, assignedPosterDesigner, submittedPoster, approvedPoster, createdGroupChat, sentAdvertisements, teacherApproved, confirmedLocation, testedDevice, updatedLiveAudience, submittedFeedback, submittedVideo, submittedReflection, modifiedStatus])
-  smsNotifications   NotificationType[] @default([assignedHost, assignedTeacher, submittedPoster, approvedPoster, teacherApproved, modifiedStatus, submittedVideo])
+  smsNotifications NotificationType[] @default([assignedHost, confirmedDate, assignedTeacher, submittedPoster, approvedPoster, teacherApproved, modifiedStatus, submittedVideo])
   notifications      Notification[]
 }
 

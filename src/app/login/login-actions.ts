@@ -44,6 +44,33 @@ export async function getMyUser(): Promise<User | null> {
     })
 }
 
+export async function getUsers(page: number, keyword: string): Promise<Paginated<User>> {
+    await requireUserPermission('admin.manage')
+    const pages = Math.ceil(await prisma.user.count({
+        where: {
+            OR: [
+                { name: { contains: keyword } },
+                { pinyin: { contains: keyword } }
+            ]
+        }
+    }) / 10)
+    const users = await prisma.user.findMany({
+        where: {
+            OR: [
+                { name: { contains: keyword } },
+                { pinyin: { contains: keyword } }
+            ]
+        },
+        skip: page * 10,
+        take: 10
+    })
+    return {
+        items: users,
+        page,
+        pages
+    }
+}
+
 export async function getAccessToken(): Promise<string | null> {
     const user = await prisma.user.findUnique({
         where: {
