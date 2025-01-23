@@ -48,6 +48,8 @@ export default function StudioLectures() {
             </div>
         </If>
         <If condition={page.pages >= 1}>
+            <Button className="mb-5 inline-block" color="blue" as={Link}
+                    href="/studio/lectures/create">{t('myLectures.startLecture')}</Button>
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
                 {page.items.map(lecture => <Card key={lecture.id} className="col-span-2">
                     <h2>{lecture.title}</h2>
