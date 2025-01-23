@@ -1,0 +1,31 @@
+{
+  "brand": "BAID Speaker",
+  "studio": "Studio",
+  "home": {
+    "welcomeTitle": "Welcome to BAID Speaker!",
+    "welcomeSubtitle": "BAID Speaker is Beijing Academy's premiere platform for sharing knowledge and ideas.",
+    "cta": "Start My Lecture",
+    "ctaSide": "... or discover some first.",
+    "upcoming": "Upcoming on {{date}}",
+    "stats": "{{live}} live views • {{view}} video views",
+    "statsVideoOnly": "{{view}} video views"
+  },
+  "lecture": {
+    "notAssigned": "Not Assigned",
+    "host": "Host: ",
+    "teacher": "Teacher: ",
+    "poster": "Poster Designer: ",
+    "likes": "{{likes}} likes",
+    "views": "{{views}} views",
+    "share": "Share",
+    "survey": "Speaker Survey",
+    "slides": "Slides",
+    "slidesDownload": "Tap to Download",
+    "preSurveyQ1": "Please tell us about the content of your lecture.",
+    "preSurveyQ2": "Why did you choose this topic?",
+    "video": "Video",
+    "videoUpcoming": "The video will be available soon. Stay tuned!",
+    "youtubeBlocked": "BAID Speaker videos are hosted on YouTube, which is unavailable under your network condition.",
+    "copied": "Copied!"
+  }
+}

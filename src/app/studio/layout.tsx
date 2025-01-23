@@ -45,7 +45,7 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
         <div className="h-screen flex">
             <div className="h-screen">
                 <Sidebar className="h-full relative">
-                    <SidebarLogo href="/" img="/assets/logo.png"><span
+                    <SidebarLogo href="/core" img="/assets/logo.png"><span
                         className="font-display">BAID Speaker</span></SidebarLogo>
                     <SidebarItems>
                         <SidebarItemGroup>

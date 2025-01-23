@@ -214,7 +214,7 @@ export default function LectureContent({ lecture, uploadServePath }: {
                     <Card className="col-span-1 h-full w-full relative">
                         <h2>{t('lecture.content.videoTitle')}</h2>
                         <p className="secondary">{t('lecture.content.videoMessage')}</p>
-                        <Button as={Link} color="blue" href={`/watch/${lecture.id}`}>
+                        <Button as={Link} color="blue" href={`/core/lecture/${lecture.id}`}>
                             {t('lecture.content.videoCta')}
                         </Button>
                     </Card>

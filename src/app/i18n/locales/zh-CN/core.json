@@ -1,0 +1,31 @@
+{
+  "brand": "BAID Speaker",
+  "studio": "Studio",
+  "home": {
+    "welcomeTitle": "欢迎来到北中小讲师!",
+    "welcomeSubtitle": "北中小讲师是北京中学的核心学术分享平台。",
+    "cta": "我也要参加!",
+    "ctaSide": "... 也可以先观看一些。",
+    "upcoming": "预告: {{date}}",
+    "stats": "{{live}} 名现场观众 • {{view}} 播放",
+    "statsVideoOnly": "{{view}} 播放"
+  },
+  "lecture": {
+    "notAssigned": "未指定",
+    "host": "主持人: ",
+    "teacher": "指导教师: ",
+    "poster": "海报设计师: ",
+    "likes": "{{likes}} 点赞",
+    "views": "{{views}} 播放",
+    "share": "分享",
+    "survey": "讲师调查",
+    "slides": "幻灯片",
+    "slidesDownload": "轻触即可下载",
+    "preSurveyQ1": "请告诉我们您的讲座内容。",
+    "preSurveyQ2": "为什么选择这个主题?",
+    "video": "视频",
+    "videoUpcoming": "视频将很快上线，敬请期待。",
+    "youtubeBlocked": "北中小讲师的视频托管在 YouTube 上，但在您的网络环境下无法访问。",
+    "copied": "已复制!"
+  }
+}

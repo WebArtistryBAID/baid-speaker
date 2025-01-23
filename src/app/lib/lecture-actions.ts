@@ -198,6 +198,52 @@ export async function getMyOwnLatestLecture(): Promise<HydratedLecture | null> {
     })
 }
 
+export async function getPublicLectures(page: number): Promise<Paginated<HydratedLecture>> {
+    const pages = Math.ceil(await prisma.lecture.count({
+        where: {
+            OR: [
+                {
+                    status: LectureStatus.ready
+                },
+                {
+                    status: LectureStatus.completingPostTasks
+                },
+                {
+                    status: LectureStatus.completed
+                }
+            ],
+            posterApproved: true
+        }
+    }) / 10)
+    const lectures = await prisma.lecture.findMany({
+        where: {
+            OR: [
+                {
+                    status: LectureStatus.ready
+                },
+                {
+                    status: LectureStatus.completingPostTasks
+                },
+                {
+                    status: LectureStatus.completed
+                }
+            ],
+            posterApproved: true
+        },
+        orderBy: {
+            createdAt: 'desc'
+        },
+        include: HydratedLectureInclude,
+        skip: page * 10,
+        take: 10
+    })
+    return {
+        items: lectures,
+        page,
+        pages
+    }
+}
+
 export async function getLectures(page: number, filter: LectureWhereInput): Promise<Paginated<HydratedLecture>> {
     await requireUserPermission('admin.manage')
     const pages = Math.ceil(await prisma.lecture.count({ where: filter }) / 10)

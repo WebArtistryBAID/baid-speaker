@@ -26,7 +26,7 @@ export default function LectureStatistics({ lecture, uploadServePath }: {
             <h2>{t('lecture.statistics.videoTitle')}</h2>
             <If condition={lecture.uploadedVideo != null}>
                 <p className="secondary">{t('lecture.statistics.videoAvailable')}</p>
-                <Button as={Link} color="blue" href={`/watch/${lecture.id}`}>
+                <Button as={Link} color="blue" href={`/core/lecture/${lecture.id}`}>
                     {t('lecture.content.videoCta')}
                 </Button>
             </If>

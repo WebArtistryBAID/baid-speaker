@@ -59,7 +59,7 @@ export default function StudioInboxClient({ notifications }: { notifications: Pa
                         messageData.v0 = t(`lectureStatus.${notification.values[1]}.name`)
                 }
 
-                return <Alert key={notification.id} color="light" icon={HiInformationCircle} className="mb-3" rounded
+                return <Alert key={notification.id} color="gray" icon={HiInformationCircle} className="mb-3" rounded
                               onDismiss={async () => {
                                   if (loading) {
                                       return
