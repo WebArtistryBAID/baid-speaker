@@ -44,6 +44,42 @@ export async function getMyUser(): Promise<User | null> {
     })
 }
 
+export async function getUser(id: number): Promise<User | null> {
+    await requireUserPermission('admin.manage')
+    return prisma.user.findUnique({
+        where: { id }
+    })
+}
+
+export async function toggleUserPermission(id: number, permission: string): Promise<void> {
+    await requireUserPermission('admin.manage')
+    const user = await prisma.user.findUnique({
+        where: { id }
+    })
+    if (!user) {
+        return
+    }
+    if (user.permissions.includes(permission)) {
+        await prisma.user.update({
+            where: { id },
+            data: {
+                permissions: {
+                    set: user.permissions.filter(p => p !== permission)
+                }
+            }
+        })
+    } else {
+        await prisma.user.update({
+            where: { id },
+            data: {
+                permissions: {
+                    set: [ ...user.permissions, permission ]
+                }
+            }
+        })
+    }
+}
+
 export async function getUsers(page: number, keyword: string): Promise<Paginated<User>> {
     await requireUserPermission('admin.manage')
     const pages = Math.ceil(await prisma.user.count({

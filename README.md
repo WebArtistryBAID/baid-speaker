@@ -47,7 +47,5 @@ Upon completing of lecture:
 
 ## Features to complete
 
-* Show users in user management page: pagination
-* Allow editing users (mostly permissions) in user management page
 * Allow watching videos
 * Homepage video feed

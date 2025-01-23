@@ -502,7 +502,17 @@
   "users": {
     "title": "Users Management",
     "view": "View Details",
-    "search": "Search by name..."
+    "search": "Search by name...",
+    "name": "Name",
+    "pinyin": "Pinyin",
+    "phone": "Phone Number",
+    "type": "Type",
+    "none": "None",
+    "student": "Student",
+    "teacher": "Teacher",
+    "permissions": "Permissions",
+    "admin": "Management Access",
+    "permissionsOwn": "You can't change your own permissions."
   },
   "settings": {
     "title": "Settings",
