@@ -4,8 +4,9 @@ import { requireUser } from '@/app/login/login-actions'
 import * as fs from 'fs/promises'
 import path from 'node:path'
 import { createWriteStream } from 'node:fs'
-import { LectureAuditLogType, LectureTasks, PrismaClient } from '@prisma/client'
+import { LectureAuditLogType, LectureTasks, NotificationType, PrismaClient } from '@prisma/client'
 import { Readable } from 'node:stream'
+import { sendNotification } from '@/app/lib/notify-action'
 
 const prisma = new PrismaClient()
 
@@ -84,14 +85,7 @@ export async function POST(req: NextRequest, { params }: {
             }
         })
         if (lecture.userId !== user.id) {
-            await prisma.notification.create({
-                data: {
-                    lectureId: lecture.id,
-                    userId: lecture.userId,
-                    type: LectureAuditLogType.submittedPoster,
-                    values: [ user.name ]
-                }
-            })
+            await sendNotification(lecture.user, NotificationType.submittedPoster, [ user.name ], lecture.id)
         }
         if (task != null) {
             await prisma.lectureTask.delete({
@@ -243,14 +237,7 @@ export async function POST(req: NextRequest, { params }: {
                 values: [ filename ]
             }
         })
-        await prisma.notification.create({
-            data: {
-                lectureId: lecture.id,
-                userId: lecture.userId,
-                type: LectureAuditLogType.createdGroupChat,
-                values: [ user.name ]
-            }
-        })
+        await sendNotification(lecture.user, NotificationType.createdGroupChat, [ user.name ], lecture.id)
 
         if (task != null) {
             await prisma.lectureTask.delete({
@@ -296,14 +283,7 @@ export async function POST(req: NextRequest, { params }: {
                 values: [ filename ]
             }
         })
-        await prisma.notification.create({
-            data: {
-                lectureId: lecture.id,
-                userId: lecture.userId,
-                type: LectureAuditLogType.submittedFeedback,
-                values: [ user.name ]
-            }
-        })
+        await sendNotification(lecture.user, NotificationType.submittedFeedback, [ user.name ], lecture.id)
         if (task != null) {
             await prisma.lectureTask.delete({
                 where: {

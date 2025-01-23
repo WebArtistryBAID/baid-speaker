@@ -5,12 +5,14 @@ import {
     LectureAuditLogType,
     LectureStatus,
     LectureTasks,
+    NotificationType,
     Prisma,
     PrismaClient,
     User,
     UserType
 } from '@prisma/client'
 import { requireUser, requireUserPermission } from '@/app/login/login-actions'
+import { sendNotification } from '@/app/lib/notify-action'
 import LectureWhereInput = Prisma.LectureWhereInput
 
 const prisma = new PrismaClient()
@@ -26,7 +28,12 @@ const HydratedLectureInclude = {
         select: {
             id: true,
             name: true,
-            phone: true
+            phone: true,
+            pinyin: true,
+            permissions: true,
+            inboxNotifications: true,
+            smsNotifications: true,
+            type: true
         }
     },
     assignee: {
@@ -73,11 +80,7 @@ export interface HydratedLecture {
     preSurveyQ2: string
     date: Date | null
     status: LectureStatus
-    user: {
-        id: number
-        name: string
-        phone: string | null
-    }
+    user: User
     userId: number
     assignee: {
         id: number
@@ -308,14 +311,7 @@ export async function claimLecture(id: number): Promise<void> {
             lectureId: lecture.id
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.createdGroupChat,
-            values: [ user.name ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.createdGroupChat, [ user.name ], lecture.id)
     if (!fromReclaimable) {
         await prisma.lectureTask.create({
             data: {
@@ -386,14 +382,7 @@ export async function confirmDate(lectureId: number, task: HydratedLectureTask, 
             values: [ date.getTime().toString() ]
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.confirmedDate,
-            values: [ user.name, date.getTime().toString() ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.confirmedDate, [ user.name, date.getTime().toString() ], lecture.id)
     await prisma.lectureTask.create({
         data: {
             type: LectureTasks.confirmNeedComPoster,
@@ -518,14 +507,7 @@ export async function confirmPosterDesigner(lectureId: number): Promise<Hydrated
             lectureId: lecture.id
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.assignedPosterDesigner,
-            values: [ user.name ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.assignedPosterDesigner, [ user.name ], lecture.id)
     await prisma.lectureTask.create({
         data: {
             type: LectureTasks.submitPoster,
@@ -578,14 +560,7 @@ export async function inviteTeacher(lectureId: number): Promise<HydratedLecture>
             lectureId: lecture.id
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.assignedTeacher,
-            values: [ user.name ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.assignedTeacher, [ user.name ], lecture.id)
     if (lecture.uploadedSlides != null) {
         await prisma.lectureTask.create({
             data: {
@@ -636,14 +611,7 @@ export async function schoolApprovePoster(lectureId: number): Promise<HydratedLe
             lectureId: lecture.id
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.approvedPoster,
-            values: [ user.name ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.approvedPoster, [ user.name ], lecture.id)
     if (lecture.uploadedSlides != null) {
         await prisma.lectureTask.create({
             data: {
@@ -677,14 +645,7 @@ export async function sendAdvertisements(lectureId: number, task: HydratedLectur
             lectureId: lecture.id
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.sentAdvertisements,
-            values: [ user.name ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.sentAdvertisements, [ user.name ], lecture.id)
     return lecture
 }
 
@@ -725,14 +686,7 @@ export async function teacherApprovePresentation(lectureId: number): Promise<Hyd
             lectureId: lecture.id
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.teacherApproved,
-            values: [ user.name ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.teacherApproved, [ user.name ], lecture.id)
     return lecture
 }
 
@@ -788,14 +742,7 @@ export async function confirmLocation(lectureId: number, task: HydratedLectureTa
             values: [location]
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.confirmedLocation,
-            values: [ user.name, location ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.confirmedLocation, [ user.name, location ], lecture.id)
     await prisma.lectureTask.create({
         data: {
             type: LectureTasks.testDevice,
@@ -854,14 +801,7 @@ export async function markReady(lectureId: number): Promise<HydratedLecture> {
             values: ['ready']
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.modifiedStatus,
-            values: [ user.name, 'ready' ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.modifiedStatus, [ user.name, 'ready' ], lecture.id)
     return lecture
 }
 
@@ -889,14 +829,7 @@ export async function markCompletingPostTasks(lectureId: number): Promise<Hydrat
             values: ['completingPostTasks']
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.modifiedStatus,
-            values: [ user.name, 'completingPostTasks' ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.modifiedStatus, [ user.name, 'completingPostTasks' ], lecture.id)
     await prisma.lectureTask.create({
         data: {
             type: LectureTasks.updateLiveAudience,
@@ -961,14 +894,7 @@ export async function updateLiveAudience(lectureId: number, task: HydratedLectur
             values: [liveAudience.toString()]
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.updatedLiveAudience,
-            values: [ user.name, liveAudience.toString() ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.updatedLiveAudience, [ user.name, liveAudience.toString() ], lecture.id)
     return lecture
 }
 
@@ -1001,14 +927,7 @@ export async function submitVideo(lectureId: number, task: HydratedLectureTask, 
             values: [video]
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.submittedVideo,
-            values: [ user.name ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.submittedVideo, [ user.name ], lecture.id)
     return lecture
 }
 
@@ -1041,14 +960,7 @@ export async function submitReflection(lectureId: number, task: HydratedLectureT
             values: [reflection]
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.submittedReflection,
-            values: [ user.name ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.submittedReflection, [ user.name ], lecture.id)
     return lecture
 }
 
@@ -1076,14 +988,7 @@ export async function markCompleted(lectureId: number): Promise<HydratedLecture>
             values: ['completed']
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.modifiedStatus,
-            values: [ user.name, 'completed' ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.modifiedStatus, [ user.name, 'completed' ], lecture.id)
     return lecture
 }
 
@@ -1148,14 +1053,7 @@ export async function changeLocation(lectureId: number, location: string): Promi
             values: [ location ]
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.confirmedLocation,
-            values: [ user.name, location ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.confirmedLocation, [ user.name, location ], lecture.id)
     return lecture
 }
 
@@ -1195,14 +1093,7 @@ export async function changeDate(lectureId: number, date: Date): Promise<Hydrate
             values: [ date.getTime().toString() ]
         }
     })
-    await prisma.notification.create({
-        data: {
-            lectureId: lecture.id,
-            userId: lecture.userId,
-            type: LectureAuditLogType.confirmedDate,
-            values: [ user.name, date.getTime().toString() ]
-        }
-    })
+    await sendNotification(lecture.user, NotificationType.confirmedDate, [ user.name, date.getTime().toString() ], lecture.id)
     return lecture
 }
 
