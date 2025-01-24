@@ -203,9 +203,9 @@ model Lecture {
   location          String?
   teacherRating     Int?
   liveAudience      Int?
-  videoViews        Int               @default(0)
-  videoLikes        Int               @default(0)
   logs              LectureAuditLog[]
+  viewedUsers Int[]
+  likedUsers  Int[]
 
   relatedNotis Notification[]
 }

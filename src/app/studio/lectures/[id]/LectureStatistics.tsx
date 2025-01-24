@@ -44,14 +44,14 @@ export default function LectureStatistics({ lecture, uploadServePath }: {
         <Card>
             <p className="secondary text-sm font-display">{t('lecture.statistics.videoViews')}</p>
             <div className="flex flex-col w-full justify-center items-center h-full">
-                <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{lecture.videoViews ?? '...'}</p>
+                <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{lecture.viewedUsers.length ?? '...'}</p>
                 <p>{t('lecture.statistics.videoViews')}</p>
             </div>
         </Card>
         <Card>
             <p className="secondary text-sm font-display">{t('lecture.statistics.videoLikes')}</p>
             <div className="flex flex-col w-full justify-center items-center h-full">
-                <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{lecture.videoLikes ?? '...'}</p>
+                <p className="text-7xl mb-3 font-display font-bold text-blue-500 dark:text-white">{lecture.likedUsers.length ?? '...'}</p>
                 <p>{t('lecture.statistics.videoLikes')}</p>
             </div>
         </Card>

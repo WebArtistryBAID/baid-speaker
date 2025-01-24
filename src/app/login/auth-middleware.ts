@@ -8,6 +8,7 @@ const protectedRoutes = [
 ]
 
 const protectedRoutesPartial = [
+    '/core',
     '/studio'
 ]
 

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { getPublicLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
 import { LectureStatus } from '@prisma/client'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 export default function CoreClient({ lectures, uploadServePath }: {
     lectures: Paginated<HydratedLecture>,
@@ -56,15 +57,12 @@ export default function CoreClient({ lectures, uploadServePath }: {
                             </If>
                         </If>
                         <If condition={lecture.status === LectureStatus.completingPostTasks || lecture.status === LectureStatus.completed}>
-                            <If condition={lecture.liveAudience == null}>
-                                <p className="text-xs secondary">{t('home.statsViewOnly', { view: lecture.videoViews })}</p>
-                            </If>
-                            <If condition={lecture.liveAudience != null}>
-                                <p className="text-xs secondary">{t('home.stats', {
-                                    live: lecture.liveAudience,
-                                    view: lecture.videoViews
-                                })}</p>
-                            </If>
+                            <p className="text-xs secondary">
+                                <If condition={lecture.liveAudience != null}>
+                                    <Trans t={t} i18nKey="home.liveViews" count={lecture.liveAudience ?? 0}/> •
+                                </If>
+                                <Trans t={t} i18nKey="home.videoViews" count={lecture.viewedUsers.length}/>
+                            </p>
                         </If>
                     </div>
                 </Link>)}

@@ -114,8 +114,8 @@ export interface HydratedLecture {
     uploadedFeedback: string | null
     teacherRating: number | null
     liveAudience: number | null
-    videoViews: number
-    videoLikes: number
+    viewedUsers: number[]
+    likedUsers: number[]
 }
 
 export interface HydratedLectureTask {
@@ -183,6 +183,67 @@ export async function createLecture(title: string, contact: string, surveyQ1: st
         }
     })
     return lecture
+}
+
+export async function countMyView(lectureID: number): Promise<void> {
+    const user = await requireUser()
+    // Add my user to Lecture's `viewedUsers`, if not already there
+    const lecture = await prisma.lecture.findUnique({
+        where: {
+            id: lectureID
+        }
+    })
+    if (lecture == null) {
+        return
+    }
+    if (lecture.viewedUsers.includes(user.id)) {
+        return
+    }
+    await prisma.lecture.update({
+        where: {
+            id: lecture.id
+        },
+        data: {
+            viewedUsers: {
+                push: user.id
+            }
+        }
+    })
+}
+
+export async function toggleLike(lectureID: number): Promise<void> {
+    const user = await requireUser()
+    const lecture = await prisma.lecture.findUnique({
+        where: {
+            id: lectureID
+        }
+    })
+    if (lecture == null) {
+        return
+    }
+    if (lecture.likedUsers.includes(user.id)) {
+        await prisma.lecture.update({
+            where: {
+                id: lecture.id
+            },
+            data: {
+                likedUsers: {
+                    set: lecture.likedUsers.filter(id => id !== user.id)
+                }
+            }
+        })
+    } else {
+        await prisma.lecture.update({
+            where: {
+                id: lecture.id
+            },
+            data: {
+                likedUsers: {
+                    push: user.id
+                }
+            }
+        })
+    }
 }
 
 export async function getMyOwnLatestLecture(): Promise<HydratedLecture | null> {

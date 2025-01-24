@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description: 'An integrated service for BAID Speaker'
 }
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html lang="en" suppressHydrationWarning>
         <head>
@@ -32,6 +32,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
         <NextTopLoader showSpinner={false} color="#3b82f6"/>
         {children}
+        <p className="fixed bottom-2 right-2 secondary text-xs"><a
+            href="https://beian.miit.gov.cn">{process.env.BOTTOM_TEXT}</a></p>
         </body>
         </html>
     )

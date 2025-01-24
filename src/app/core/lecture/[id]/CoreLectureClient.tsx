@@ -1,6 +1,6 @@
 'use client'
 
-import { HydratedLecture } from '@/app/lib/lecture-actions'
+import { countMyView, HydratedLecture, toggleLike } from '@/app/lib/lecture-actions'
 import { useTranslationClient } from '@/app/i18n/client'
 import {
     HiAcademicCap,
@@ -15,8 +15,11 @@ import {
 } from 'react-icons/hi'
 import { Button } from 'flowbite-react'
 import If from '@/app/lib/If'
-import { LectureStatus } from '@prisma/client'
+import { LectureStatus, User } from '@prisma/client'
 import { useEffect, useState } from 'react'
+import { getMyUser } from '@/app/login/login-actions'
+import { useRouter } from 'next/navigation'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 export default function CoreLectureClient({ lecture, uploadServePath }: {
     lecture: HydratedLecture,
@@ -25,16 +28,22 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
     const { t } = useTranslationClient('core')
     const [ youtubeAvailable, setYoutubeAvailable ] = useState(true)
     const [ copied, setCopied ] = useState(false)
+    const [ myUser, setMyUser ] = useState<User>()
+    const [ loading, setLoading ] = useState(false)
+    const router = useRouter()
 
     useEffect(() => {
         (async () => {
+            setMyUser((await getMyUser())!)
+            await countMyView(lecture.id)
+
             try {
                 await fetch('https://www.google.com', { mode: 'no-cors' })
             } catch {
                 setYoutubeAvailable(false)
             }
         })()
-    }, [])
+    }, [ lecture.id ])
 
     function findSource(): string {
         if (lecture.uploadedVideo == null) {
@@ -73,6 +82,13 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
                 setCopied(false)
             }, 3000)
         }
+    }
+
+    async function like() {
+        setLoading(true)
+        await toggleLike(lecture.id)
+        router.refresh()
+        setLoading(false)
     }
 
     return <div className="base-studio-page">
@@ -138,9 +154,16 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
 
                     <div className="flex w-full flex-wrap gap-3">
                         <Button pill color="light" aria-disabled><HiUser
-                            className="btn-icon"/>{t('lecture.views', { views: lecture.videoViews })}</Button>
-                        <Button pill color="light"><HiThumbUp
-                            className="btn-icon"/>{t('lecture.likes', { likes: lecture.videoLikes })}</Button>
+                            className="btn-icon"/><Trans t={t} i18nKey="lecture.views"
+                                                         count={lecture.viewedUsers.length}/></Button>
+                        <Button pill disabled={loading}
+                                color={lecture.likedUsers.includes(myUser?.id ?? -1) ? 'blue' : 'light'} onClick={like}>
+                            <HiThumbUp className="btn-icon"/>
+                            <Trans t={t} i18nKey="lecture.likes" count={lecture.likedUsers.length}/>
+                            <If condition={lecture.likedUsers.includes(myUser?.id ?? -1)}>
+                                <span className="sr-only">{t('lecture.youLiked')}</span>
+                            </If>
+                        </Button>
                         <Button pill color="light" onClick={share}><HiShare
                             className="btn-icon"/>{copied ? t('lecture.copied') : t('lecture.share')}</Button>
                     </div>
@@ -150,7 +173,7 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
                     <div className="flex flex-col gap-5">
                         <a href={uploadServePath + lecture.uploadedSlides} download
                            className={`${lecture.uploadedVideo == null ? 'h-1/2' : ''} 
-                           rounded-3xl bg-blue-500 hover:bg-blue-600 transition-colors duration-100 p-8 flex gap-5 items-center`}>
+                           rounded-3xl bg-blue-500 hover:bg-blue-600 transition-colors duration-100 p-8 flex gap-5 items-center text-white`}>
                             <HiPresentationChartBar className="text-2xl w-1/4"/>
                             <div className="w-3/4">
                                 <p className="font-display text-xl font-bold">{t('lecture.slides')}</p>
@@ -159,7 +182,7 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
                         </a>
 
                         <If condition={lecture.uploadedVideo == null}>
-                            <div className="rounded-3xl bg-green-400 p-8 flex gap-5 items-center h-1/2">
+                            <div className="rounded-3xl bg-green-400 p-8 flex gap-5 items-center h-1/2 text-white">
                                 <HiVideoCamera className="text-2xl w-1/4"/>
                                 <div className="w-3/4">
                                     <p className="font-display text-xl font-bold">{t('lecture.video')}</p>
@@ -184,7 +207,8 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
                     </div>
                 </If>
 
-                <div className="rounded-3xl bg-gray-50 dark:bg-gray-800 p-8 max-h-96 overflow-y-auto">
+                <div
+                    className={`rounded-3xl bg-gray-50 dark:bg-gray-800 p-8 overflow-y-auto ${lecture.uploadedVideo == null ? 'h-full min-h-96' : 'max-h-96'}`}>
                     <p className="text-sm secondary font-display">{t('lecture.survey')}</p>
                     <p className="font-display font-bold">{t('lecture.preSurveyQ1')}</p>
                     <p className="mb-3">{lecture.preSurveyQ1}</p>
