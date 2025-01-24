@@ -20,6 +20,8 @@
 # production
 /build
 
+start.sh
+
 # misc
 .DS_Store
 *.pem
