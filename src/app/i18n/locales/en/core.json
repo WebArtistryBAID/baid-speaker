@@ -12,6 +12,10 @@
     "videoViews_one": "{{count}} video view",
     "videoViews_other": "{{count}} video views"
   },
+  "search": {
+    "placeholder": "Search",
+    "empty": "No results found."
+  },
   "lecture": {
     "notAssigned": "Not Assigned",
     "host": "Host: ",

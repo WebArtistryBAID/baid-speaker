@@ -259,6 +259,82 @@ export async function getMyOwnLatestLecture(): Promise<HydratedLecture | null> {
     })
 }
 
+export async function searchPublicLectures(page: number, keyword: string): Promise<Paginated<HydratedLecture>> {
+    if (keyword.length < 3) {
+        return {
+            pages: 0,
+            page: 0,
+            items: []
+        }
+    }
+    const whereClause = {
+        AND: [
+            {
+                OR: [
+                    {
+                        status: LectureStatus.ready
+                    },
+                    {
+                        status: LectureStatus.completingPostTasks
+                    },
+                    {
+                        status: LectureStatus.completed
+                    }
+                ]
+            },
+            {
+                OR: [
+                    {
+                        title: {
+                            contains: keyword,
+                            mode: 'insensitive'
+                        }
+                    },
+                    {
+                        user: {
+                            OR: [
+                                {
+                                    name: {
+                                        contains: keyword,
+                                        mode: 'insensitive'
+                                    }
+                                },
+                                {
+                                    pinyin: {
+                                        contains: keyword,
+                                        mode: 'insensitive'
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                posterApproved: true
+            }
+        ]
+    }
+
+    const pages = Math.ceil(await prisma.lecture.count({
+        where: whereClause as never
+    }) / 10)
+    const lectures = await prisma.lecture.findMany({
+        where: whereClause as never,
+        orderBy: {
+            createdAt: 'desc'
+        },
+        include: HydratedLectureInclude,
+        skip: page * 10,
+        take: 10
+    })
+    return {
+        items: lectures,
+        page,
+        pages
+    }
+}
+
 export async function getPublicLectures(page: number): Promise<Paginated<HydratedLecture>> {
     const pages = Math.ceil(await prisma.lecture.count({
         where: {

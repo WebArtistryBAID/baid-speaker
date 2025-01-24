@@ -1,17 +1,18 @@
 'use client'
 
 import { useTranslationClient } from '@/app/i18n/client'
-import { Button, Pagination } from 'flowbite-react'
+import { Pagination } from 'flowbite-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { getPublicLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-actions'
+import { HydratedLecture, Paginated, searchPublicLectures } from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
 import { LectureStatus } from '@prisma/client'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-export default function CoreClient({ lectures, uploadServePath }: {
+export default function CoreSearchClient({ lectures, uploadServePath, query }: {
     lectures: Paginated<HydratedLecture>,
-    uploadServePath: string
+    uploadServePath: string,
+    query: string
 }) {
     const { t } = useTranslationClient('core')
 
@@ -21,21 +22,17 @@ export default function CoreClient({ lectures, uploadServePath }: {
     useEffect(() => {
         (async () => {
             if (page.page !== currentPage) {
-                setPage(await getPublicLectures(currentPage))
+                setPage(await searchPublicLectures(currentPage, query))
             }
         })()
     }, [ currentPage ])
 
     return <div className="base-studio-page">
-        <If condition={currentPage === 0}>
-            <div className="lg:px-24 xl:px-48 2xl:px-72 mb-16">
-                <img src="/assets/logo.png" alt="BAID Speaker Logo" className="w-20 mb-5"/>
-                <h1 className="mb-3">{t('home.welcomeTitle')}</h1>
-                <p className="mb-5">{t('home.welcomeSubtitle')}</p>
-                <div className="flex items-center gap-3">
-                    <Button pill color="blue" as={Link} href="/studio" className="inline-block">{t('home.cta')}</Button>
-                    <p className="text-sm secondary">{t('home.ctaSide')}</p>
-                </div>
+        <If condition={page.pages < 1}>
+            <div className="w-full h-[60dvh] flex flex-col justify-center items-center">
+                <img src="/assets/illustrations/art-light.png" className="dark:hidden w-72" alt=""/>
+                <img src="/assets/illustrations/art-dark.png" className="hidden dark:block w-72" alt=""/>
+                <p className="mb-3">{t('search.empty')}</p>
             </div>
         </If>
 
