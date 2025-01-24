@@ -17,22 +17,22 @@ export async function sendNotification(user: User, type: NotificationType, value
 
     if (user.smsNotifications.includes(type)) {
         const template = Object({
-            assignedHost: 'SMS_478435414',
-            confirmedDate: 'SMS_478545395',
-            assignedTeacher: 'SMS_478645258',
-            assignedPosterDesigner: 'SMS_478570397',
-            submittedPoster: 'SMS_478600350',
-            approvedPoster: 'SMS_478535393',
-            createdGroupChat: 'SMS_478470393',
-            sentAdvertisements: 'SMS_478525388',
-            teacherApproved: 'SMS_478540373',
-            confirmedLocation: 'SMS_478560408',
-            testedDevice: 'SMS_478550384',
-            updatedLiveAudience: 'SMS_478480411',
-            submittedFeedback: 'SMS_478535394',
-            submittedVideo: 'SMS_478520398',
-            submittedReflection: 'SMS_478430390',
-            modifiedStatus: 'SMS_478575429'
+            assignedHost: 'SMS_478585457',
+            confirmedDate: 'SMS_478535455',
+            assignedTeacher: 'SMS_478530425',
+            assignedPosterDesigner: 'SMS_478620429',
+            submittedPoster: 'SMS_478500448',
+            approvedPoster: 'SMS_478410431',
+            createdGroupChat: 'SMS_478615482',
+            sentAdvertisements: 'SMS_478610444',
+            teacherApproved: 'SMS_478590477',
+            confirmedLocation: 'SMS_478570450',
+            testedDevice: 'SMS_478510427',
+            updatedLiveAudience: 'SMS_478625451',
+            submittedFeedback: 'SMS_478415465',
+            submittedVideo: 'SMS_478410430',
+            submittedReflection: 'SMS_478505441',
+            modifiedStatus: 'SMS_478390475'
         })[type]
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const params: any = {
