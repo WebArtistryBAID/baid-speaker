@@ -9,7 +9,8 @@ const protectedRoutes = [
 
 const protectedRoutesPartial = [
     '/core',
-    '/studio'
+    '/studio',
+    '/invitations'
 ]
 
 export default async function authMiddleware(req: NextRequest): Promise<NextResponse | null> {
