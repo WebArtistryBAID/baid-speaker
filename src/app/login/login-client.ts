@@ -15,6 +15,8 @@ export function useCachedUser(): User | null {
         phone: data.phone as string,
         pinyin: data.pinyin as string,
         permissions: data.permissions as string[],
-        type: data.userType as UserType
+        type: data.userType as UserType,
+        inboxNotifications: [],
+        smsNotifications: []
     }
 }

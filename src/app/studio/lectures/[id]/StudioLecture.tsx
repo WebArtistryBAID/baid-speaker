@@ -142,7 +142,7 @@ export default function StudioLecture({ lecture, uploadServePath }: {
             setOnboardingModal(true)
             localStorage.setItem('onboarding', 'done')
         }
-    }, [])
+    }, [ t ])
 
     if (myUser == null) {
         return <div className="base-studio-page">

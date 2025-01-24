@@ -13,7 +13,7 @@ export default function PageLoginOnboarding() {
                 {t('details')}
             </p>
             <button onClick={async () => {
-                location.href = await getLoginTarget()
+                location.href = await getLoginTarget('/core')
             }} className="btn">{t('tryAgain')}</button>
         </div>
     </div>

@@ -72,7 +72,7 @@ export default function TaskCard({ task }: { task: HydratedLectureTask }) {
         case LectureTasks.submitReflection:
             return <SubmitReflectionCard task={task}/>
         default:
-            return <div>Wait, that's impossible...</div>
+            return <div>Wait, that&apos;s impossible...</div>
     }
 }
 

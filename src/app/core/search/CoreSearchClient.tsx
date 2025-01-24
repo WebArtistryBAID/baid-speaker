@@ -25,7 +25,7 @@ export default function CoreSearchClient({ lectures, uploadServePath, query }: {
                 setPage(await searchPublicLectures(currentPage, query))
             }
         })()
-    }, [ currentPage ])
+    }, [ currentPage, query ])
 
     return <div className="base-studio-page">
         <If condition={page.pages < 1}>
