@@ -77,8 +77,10 @@ export default function CoreSearchClient({lectures, uploadServePath, query}: {
                 </If>
 
                 <div className="flex overflow-x-auto sm:justify-center">
-                    <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
-                                totalPages={page.pages}/>
+                    <If condition={page.pages > 0}>
+                        <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
+                                    totalPages={page.pages}/>
+                    </If>
                 </div>
             </If>
         </div>

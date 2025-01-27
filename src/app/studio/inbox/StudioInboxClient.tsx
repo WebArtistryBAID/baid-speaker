@@ -1,14 +1,14 @@
 'use client'
 
-import { useTranslationClient } from '@/app/i18n/client'
-import { Paginated } from '@/app/lib/lecture-actions'
-import { useEffect, useState } from 'react'
-import { dismissNotification, getMyNotifications, HydratedNotification } from '@/app/login/login-actions'
+import {useTranslationClient} from '@/app/i18n/client'
+import {Paginated} from '@/app/lib/lecture-actions'
+import {useEffect, useState} from 'react'
+import {dismissNotification, getMyNotifications, HydratedNotification} from '@/app/login/login-actions'
 import If from '@/app/lib/If'
-import { Alert, Breadcrumb, BreadcrumbItem, Pagination } from 'flowbite-react'
-import { HiColorSwatch, HiInformationCircle } from 'react-icons/hi'
-import { NotificationType } from '@prisma/client'
-import { Trans } from 'react-i18next/TransWithoutContext'
+import {Alert, Breadcrumb, BreadcrumbItem, Pagination} from 'flowbite-react'
+import {HiColorSwatch, HiInformationCircle} from 'react-icons/hi'
+import {NotificationType} from '@prisma/client'
+import {Trans} from 'react-i18next/TransWithoutContext'
 import Link from 'next/link'
 
 export default function StudioInboxClient({ notifications }: { notifications: Paginated<HydratedNotification> }) {
@@ -79,8 +79,10 @@ export default function StudioInboxClient({ notifications }: { notifications: Pa
             })}
 
             <div className="flex overflow-x-auto sm:justify-center">
-                <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
-                            totalPages={page.pages}/>
+                <If condition={page.pages > 0}>
+                    <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
+                                totalPages={page.pages}/>
+                </If>
             </div>
         </If>
     </div>

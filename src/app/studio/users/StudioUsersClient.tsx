@@ -1,10 +1,10 @@
 'use client'
 
-import { Paginated } from '@/app/lib/lecture-actions'
-import { User } from '@prisma/client'
-import { useTranslationClient } from '@/app/i18n/client'
-import { useEffect, useState } from 'react'
-import { getUsers } from '@/app/login/login-actions'
+import {Paginated} from '@/app/lib/lecture-actions'
+import {User} from '@prisma/client'
+import {useTranslationClient} from '@/app/i18n/client'
+import {useEffect, useState} from 'react'
+import {getUsers} from '@/app/login/login-actions'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -16,8 +16,9 @@ import {
     TableRow,
     TextInput
 } from 'flowbite-react'
-import { HiColorSwatch, HiSearch } from 'react-icons/hi'
+import {HiColorSwatch, HiSearch} from 'react-icons/hi'
 import Link from 'next/link'
+import If from '@/app/lib/If'
 
 export default function StudioUsersClient({ users }: { users: Paginated<User> }) {
     const { t } = useTranslationClient('studio')
@@ -54,8 +55,10 @@ export default function StudioUsersClient({ users }: { users: Paginated<User> })
         </Table>
 
         <div className="flex overflow-x-auto sm:justify-center">
-            <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
-                        totalPages={page.pages}/>
+            <If condition={page.pages > 0}>
+                <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
+                            totalPages={page.pages}/>
+            </If>
         </div>
     </div>
 }

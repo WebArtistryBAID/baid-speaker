@@ -1,13 +1,13 @@
 'use client'
 
-import { useTranslationClient } from '@/app/i18n/client'
-import { Button, Pagination } from 'flowbite-react'
+import {useTranslationClient} from '@/app/i18n/client'
+import {Button, Pagination} from 'flowbite-react'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { getPublicLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-actions'
+import {useEffect, useState} from 'react'
+import {getPublicLectures, HydratedLecture, Paginated} from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
-import { LectureStatus } from '@prisma/client'
-import { Trans } from 'react-i18next/TransWithoutContext'
+import {LectureStatus} from '@prisma/client'
+import {Trans} from 'react-i18next/TransWithoutContext'
 
 export default function CoreClient({ lectures, uploadServePath }: {
     lectures: Paginated<HydratedLecture>,
@@ -70,8 +70,10 @@ export default function CoreClient({ lectures, uploadServePath }: {
         </If>
 
         <div className="flex overflow-x-auto sm:justify-center">
-            <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
-                        totalPages={page.pages}/>
+            <If condition={page.pages > 0}>
+                <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
+                            totalPages={page.pages}/>
+            </If>
         </div>
     </div>
 }

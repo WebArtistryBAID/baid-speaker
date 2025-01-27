@@ -1,14 +1,14 @@
 'use client'
 
-import { useTranslationClient } from '@/app/i18n/client'
-import { useEffect, useState } from 'react'
-import { getMyLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-actions'
+import {useTranslationClient} from '@/app/i18n/client'
+import {useEffect, useState} from 'react'
+import {getMyLectures, HydratedLecture, Paginated} from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
-import { Breadcrumb, BreadcrumbItem, Button, Card, Pagination } from 'flowbite-react'
+import {Breadcrumb, BreadcrumbItem, Button, Card, Pagination} from 'flowbite-react'
 import Link from 'next/link'
-import { LectureRoleIconCircle, LectureStatusIconCircle } from '@/app/lib/lecture-icons'
-import { useCachedUser } from '@/app/login/login-client'
-import { HiColorSwatch, HiRefresh } from 'react-icons/hi'
+import {LectureRoleIconCircle, LectureStatusIconCircle} from '@/app/lib/lecture-icons'
+import {useCachedUser} from '@/app/login/login-client'
+import {HiColorSwatch, HiRefresh} from 'react-icons/hi'
 
 export default function StudioLectures() {
     const { t } = useTranslationClient('studio')
@@ -90,8 +90,10 @@ export default function StudioLectures() {
                 </Card>)}
             </div>
             <div className="flex overflow-x-auto sm:justify-center">
-                <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
-                            totalPages={page.pages}/>
+                <If condition={page.pages > 0}>
+                    <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
+                                totalPages={page.pages}/>
+                </If>
             </div>
         </If>
     </div>

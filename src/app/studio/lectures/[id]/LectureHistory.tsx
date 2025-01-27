@@ -1,8 +1,9 @@
-import { getLogs, HydratedLecture, HydratedLectureAuditLog, Paginated } from '@/app/lib/lecture-actions'
-import { useEffect, useState } from 'react'
-import { Pagination, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 'flowbite-react'
-import { useTranslationClient } from '@/app/i18n/client'
-import { LectureAuditLogType } from '@prisma/client'
+import {getLogs, HydratedLecture, HydratedLectureAuditLog, Paginated} from '@/app/lib/lecture-actions'
+import {useEffect, useState} from 'react'
+import {Pagination, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from 'flowbite-react'
+import {useTranslationClient} from '@/app/i18n/client'
+import {LectureAuditLogType} from '@prisma/client'
+import If from '@/app/lib/If'
 
 export default function LectureHistory({lecture}: { lecture: HydratedLecture }) {
     const {t} = useTranslationClient('studio')
@@ -60,8 +61,10 @@ export default function LectureHistory({lecture}: { lecture: HydratedLecture }) 
             </TableBody>
         </Table>
         <div className="flex overflow-x-auto sm:justify-center">
-            <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
-                        totalPages={page.pages}/>
+            <If condition={page.pages > 0}>
+                <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
+                            totalPages={page.pages}/>
+            </If>
         </div>
     </div>
 }

@@ -1,13 +1,13 @@
 'use client'
 
-import { useTranslationClient } from '@/app/i18n/client'
-import { useEffect, useState } from 'react'
-import { getLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-actions'
-import { Prisma, User } from '@prisma/client'
-import { getMyUser } from '@/app/login/login-actions'
+import {useTranslationClient} from '@/app/i18n/client'
+import {useEffect, useState} from 'react'
+import {getLectures, HydratedLecture, Paginated} from '@/app/lib/lecture-actions'
+import {Prisma, User} from '@prisma/client'
+import {getMyUser} from '@/app/login/login-actions'
 import If from '@/app/lib/If'
-import { Button, Card, Pagination } from 'flowbite-react'
-import { HiRefresh, HiSpeakerphone } from 'react-icons/hi'
+import {Button, Card, Pagination} from 'flowbite-react'
+import {HiRefresh, HiSpeakerphone} from 'react-icons/hi'
 import Link from 'next/link'
 import LectureWhereInput = Prisma.LectureWhereInput
 
@@ -76,8 +76,10 @@ export default function TypicalLectures({ filter }: { filter: LectureWhereInput 
             </div>
 
             <div className="flex overflow-x-auto sm:justify-center">
-                <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
-                            totalPages={page.pages}/>
+                <If condition={page.pages > 0}>
+                    <Pagination currentPage={currentPage + 1} onPageChange={p => setCurrentPage(p - 1)}
+                                totalPages={page.pages}/>
+                </If>
             </div>
         </If>
     </>
