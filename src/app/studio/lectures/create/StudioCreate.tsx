@@ -2,7 +2,7 @@
 
 import { useTranslationClient } from '@/app/i18n/client'
 import { Breadcrumb, BreadcrumbItem, Button, Label, Textarea, TextInput } from 'flowbite-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 import { createLecture } from '@/app/lib/lecture-actions'
 import { useRouter } from 'next/navigation'
@@ -21,6 +21,18 @@ export default function StudioCreate() {
     const [ surveyQ2Error, setSurveyQ2Error ] = useState(false)
     const [ loading, setLoading ] = useState(false)
     const router = useRouter()
+
+    useEffect(() => {
+        setTitle(localStorage.getItem('baid-speaker-title') ?? '')
+        setSurveyQ1(localStorage.getItem('baid-speaker-survey-q1') ?? '')
+        setSurveyQ2(localStorage.getItem('baid-speaker-survey-q2') ?? '')
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('baid-speaker-title', title)
+        localStorage.setItem('baid-speaker-survey-q1', surveyQ1)
+        localStorage.setItem('baid-speaker-survey-q2', surveyQ2)
+    }, [ title, surveyQ1, surveyQ2 ])
 
     function submit() {
         // Validation
@@ -49,6 +61,8 @@ export default function StudioCreate() {
             return
         }
 
+        localStorage.removeItem('baid-speaker-survey-q1')
+        localStorage.removeItem('baid-speaker-survey-q2')
         setLoading(true);
         (async () => {
             router.replace(`/studio/lectures/${(await createLecture(title, contact, surveyQ1, surveyQ2)).id}`)
