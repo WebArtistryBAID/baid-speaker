@@ -20,12 +20,14 @@ import { useCachedUser } from '@/app/login/login-client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { LectureStatus } from '@prisma/client'
+import { HiLink } from 'react-icons/hi'
 
 export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) {
     const { t } = useTranslationClient('studio')
     const [ removeHost, setRemoveHost ] = useState(false)
     const [ removeTeacherOpen, setRemoveTeacher ] = useState(false)
     const [ removeArtistOpen, setRemoveArtist ] = useState(false)
+    const [ copied, setCopied ] = useState(false)
     const [ loading, setLoading ] = useState(false)
     const router = useRouter()
 
@@ -90,7 +92,7 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
             </ModalFooter>
         </Modal>
 
-        <Table>
+        <Table className="mb-5">
             <TableHead>
                 <TableHeadCell>{t('lecture.people.name')}</TableHeadCell>
                 <TableHeadCell>{t('lecture.people.phone')}</TableHeadCell>
@@ -108,6 +110,14 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                         <TableCell/>
                     </If>
                 </TableRow>
+                {lecture.collaborators.map(collaborator => <TableRow className="tr" key={collaborator.id}>
+                    <TableCell className="th">{collaborator.name}</TableCell>
+                    <TableCell>{collaborator.phone}</TableCell>
+                    <TableCell>{t('lecture.people.collaborator')}</TableCell>
+                    <If condition={user.permissions.includes('admin.manage')}>
+                        <TableCell/>
+                    </If>
+                </TableRow>)}
                 <If condition={lecture.assigneeId != null}>
                     <TableRow className="tr">
                         <TableCell className="th">{lecture.assignee?.name}</TableCell>
@@ -173,5 +183,15 @@ export default function LectureUsers({ lecture }: { lecture: HydratedLecture }) 
                 </TableRow>
             </TableBody>
         </Table>
+
+        <Button color="blue" onClick={async () => {
+            await navigator.clipboard.writeText(`${location.origin}/invitations/${lecture.id}/collab`)
+            setCopied(true)
+            setTimeout(() => {
+                setCopied(false)
+            }, 3000)
+        }}>
+            <HiLink className="btn-icon"/>{t(copied ? 'copied' : 'lecture.people.inviteCollab')}
+        </Button>
     </>
 }

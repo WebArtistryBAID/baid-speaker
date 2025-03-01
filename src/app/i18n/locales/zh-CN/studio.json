@@ -185,7 +185,8 @@
     "modifiedStatus": "{{user}} 将此讲座的状态修改为 {{v0}}。",
     "markedReclaimable": "{{user}} 标记此讲座为可由其他主持人接管。",
     "removedTeacher": "{{user}} 移除了此讲座的指导教师。",
-    "removedArtist": "{{user}} 移除了此讲座的海报设计师。"
+    "removedArtist": "{{user}} 移除了此讲座的海报设计师。",
+    "addedCollaborator": "{{user}} 被添加为了此讲座的合作者。"
   },
   "notifications": {
     "assignedHost": "<1>{{user}}</1> 被分配为 <1>{{lecture}}</1> 的主持人。",
@@ -272,6 +273,7 @@
     "role": "角色: ",
     "lastUpdated": "最近更新: ",
     "speaker": "讲师",
+    "collaborator": "合作者",
     "host": "主持人",
     "teacher": "指导教师",
     "poster": "海报设计师",
@@ -367,10 +369,12 @@
       "removeTeacherConfirm": "移除指导教师将造成不可逆的影响。您需要为讲座邀请另一位指导教师。",
       "removeArtistConfirm": "移除海报设计师将造成不可逆的影响。讲座将回退到之前阶段。",
       "speaker": "讲师",
+      "collaborator": "合作者",
       "host": "主持人",
       "teacher": "指导教师",
       "poster": "海报设计师",
-      "other": "其他管理员"
+      "other": "其他管理员",
+      "inviteCollab": "邀请合作者"
     },
     "history": {
       "id": "日志 ID",
@@ -414,6 +418,19 @@
       "message": "当您完成前一个讲座后，才可以开始下一个讲座。",
       "cta": "返回"
     }
+  },
+  "collabInvitation": {
+    "title": "邀请",
+    "message": "您被邀请在北中小讲师讲座 <1>{{lecture}}</1> 上合作，讲师是 <1>{{speaker}}</1>。",
+    "message2": "接受邀请后，讲座成员将可以看到您的手机号码以便联系您。",
+    "info": "讲座信息",
+    "lecture": "讲座标题",
+    "speaker": "讲师",
+    "host": "主持人",
+    "teacher": "指导教师",
+    "notInvited": "尚未邀请",
+    "date": "日期",
+    "cta": "接受邀请"
   },
   "artistInvitation": {
     "title": "邀请",

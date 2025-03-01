@@ -13,24 +13,25 @@ enum UserType {
 }
 
 model User {
-  id               Int                @id
-  name             String
-  pinyin           String
-  phone            String?
-  permissions      String[]
-  logs             UserAuditLog[]
-  type             UserType
-  oaTokens         OATokens?
-  lectures         Lecture[]          @relation("lectures")
-  assignedLectures Lecture[]          @relation("assignedLectures")
-  assignedPosters  Lecture[]          @relation("assignedPosters")
-  assignedTeachers Lecture[]          @relation("assignedTeachers")
-  lectureLogs      LectureAuditLog[]
-  assignedTasks    LectureTask[]
-  inboxNotifications NotificationType[] @default([assignedHost, confirmedDate, assignedTeacher, assignedPosterDesigner, submittedPoster, approvedPoster, createdGroupChat, sentAdvertisements, teacherApproved, confirmedLocation, testedDevice, updatedLiveAudience, submittedFeedback, submittedVideo, submittedReflection, modifiedStatus])
-  smsNotifications NotificationType[] @default([assignedHost, confirmedDate, assignedTeacher, submittedPoster, approvedPoster, teacherApproved, modifiedStatus, submittedVideo])
-  notifications      Notification[]
-  comments         Comment[]
+  id                   Int                @id
+  name                 String
+  pinyin               String
+  phone                String?
+  permissions          String[]
+  logs                 UserAuditLog[]
+  type                 UserType
+  oaTokens             OATokens?
+  lectures             Lecture[]          @relation("lectures")
+  assignedLectures     Lecture[]          @relation("assignedLectures")
+  assignedPosters      Lecture[]          @relation("assignedPosters")
+  assignedTeachers     Lecture[]          @relation("assignedTeachers")
+  lectureLogs          LectureAuditLog[]
+  assignedTasks        LectureTask[]
+  inboxNotifications   NotificationType[] @default([assignedHost, confirmedDate, assignedTeacher, assignedPosterDesigner, submittedPoster, approvedPoster, createdGroupChat, sentAdvertisements, teacherApproved, confirmedLocation, testedDevice, updatedLiveAudience, submittedFeedback, submittedVideo, submittedReflection, modifiedStatus])
+  smsNotifications     NotificationType[] @default([assignedHost, confirmedDate, assignedTeacher, submittedPoster, approvedPoster, teacherApproved, modifiedStatus, submittedVideo])
+  notifications        Notification[]
+  comments             Comment[]
+  collaboratedLectures Lecture[]
 }
 
 enum UserAuditLogType {
@@ -146,6 +147,7 @@ enum LectureAuditLogType {
   markedReclaimable
   removedTeacher
   removedArtist
+  addedCollaborator
 }
 
 enum LectureStatus {
@@ -179,6 +181,7 @@ model Lecture {
   status            LectureStatus
   user              User              @relation("lectures", fields: [userId], references: [id])
   userId            Int
+  collaborators User[]
   assignee          User?             @relation("assignedLectures", fields: [assigneeId], references: [id])
   assigneeId        Int?
   reclaimable       Boolean           @default(false)
@@ -200,10 +203,10 @@ model Lecture {
   teacherRating     Int?
   liveAudience      Int?
   logs              LectureAuditLog[]
-  viewedUsers  Int[]
-  likedUsers   Int[]
-  relatedNotis Notification[]
-  comments     Comment[]
+  viewedUsers   Int[]
+  likedUsers    Int[]
+  relatedNotis  Notification[]
+  comments      Comment[]
 }
 
 model Comment {

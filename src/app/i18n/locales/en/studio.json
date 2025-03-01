@@ -185,7 +185,8 @@
     "modifiedStatus": "{{user}} modified the status of this lecture to {{v0}}.",
     "markedReclaimable": "{{user}} marked this lecture as reclaimable by another host.",
     "removedTeacher": "{{user}} removed the teacher from this lecture.",
-    "removedArtist": "{{user}} removed the poster designer from this lecture."
+    "removedArtist": "{{user}} removed the poster designer from this lecture.",
+    "addedCollaborator": "{{user}} is added as a collaborator for this lecture."
   },
   "notifications": {
     "assignedHost": "<1>{{user}}</1> was assigned as the host for <1>{{lecture}}</1>.",
@@ -272,6 +273,7 @@
     "role": "Role: ",
     "lastUpdated": "Last Updated: ",
     "speaker": "Speaker",
+    "collaborator": "Collaborator",
     "host": "Host",
     "teacher": "Teacher",
     "poster": "Poster Designer",
@@ -367,10 +369,12 @@
       "removeTeacherConfirm": "Removing the teacher will cause irreversible side effects. You will need to invite another teacher to the lecture.",
       "removeArtistConfirm": "Removing the poster designer will cause irreversible side effects. The lecture will be reverted to an earlier stage.",
       "speaker": "Speaker",
+      "collaborator": "Collaborator",
       "host": "Host",
       "teacher": "Teacher",
       "poster": "Poster Designer",
-      "other": "Other Administrators"
+      "other": "Other Administrators",
+      "inviteCollab": "Invite Collaborator"
     },
     "history": {
       "id": "Log ID",
@@ -414,6 +418,19 @@
       "message": "You can only have one active lecture at once. You may start your next lecture when you finish the previous one.",
       "cta": "Back to Dashboard"
     }
+  },
+  "collabInvitation": {
+    "title": "Invitation",
+    "message": "You have been invited to collaborate on BAID Speaker for the lecture <1>{{lecture}}</1> by <1>{{speaker}}</1>.",
+    "message2": "By accepting the invitation, lecture members will be able to see your phone number to contact you.",
+    "info": "Lecture Information",
+    "lecture": "Lecture Title",
+    "speaker": "Speaker",
+    "host": "Host",
+    "teacher": "Teacher",
+    "notInvited": "Not Invited Yet",
+    "date": "Date",
+    "cta": "Accept Invitation"
   },
   "artistInvitation": {
     "title": "Invitation",

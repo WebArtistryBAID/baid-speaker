@@ -36,6 +36,13 @@ const HydratedLectureInclude = {
             type: true
         }
     },
+    collaborators: {
+        select: {
+            id: true,
+            name: true,
+            phone: true
+        }
+    },
     assignee: {
         select: {
             id: true,
@@ -99,7 +106,12 @@ export interface HydratedLecture {
         id: number
         name: string
         phone: string | null
-    } | null
+    } | null,
+    collaborators: {
+        id: number
+        name: string
+        phone: string | null
+    }[],
     posterAssigneeId: number | null
     needComPoster: boolean | null
     teacherPreFdbk: string | null
@@ -429,6 +441,13 @@ export async function getMyLectures(page: number): Promise<Paginated<HydratedLec
                 },
                 {
                     posterAssigneeId: user.id
+                },
+                {
+                    collaborators: {
+                        some: {
+                            id: user.id
+                        }
+                    }
                 }
             ]
         }
@@ -447,6 +466,13 @@ export async function getMyLectures(page: number): Promise<Paginated<HydratedLec
                 },
                 {
                     posterAssigneeId: user.id
+                },
+                {
+                    collaborators: {
+                        some: {
+                            id: user.id
+                        }
+                    }
                 }
             ]
         },
@@ -1449,40 +1475,9 @@ export async function getTopLevelComments(lectureId: number, page: number): Prom
     }
 }
 
-export async function getReplies(commentId: number, page: number): Promise<Paginated<HydratedComment>> {
-    const comment = await prisma.comment.findUniqueOrThrow({
-        where: {
-            id: commentId
-        }
-    })
-    const pages = Math.ceil(await prisma.comment.count({
-        where: {
-            replyToId: comment.id
-        }
-    }) / 10)
-    const comments = await prisma.comment.findMany({
-        where: {
-            replyToId: comment.id
-        },
-        orderBy: {
-            createdAt: 'asc'
-        },
-        include: {
-            user: true
-        },
-        skip: page * 10,
-        take: 10
-    })
-    return {
-        items: comments,
-        page,
-        pages
-    }
-}
-
 export async function makeComment(lectureId: number, content: string, replyToId?: number): Promise<HydratedComment> {
     const user = await requireUser()
-    return await prisma.comment.create({
+    return prisma.comment.create({
         data: {
             content,
             lectureId,
@@ -1508,6 +1503,41 @@ export async function deleteComment(commentId: number): Promise<void> {
     await prisma.comment.delete({
         where: {
             id: commentId
+        }
+    })
+}
+
+export async function addCollaborator(lectureId: number): Promise<void> {
+    const user = await requireUser()
+    const lecture = await prisma.lecture.findUniqueOrThrow({
+        where: {
+            id: lectureId
+        },
+        include: {
+            collaborators: {
+                select: {
+                    id: true
+                }
+            }
+        }
+    })
+    if (lecture.collaborators.some(c => c.id === user.id) || lecture.userId === user.id ||
+        lecture.assigneeId === user.id || lecture.assigneeTeacherId === user.id || lecture.posterAssigneeId === user.id) {
+        throw new Error('Already a collaborator')
+    }
+    await prisma.lecture.update({
+        where: { id: lectureId },
+        data: {
+            collaborators: {
+                connect: { id: user.id }
+            }
+        }
+    })
+    await prisma.lectureAuditLog.create({
+        data: {
+            type: LectureAuditLogType.addedCollaborator,
+            userId: user.id,
+            lectureId
         }
     })
 }

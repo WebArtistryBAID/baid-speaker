@@ -69,5 +69,6 @@ export function LectureRoleIconCircle({ lecture, user }: { lecture: Lecture, use
         return <div className="rounded-full flex justify-center items-center bg-pink-500 w-8 h-8"><HiPhotograph
             className="text-white"/></div>
     }
-    return <></>
+    return <div className="rounded-full flex justify-center items-center bg-blue-500 w-8 h-8"><HiBriefcase
+        className="text-white"/></div>
 }

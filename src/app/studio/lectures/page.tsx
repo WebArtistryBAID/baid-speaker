@@ -1,14 +1,14 @@
 'use client'
 
-import {useTranslationClient} from '@/app/i18n/client'
-import {useEffect, useState} from 'react'
-import {getMyLectures, HydratedLecture, Paginated} from '@/app/lib/lecture-actions'
+import { useTranslationClient } from '@/app/i18n/client'
+import { useEffect, useState } from 'react'
+import { getMyLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
-import {Breadcrumb, BreadcrumbItem, Button, Card, Pagination} from 'flowbite-react'
+import { Breadcrumb, BreadcrumbItem, Button, Card, Pagination } from 'flowbite-react'
 import Link from 'next/link'
-import {LectureRoleIconCircle, LectureStatusIconCircle} from '@/app/lib/lecture-icons'
-import {useCachedUser} from '@/app/login/login-client'
-import {HiColorSwatch, HiRefresh} from 'react-icons/hi'
+import { LectureRoleIconCircle, LectureStatusIconCircle } from '@/app/lib/lecture-icons'
+import { useCachedUser } from '@/app/login/login-client'
+import { HiColorSwatch, HiRefresh } from 'react-icons/hi'
 
 export default function StudioLectures() {
     const { t } = useTranslationClient('studio')
@@ -71,6 +71,7 @@ export default function StudioLectures() {
                             <If condition={lecture.assigneeId === me.id}>{t('myLectures.host')}</If>
                             <If condition={lecture.assigneeTeacherId === me.id}>{t('myLectures.teacher')}</If>
                             <If condition={lecture.posterAssigneeId === me.id}>{t('myLectures.poster')}</If>
+                            <If condition={lecture.collaborators.some(c => c.id === me.id)}>{t('myLectures.collaborator')}</If>
                                 </span>
                         </p>
                     </div>
