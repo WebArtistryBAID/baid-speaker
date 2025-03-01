@@ -35,6 +35,12 @@
     "video": "Video",
     "videoUpcoming": "The video will be available soon. Stay tuned!",
     "youtubeBlocked": "BAID Speaker videos are hosted on YouTube, which is unavailable under your network condition.",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "comments_one": "{{count}} Comment",
+    "comments_other": "{{count}} Comments",
+    "comment": "Comment",
+    "commentPlaceholder": "Share some love!",
+    "commentNotes": "Your comment will be visible to all viewers and is associated with your identity. Please be nice!",
+    "delete": "Delete"
   }
 }

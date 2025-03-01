@@ -118,6 +118,19 @@ export interface HydratedLecture {
     likedUsers: number[]
 }
 
+export interface HydratedComment {
+    id: number
+    createdAt: Date
+    content: string
+    user: {
+        id: number
+        name: string
+        phone: string | null
+    }
+    userId: number
+    lectureId: number
+}
+
 export interface HydratedLectureTask {
     id: number
     type: LectureTasks
@@ -1400,6 +1413,101 @@ export async function deleteLecture(lectureId: number): Promise<void> {
     await prisma.lecture.delete({
         where: {
             id: lectureId
+        }
+    })
+}
+
+export async function getCommentsAmount(lectureId: number): Promise<number> {
+    return prisma.comment.count({
+        where: {
+            lectureId,
+            replyToId: null
+        }
+    })
+}
+
+export async function getTopLevelComments(lectureId: number, page: number): Promise<Paginated<HydratedComment>> {
+    const pages = Math.ceil(await getCommentsAmount(lectureId) / 10)
+    const comments = await prisma.comment.findMany({
+        where: {
+            lectureId,
+            replyToId: null
+        },
+        orderBy: {
+            createdAt: 'desc'
+        },
+        include: {
+            user: true
+        },
+        skip: page * 10,
+        take: 10
+    })
+    return {
+        items: comments,
+        page,
+        pages
+    }
+}
+
+export async function getReplies(commentId: number, page: number): Promise<Paginated<HydratedComment>> {
+    const comment = await prisma.comment.findUniqueOrThrow({
+        where: {
+            id: commentId
+        }
+    })
+    const pages = Math.ceil(await prisma.comment.count({
+        where: {
+            replyToId: comment.id
+        }
+    }) / 10)
+    const comments = await prisma.comment.findMany({
+        where: {
+            replyToId: comment.id
+        },
+        orderBy: {
+            createdAt: 'asc'
+        },
+        include: {
+            user: true
+        },
+        skip: page * 10,
+        take: 10
+    })
+    return {
+        items: comments,
+        page,
+        pages
+    }
+}
+
+export async function makeComment(lectureId: number, content: string, replyToId?: number): Promise<HydratedComment> {
+    const user = await requireUser()
+    return await prisma.comment.create({
+        data: {
+            content,
+            lectureId,
+            userId: user.id,
+            replyToId
+        },
+        include: {
+            user: true
+        }
+    })
+}
+
+export async function deleteComment(commentId: number): Promise<void> {
+    const user = await requireUser()
+    const comment = await prisma.comment.findUniqueOrThrow({
+        where: {
+            id: commentId
+        }
+    })
+    if (comment.userId !== user.id && !user.permissions.includes('admin.manage')) {
+        throw new Error('Unauthorized')
+    }
+    await prisma.comment.delete({
+        where: {
+            id: commentId
         }
     })
 }

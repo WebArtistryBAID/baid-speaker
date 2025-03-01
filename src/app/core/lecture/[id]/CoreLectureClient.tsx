@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react'
 import { getMyUser } from '@/app/login/login-actions'
 import { useRouter } from 'next/navigation'
 import { Trans } from 'react-i18next/TransWithoutContext'
+import CommentSection from '@/app/core/lecture/[id]/CommentSection'
 
 export default function CoreLectureClient({ lecture, uploadServePath }: {
     lecture: HydratedLecture,
@@ -96,7 +97,7 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
         <div className="flex flex-col lg:flex-row gap-5">
             <If condition={lecture.uploadedVideo != null}>
                 <div className="lg:w-2/3 xl:w-3/4 w-full">
-                    <div className="w-full rounded-3xl bg-gray-50 dark:bg-gray-800">
+                    <div className="w-full rounded-3xl bg-gray-50 dark:bg-gray-800 mb-5 lg:mb-8">
                         <If condition={youtubeAvailable}>
                             <iframe src={findSource()} className="border-0 w-full aspect-video rounded-3xl"
                                     allowFullScreen/>
@@ -106,6 +107,10 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
                                 <p>{t('lecture.youtubeBlocked')}</p>
                             </div>
                         </If>
+                    </div>
+
+                    <div className="w-full h-96 lg:h-auto overflow-y-auto">
+                        <CommentSection lecture={lecture}/>
                     </div>
                 </div>
             </If>

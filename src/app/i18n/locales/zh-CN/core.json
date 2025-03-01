@@ -4,7 +4,7 @@
   "home": {
     "welcomeTitle": "欢迎来到北中小讲师!",
     "welcomeSubtitle": "北中小讲师是北京中学的核心学术分享平台。",
-    "cta": "我也要参加!",
+    "cta": "报名",
     "ctaSide": "... 也可以先观看一些。",
     "upcoming": "预告: {{date}}",
     "liveViews_one": "{{count}} 名现场观众",
@@ -31,6 +31,12 @@
     "video": "视频",
     "videoUpcoming": "视频将很快上线，敬请期待。",
     "youtubeBlocked": "北中小讲师的视频托管在 YouTube 上，但在您的网络环境下无法访问。",
-    "copied": "已复制!"
+    "copied": "已复制!",
+    "comments_one": "{{count}} 个评论",
+    "comments_other": "{{count}} 个评论",
+    "comment": "评论",
+    "commentPlaceholder": "想要说些什么?",
+    "commentNotes": "您的评论将对所有观众可见，并与您的身份关联。Please be nice!",
+    "delete": "删除"
   }
 }
