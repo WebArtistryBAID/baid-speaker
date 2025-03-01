@@ -13,27 +13,24 @@ enum UserType {
 }
 
 model User {
-  id          Int            @id
-  name        String
-  pinyin      String
-  phone       String?
-  permissions String[]
-  logs        UserAuditLog[]
-  type        UserType
-
-  oaTokens OATokens?
-
-  lectures         Lecture[] @relation("lectures")
-  assignedLectures Lecture[] @relation("assignedLectures")
-  assignedPosters  Lecture[] @relation("assignedPosters")
-  assignedTeachers Lecture[] @relation("assignedTeachers")
-
-  lectureLogs   LectureAuditLog[]
-  assignedTasks LectureTask[]
-
+  id               Int                @id
+  name             String
+  pinyin           String
+  phone            String?
+  permissions      String[]
+  logs             UserAuditLog[]
+  type             UserType
+  oaTokens         OATokens?
+  lectures         Lecture[]          @relation("lectures")
+  assignedLectures Lecture[]          @relation("assignedLectures")
+  assignedPosters  Lecture[]          @relation("assignedPosters")
+  assignedTeachers Lecture[]          @relation("assignedTeachers")
+  lectureLogs      LectureAuditLog[]
+  assignedTasks    LectureTask[]
   inboxNotifications NotificationType[] @default([assignedHost, confirmedDate, assignedTeacher, assignedPosterDesigner, submittedPoster, approvedPoster, createdGroupChat, sentAdvertisements, teacherApproved, confirmedLocation, testedDevice, updatedLiveAudience, submittedFeedback, submittedVideo, submittedReflection, modifiedStatus])
   smsNotifications NotificationType[] @default([assignedHost, confirmedDate, assignedTeacher, submittedPoster, approvedPoster, teacherApproved, modifiedStatus, submittedVideo])
   notifications      Notification[]
+  comments         Comment[]
 }
 
 enum UserAuditLogType {
@@ -81,10 +78,9 @@ model Notification {
   createdAt DateTime         @default(now())
   type      NotificationType
   values    String[]
-
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
-  lecture   Lecture? @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  lecture Lecture? @relation(fields: [lectureId], references: [id], onDelete: Cascade)
   lectureId Int?
 }
 
@@ -204,8 +200,21 @@ model Lecture {
   teacherRating     Int?
   liveAudience      Int?
   logs              LectureAuditLog[]
-  viewedUsers Int[]
-  likedUsers  Int[]
-
+  viewedUsers  Int[]
+  likedUsers   Int[]
   relatedNotis Notification[]
+  comments     Comment[]
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  content   String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  lecture   Lecture   @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  lectureId Int
+  replyTo   Comment?  @relation("replies", fields: [replyToId], references: [id]) // Only one level of reply is allowed
+  replyToId Int?
+  replies   Comment[] @relation("replies")
 }
