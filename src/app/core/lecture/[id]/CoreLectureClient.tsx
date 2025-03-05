@@ -115,7 +115,7 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
                 </div>
             </If>
             <div
-                className={lecture.uploadedVideo == null ? 'grid gap-5 grid-cols-5' : 'w-full lg:w-1/3 xl:w-1/4 flex flex-col gap-5'}>
+                className={lecture.uploadedVideo == null ? 'grid gap-5 grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5' : 'w-full lg:w-1/3 xl:w-1/4 flex flex-col gap-5'}>
                 <div className="rounded-3xl bg-gray-50 dark:bg-gray-800 p-8">
                     <div className="flex items-center mb-5">
                         <div className="bg-green-400 rounded-full h-12 w-12 flex justify-center items-center mr-5">
