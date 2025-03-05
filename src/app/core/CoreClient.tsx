@@ -44,7 +44,7 @@ export default function CoreClient({ lectures, uploadServePath }: {
                 {page.items.map(lecture => <Link href={`/core/lecture/${lecture.id}`} key={lecture.id}
                                                  className="bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800 rounded-3xl block transition-colors duration-100">
                     <img src={uploadServePath + lecture.uploadedPoster!} alt={lecture.title}
-                         className="w-full object-cover h-48"/>
+                         className="w-full object-cover rounded-3xl h-48"/>
                     <div className="p-5">
                         <p className="font-bold text-sm mb-2">{lecture.title}</p>
                         <p className="text-xs secondary font-bold">{lecture.user.name}</p>
