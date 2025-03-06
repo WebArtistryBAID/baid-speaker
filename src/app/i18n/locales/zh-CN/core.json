@@ -23,6 +23,7 @@
     "views_other": "{{count}} 播放",
     "youLiked": "(您已点赞)",
     "share": "分享",
+    "shareContent": "{{user}} 的北中小讲师讲座",
     "survey": "讲师调查",
     "slides": "幻灯片",
     "slidesDownload": "轻触即可下载",

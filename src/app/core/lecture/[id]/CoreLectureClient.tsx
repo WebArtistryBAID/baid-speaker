@@ -66,16 +66,13 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
 
     async function share() {
         // Use Web Share API whenever possible
-        if (navigator.canShare({
-            title: t('brand'),
-            text: lecture.title,
+        const data = {
+            title: lecture.title,
+            text: t('lecture.shareContent', { user: lecture.user.name }),
             url: location.toString()
-        })) {
-            await navigator.share({
-                title: t('brand'),
-                text: lecture.title,
-                url: location.toString()
-            })
+        }
+        if (navigator.canShare(data)) {
+            await navigator.share(data)
         } else {
             await navigator.clipboard.writeText(location.toString())
             setCopied(true)

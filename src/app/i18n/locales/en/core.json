@@ -27,6 +27,7 @@
     "views_other": "{{count}} views",
     "youLiked": "(You liked)",
     "share": "Share",
+    "shareContent": "BAID Speaker lecture by {{user}}",
     "survey": "Speaker Survey",
     "slides": "Slides",
     "slidesDownload": "Tap to Download",
