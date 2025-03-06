@@ -885,8 +885,8 @@ export async function teacherApprovePresentation(lectureId: number): Promise<Hyd
         },
         include: HydratedLectureInclude
     }))!
-    if (user.id !== lecture.assigneeTeacherId) {
-        throw new Error('Incorrect user')
+    if (user.type !== UserType.teacher) {
+        throw new Error('Invalid user type')
     }
     await prisma.lecture.update({
         where: {
