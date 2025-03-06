@@ -393,7 +393,7 @@ export async function getPublicLectures(page: number): Promise<Paginated<Hydrate
             posterApproved: true
         },
         orderBy: {
-            createdAt: 'desc'
+            date: 'desc'
         },
         include: HydratedLectureInclude,
         skip: page * 10,
