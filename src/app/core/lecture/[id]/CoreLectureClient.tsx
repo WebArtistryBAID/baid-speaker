@@ -27,7 +27,6 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
     uploadServePath: string
 }) {
     const { t } = useTranslationClient('core')
-    const [ youtubeAvailable, setYoutubeAvailable ] = useState(true)
     const [ copied, setCopied ] = useState(false)
     const [ myUser, setMyUser ] = useState<User>()
     const [ loading, setLoading ] = useState(false)
@@ -37,12 +36,6 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
         (async () => {
             setMyUser((await getMyUser())!)
             await countMyView(lecture.id)
-
-            try {
-                await fetch('https://www.google.com', { mode: 'no-cors' })
-            } catch {
-                setYoutubeAvailable(false)
-            }
         })()
     }, [ lecture.id ])
 
@@ -95,15 +88,8 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
             <If condition={lecture.uploadedVideo != null}>
                 <div className="lg:w-2/3 xl:w-3/4 w-full">
                     <div className="w-full rounded-3xl bg-gray-50 dark:bg-gray-800 mb-5 lg:mb-8">
-                        <If condition={youtubeAvailable}>
-                            <iframe src={findSource()} className="border-0 w-full aspect-video rounded-3xl"
-                                    allowFullScreen/>
-                        </If>
-                        <If condition={!youtubeAvailable}>
-                            <div className="w-full aspect-video flex justify-center items-center text-center">
-                                <p>{t('lecture.youtubeBlocked')}</p>
-                            </div>
-                        </If>
+                        <iframe src={findSource()} className="border-0 w-full aspect-video rounded-3xl"
+                                allowFullScreen/>
                     </div>
 
                     <div className="w-full h-96 lg:h-auto overflow-y-auto">
