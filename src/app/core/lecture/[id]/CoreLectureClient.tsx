@@ -44,15 +44,19 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
             return 'about:blank'
         }
 
-        const url = URL.parse(lecture.uploadedVideo)
-        if (url == null) {
+        try {
+            const url = new URL(lecture.uploadedVideo)
+            if (url == null) {
+                return 'about:blank'
+            }
+            if (url.href.includes('youtube.com')) {
+                return `https://www.youtube.com/embed/${url.searchParams.get('v')}?rel=0`
+            }
+            if (url.href.includes('youtu.be')) {
+                return `https://www.youtube.com/embed/${url.pathname.slice(1)}?rel=0`
+            }
+        } catch {
             return 'about:blank'
-        }
-        if (url.href.includes('youtube.com')) {
-            return `https://www.youtube.com/embed/${url.searchParams.get('v')}?rel=0`
-        }
-        if (url.href.includes('youtu.be')) {
-            return `https://www.youtube.com/embed/${url.pathname.slice(1)}?rel=0`
         }
         return 'about:blank'
     }
