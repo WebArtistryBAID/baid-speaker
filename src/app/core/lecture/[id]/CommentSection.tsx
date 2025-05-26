@@ -15,6 +15,7 @@ import If from '@/app/lib/If'
 import { Button, Spinner, TextInput } from 'flowbite-react'
 import { useCachedUser } from '@/app/login/login-client'
 import { HiTrash } from 'react-icons/hi'
+import { getLoginTarget } from '@/app/login/login-actions'
 
 function CommentBlock({ comment, remove }: { comment: HydratedComment, remove: () => void }) {
     const user = useCachedUser()
@@ -32,7 +33,7 @@ function CommentBlock({ comment, remove }: { comment: HydratedComment, remove: (
             </p>
             <p className="text-sm">{comment.content}</p>
 
-            <If condition={user!.id === comment.userId || user!.permissions.includes('admin.manage')}>
+            <If condition={user?.id === comment.userId || (user?.permissions ?? []).includes('admin.manage')}>
                 <button aria-label={t('lecture.delete')} onClick={async () => {
                     await deleteComment(comment.id)
                     remove()
@@ -53,6 +54,7 @@ export default function CommentSection({ lecture }: { lecture: HydratedLecture }
     const [ loading, setLoading ] = useState(false)
     const [ comments, setComments ] = useState<HydratedComment[]>([])
     const [ newComment, setNewComment ] = useState('')
+    const user = useCachedUser()
     const loaderRef = useRef<HTMLDivElement>(null)
 
     async function loadComments(pageToLoad: number) {
@@ -69,6 +71,10 @@ export default function CommentSection({ lecture }: { lecture: HydratedLecture }
     }
 
     async function comment() {
+        if (user == null) {
+            location.href = (await getLoginTarget(`/core/lecture/${lecture.id}`))
+        }
+
         if (newComment.length > 0 && newComment.length < 128) {
             setLoading(true)
             const commentNew = await makeComment(lecture.id, newComment)
@@ -118,6 +124,11 @@ export default function CommentSection({ lecture }: { lecture: HydratedLecture }
         <div className="flex items-center gap-3 mb-2">
             <TextInput placeholder={t('lecture.commentPlaceholder')} type="text" value={newComment}
                        className="flex-grow" disabled={loading}
+                       onClick={async () => {
+                           if (user == null) {
+                               location.href = (await getLoginTarget(`/core/lecture/${lecture.id}`))
+                           }
+                       }}
                        onChange={e => setNewComment(e.currentTarget.value)} onKeyUp={e => {
                 if (e.key === 'Enter') {
                     comment()

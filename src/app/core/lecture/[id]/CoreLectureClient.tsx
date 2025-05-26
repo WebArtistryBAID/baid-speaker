@@ -28,14 +28,17 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
 }) {
     const { t } = useTranslationClient('core')
     const [ copied, setCopied ] = useState(false)
-    const [ myUser, setMyUser ] = useState<User>()
+    const [ myUser, setMyUser ] = useState<User | null>()
     const [ loading, setLoading ] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
         (async () => {
-            setMyUser((await getMyUser())!)
-            await countMyView(lecture.id)
+            const u = await getMyUser()
+            setMyUser(u)
+            if (u != null) {
+                await countMyView(lecture.id)
+            }
         })()
     }, [ lecture.id ])
 

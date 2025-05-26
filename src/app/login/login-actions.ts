@@ -19,7 +19,7 @@ export interface HydratedNotification {
 
 export async function getLoginTarget(redirect: string): Promise<string> {
     // We are really abusing state here... But it works.
-    return `${process.env.ONELOGIN_HOST}/oauth2/authorize?client_id=${process.env.ONELOGIN_CLIENT_ID}&redirect_uri=${process.env.HOST}/login/authorize&scope=basic+phone+sms&response_type=code&state=${redirect}`
+    return `${process.env.ONELOGIN_HOST}/oauth2/authorize?client_id=${process.env.ONELOGIN_CLIENT_ID}&redirect_uri=${process.env.HOST}/login/authorize&scope=basic+phone&response_type=code&state=${redirect}`
 }
 
 export async function requireUser(): Promise<User> {
@@ -39,8 +39,12 @@ export async function requireUserPermission(permission: string): Promise<User> {
 }
 
 export async function getMyUser(): Promise<User | null> {
+    const id = await me()
+    if (id == null) {
+        return null
+    }
     return prisma.user.findUnique({
-        where: { id: await me() }
+        where: { id }
     })
 }
 
@@ -108,9 +112,13 @@ export async function getUsers(page: number, keyword: string): Promise<Paginated
 }
 
 export async function getAccessToken(): Promise<string | null> {
+    const id = await me()
+    if (id == null) {
+        return null
+    }
     const user = await prisma.user.findUnique({
         where: {
-            id: await me()
+            id
         },
         include: {
             oaTokens: true

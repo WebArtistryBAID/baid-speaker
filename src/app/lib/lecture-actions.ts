@@ -491,7 +491,6 @@ export async function getMyLectures(page: number): Promise<Paginated<HydratedLec
 }
 
 export async function getLecture(id: number): Promise<HydratedLecture | null> {
-    await requireUser()
     return prisma.lecture.findUnique({
         where: {
             id

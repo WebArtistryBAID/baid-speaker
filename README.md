@@ -23,7 +23,7 @@ To run in development:
 | `UPLOAD_SERVE_PATH`      | The path where uploaded files are served. In development, this is `uploads`.                                    |
 | `BOTTOM_TEXT`            | In case you need this.                                                                                          |
 | `ONELOGIN_HOST`          | The location where [OneLogin](https://github.com/WebArtistryBAID/baid-onelogin) is hosted. No trailing slashes. |
-| `ONELOGIN_CLIENT_ID`     | OneLogin client ID. `basic`, `phone`, and `sms` scopes are required.                                            |
+| `ONELOGIN_CLIENT_ID`     | OneLogin client ID. `basic` and `phone` scopes are required.                                                    |
 | `ONELOGIN_CLIENT_SECRET` | OneLogin client secret.                                                                                         |
 
 * Run `npm run dev`.

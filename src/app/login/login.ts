@@ -20,16 +20,16 @@ export async function isLoggedIn(): Promise<boolean> {
     return decodeJwt(token).type === 'internal'
 }
 
-export async function me(): Promise<number> {
+export async function me(): Promise<number | null> {
     const cook = await cookies()
     if (!cook.has('access_token')) {
-        throw new Error('Unauthorized')
+        return null
     }
     const token = cook.get('access_token')!.value!
     try {
         await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET!))
     } catch {
-        throw new Error('Unauthorized')
+        return null
     }
     return decodeJwt(token).id as number
 }

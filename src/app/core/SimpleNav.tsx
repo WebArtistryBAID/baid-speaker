@@ -1,17 +1,13 @@
-import {Button, Navbar, NavbarBrand} from 'flowbite-react'
+import { Button, Navbar, NavbarBrand } from 'flowbite-react'
 import Link from 'next/link'
-import {serverTranslation} from '@/app/i18n'
-import {getMyUser} from '@/app/login/login-actions'
-import {HiSearch} from 'react-icons/hi'
+import { serverTranslation } from '@/app/i18n'
+import { getMyUser } from '@/app/login/login-actions'
+import { HiSearch } from 'react-icons/hi'
 import SearchBar from '@/app/core/SearchBar'
 
 export default async function SimpleNav() {
     const {t} = await serverTranslation('core')
     const user = await getMyUser()
-
-    if (user == null) {
-        return <></>
-    }
 
     return <Navbar fluid rounded>
         <NavbarBrand as={Link} href="/core">
@@ -32,9 +28,9 @@ export default async function SimpleNav() {
             <Button pill color="blue" as={Link} href="/studio">
                 {t('studio')}
             </Button>
-            <Link href="/studio/settings" className="btn-icon-only w-10 h-10" aria-label="User Icon">
-                <span className="font-bold">{user.name.at(0)}</span>
-            </Link>
+            {user != null && <Link href="/studio/settings" className="btn-icon-only w-10 h-10" aria-label="User Icon">
+                <span className="font-bold">{(user ?? 'a').name.at(0)}</span>
+            </Link>}
         </div>
     </Navbar>
 }

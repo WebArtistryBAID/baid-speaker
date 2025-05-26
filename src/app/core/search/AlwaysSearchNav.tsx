@@ -1,10 +1,10 @@
 'use client'
 
-import {useTranslationClient} from '@/app/i18n/client'
-import {useEffect, useState} from 'react'
-import {User} from '@prisma/client'
-import {getMyUser} from '@/app/login/login-actions'
-import {Button, Navbar, NavbarBrand} from 'flowbite-react'
+import { useTranslationClient } from '@/app/i18n/client'
+import { useEffect, useState } from 'react'
+import { User } from '@prisma/client'
+import { getMyUser } from '@/app/login/login-actions'
+import { Button, Navbar, NavbarBrand } from 'flowbite-react'
 import Link from 'next/link'
 import SearchBar from '@/app/core/SearchBar'
 
@@ -31,9 +31,9 @@ export default function AlwaysSearchNav() {
             <Button pill color="blue" as={Link} href="/studio">
                 {t('studio')}
             </Button>
-            <Link href="/studio/settings" className="btn-icon-only w-10 h-10" aria-label="User Icon">
+            {myUser != null && <Link href="/studio/settings" className="btn-icon-only w-10 h-10" aria-label="User Icon">
                 <span className="font-bold">{myUser?.name.at(0)}</span>
-            </Link>
+            </Link>}
         </div>
     </Navbar>
 }
