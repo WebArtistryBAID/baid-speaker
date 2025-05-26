@@ -42,6 +42,8 @@
     "comment": "Comment",
     "commentPlaceholder": "Share some love!",
     "commentNotes": "Your comment will be visible to all viewers and is associated with your identity. Please be nice!",
-    "delete": "Delete"
+    "delete": "Delete",
+    "anonymous": "Comment Anonymously",
+    "anonComment": "Anonymous"
   }
 }

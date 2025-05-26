@@ -12,7 +12,7 @@ import {
 } from '@/app/lib/lecture-actions'
 import { useEffect, useRef, useState } from 'react'
 import If from '@/app/lib/If'
-import { Button, Spinner, TextInput } from 'flowbite-react'
+import { Button, Checkbox, Label, Spinner, TextInput } from 'flowbite-react'
 import { useCachedUser } from '@/app/login/login-client'
 import { HiTrash } from 'react-icons/hi'
 import { getLoginTarget } from '@/app/login/login-actions'
@@ -23,12 +23,12 @@ function CommentBlock({ comment, remove }: { comment: HydratedComment, remove: (
 
     return <div className="flex items-center gap-3">
         <div className="btn-icon-only w-9 h-9" aria-label="User Icon">
-            <span className="font-bold">{comment.user.name.at(0)}</span>
+            <span className="font-bold">{comment.anonymous ? '?' : comment.user.name.at(0)}</span>
         </div>
 
         <div>
             <p>
-                <span className="font-bold">{comment.user.name}</span>
+                <span className="font-bold">{comment.anonymous ? t('lecture.anonComment') : comment.user.name}</span>
                 <span className="secondary ml-1 text-xs">{comment.createdAt.toLocaleString()}</span>
             </p>
             <p className="text-sm">{comment.content}</p>
@@ -54,6 +54,7 @@ export default function CommentSection({ lecture }: { lecture: HydratedLecture }
     const [ loading, setLoading ] = useState(false)
     const [ comments, setComments ] = useState<HydratedComment[]>([])
     const [ newComment, setNewComment ] = useState('')
+    const [ anon, setAnon ] = useState(false)
     const user = useCachedUser()
     const loaderRef = useRef<HTMLDivElement>(null)
 
@@ -77,7 +78,7 @@ export default function CommentSection({ lecture }: { lecture: HydratedLecture }
 
         if (newComment.length > 0 && newComment.length < 128) {
             setLoading(true)
-            const commentNew = await makeComment(lecture.id, newComment)
+            const commentNew = await makeComment(lecture.id, newComment, anon)
             setNewComment('')
             setLoading(false)
             setComments(prev => [ commentNew, ...prev ])
@@ -121,20 +122,29 @@ export default function CommentSection({ lecture }: { lecture: HydratedLecture }
             <Trans t={t} i18nKey="lecture.comments" count={commentsAmount}/>
         </p>
 
-        <div className="flex items-center gap-3 mb-2">
-            <TextInput placeholder={t('lecture.commentPlaceholder')} type="text" value={newComment}
-                       className="flex-grow" disabled={loading}
-                       onClick={async () => {
-                           if (user == null) {
-                               location.href = (await getLoginTarget(`/core/lecture/${lecture.id}`))
-                           }
-                       }}
-                       onChange={e => setNewComment(e.currentTarget.value)} onKeyUp={e => {
-                if (e.key === 'Enter') {
-                    comment()
-                }
-            }}/>
-            <Button color="blue" pill onClick={comment}>{t('lecture.comment')}</Button>
+        <div className="flex gap-3 mb-2">
+            <div className="flex-grow">
+                <TextInput placeholder={t('lecture.commentPlaceholder')} type="text" value={newComment}
+                           disabled={loading} className="mb-3"
+                           onClick={async () => {
+                               if (user == null) {
+                                   location.href = (await getLoginTarget(`/core/lecture/${lecture.id}`))
+                               }
+                           }}
+                           onChange={e => setNewComment(e.currentTarget.value)} onKeyUp={e => {
+                    if (e.key === 'Enter') {
+                        comment()
+                    }
+                }}/>
+                <div className="flex items-center gap-2">
+                    <Checkbox id="anonymous" color="blue" checked={anon}
+                              onChange={e => setAnon(e.currentTarget.checked)}/>
+                    <Label htmlFor="anonymous" className="flex">
+                        {t('lecture.anonymous')}
+                    </Label>
+                </div>
+            </div>
+            <Button color="blue" pill className="h-10" onClick={comment}>{t('lecture.comment')}</Button>
         </div>
         <p className="text-xs secondary mb-5">{t('lecture.commentNotes')}</p>
 

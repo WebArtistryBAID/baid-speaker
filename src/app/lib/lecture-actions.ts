@@ -141,6 +141,7 @@ export interface HydratedComment {
     }
     userId: number
     lectureId: number
+    anonymous: boolean
 }
 
 export interface HydratedLectureTask {
@@ -1474,14 +1475,15 @@ export async function getTopLevelComments(lectureId: number, page: number): Prom
     }
 }
 
-export async function makeComment(lectureId: number, content: string, replyToId?: number): Promise<HydratedComment> {
+export async function makeComment(lectureId: number, content: string, anonymous: boolean, replyToId?: number): Promise<HydratedComment> {
     const user = await requireUser()
     return prisma.comment.create({
         data: {
             content,
             lectureId,
             userId: user.id,
-            replyToId
+            replyToId,
+            anonymous
         },
         include: {
             user: true

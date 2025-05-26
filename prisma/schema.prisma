@@ -79,9 +79,9 @@ model Notification {
   createdAt DateTime         @default(now())
   type      NotificationType
   values    String[]
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
-  lecture Lecture? @relation(fields: [lectureId], references: [id], onDelete: Cascade)
+  lecture   Lecture?         @relation(fields: [lectureId], references: [id], onDelete: Cascade)
   lectureId Int?
 }
 
@@ -181,7 +181,7 @@ model Lecture {
   status            LectureStatus
   user              User              @relation("lectures", fields: [userId], references: [id])
   userId            Int
-  collaborators User[]
+  collaborators     User[]
   assignee          User?             @relation("assignedLectures", fields: [assigneeId], references: [id])
   assigneeId        Int?
   reclaimable       Boolean           @default(false)
@@ -203,10 +203,10 @@ model Lecture {
   teacherRating     Int?
   liveAudience      Int?
   logs              LectureAuditLog[]
-  viewedUsers   Int[]
-  likedUsers    Int[]
-  relatedNotis  Notification[]
-  comments      Comment[]
+  viewedUsers       Int[]
+  likedUsers        Int[]
+  relatedNotis      Notification[]
+  comments          Comment[]
 }
 
 model Comment {
@@ -220,4 +220,5 @@ model Comment {
   replyTo   Comment?  @relation("replies", fields: [replyToId], references: [id]) // Only one level of reply is allowed
   replyToId Int?
   replies   Comment[] @relation("replies")
+  anonymous Boolean   @default(false)
 }

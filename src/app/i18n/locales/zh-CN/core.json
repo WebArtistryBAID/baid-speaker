@@ -38,6 +38,8 @@
     "comment": "评论",
     "commentPlaceholder": "想要说些什么?",
     "commentNotes": "您的评论将对所有观众可见，并与您的身份关联。Please be nice!",
-    "delete": "删除"
+    "delete": "删除",
+    "anonymous": "匿名评论",
+    "anonComment": "匿名用户"
   }
 }
