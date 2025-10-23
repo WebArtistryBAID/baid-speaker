@@ -11,25 +11,20 @@ import {
     SidebarItems,
     SidebarLogo
 } from 'flowbite-react'
-import { HiAcademicCap, HiChartPie, HiCog, HiCollection, HiInbox, HiUser, HiUsers } from 'react-icons/hi'
+import { HiAcademicCap, HiChartPie, HiCog, HiUser, HiUsers } from 'react-icons/hi'
 import Link from 'next/link'
 import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
 import { User } from '@prisma/client'
-import { getMyNotificationsCount, getMyUser } from '@/app/login/login-actions'
+import { getMyUser } from '@/app/login/login-actions'
 
 export default function StudioLayout({ children }: { children: ReactNode }) {
     const { t } = useTranslationClient('studio')
     const [ myUser, setMyUser ] = useState<User>()
-    const [ notifications, setNotifications ] = useState(0)
     useEffect(() => {
         (async () => {
             setMyUser((await getMyUser())!)
         })()
-
-        setInterval(async () => {
-            setNotifications(await getMyNotificationsCount())
-        }, 10000)
     }, [])
 
     return <>
@@ -55,15 +50,8 @@ export default function StudioLayout({ children }: { children: ReactNode }) {
                             <SidebarItem as={Link} href="/studio/lectures" icon={HiAcademicCap}>
                                 {t('nav.lectures')}
                             </SidebarItem>
-                            <SidebarItem as={Link} href="/studio/inbox" icon={HiInbox}
-                                         label={notifications > 0 ? notifications.toString() : undefined}>
-                                {t('nav.inbox')}
-                            </SidebarItem>
                             <If condition={myUser?.permissions.includes('admin.manage')}>
                                 <SidebarCollapse label="Management" icon={HiCog}>
-                                    <SidebarItem as={Link} href="/studio/manage" icon={HiCollection}>
-                                        {t('nav.manage')}
-                                    </SidebarItem>
                                     <SidebarItem as={Link} href="/studio/users" icon={HiUsers}>
                                         {t('nav.user')}
                                     </SidebarItem>

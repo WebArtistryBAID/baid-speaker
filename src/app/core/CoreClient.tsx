@@ -1,13 +1,13 @@
 'use client'
 
-import {useTranslationClient} from '@/app/i18n/client'
-import {Button, Pagination} from 'flowbite-react'
+import { useTranslationClient } from '@/app/i18n/client'
+import { Pagination } from 'flowbite-react'
 import Link from 'next/link'
-import {useEffect, useState} from 'react'
-import {getPublicLectures, HydratedLecture, Paginated} from '@/app/lib/lecture-actions'
+import { useEffect, useState } from 'react'
+import { getPublicLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
-import {LectureStatus} from '@prisma/client'
-import {Trans} from 'react-i18next/TransWithoutContext'
+import { LectureStatus } from '@prisma/client'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 export default function CoreClient({ lectures, uploadServePath }: {
     lectures: Paginated<HydratedLecture>,
@@ -32,10 +32,6 @@ export default function CoreClient({ lectures, uploadServePath }: {
                 <img src="/assets/logo.png" alt="BAID Speaker Logo" className="w-20 mb-5"/>
                 <h1 className="mb-3">{t('home.welcomeTitle')}</h1>
                 <p className="mb-5">{t('home.welcomeSubtitle')}</p>
-                <div className="flex items-center gap-3">
-                    <Button pill color="blue" as={Link} href="/studio" className="inline-block">{t('home.cta')}</Button>
-                    <p className="text-sm secondary">{t('home.ctaSide')}</p>
-                </div>
             </div>
         </If>
 
@@ -47,7 +43,7 @@ export default function CoreClient({ lectures, uploadServePath }: {
                          className="w-full object-cover rounded-3xl h-48"/>
                     <div className="p-5">
                         <p className="font-bold text-sm mb-2">{lecture.title}</p>
-                        <p className="text-xs secondary font-bold">{lecture.user.name}</p>
+                        <p className="text-xs secondary font-bold">{lecture.overrideUserName ?? lecture.user.name}</p>
                         <If condition={lecture.date != null}>
                             <If condition={lecture.date!.getTime() > Date.now()}>
                                 <p className="text-xs secondary">{t('home.upcoming', { date: lecture.date?.toLocaleDateString().replaceAll('/', '-') })}</p>

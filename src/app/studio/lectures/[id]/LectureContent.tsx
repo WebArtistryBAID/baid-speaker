@@ -1,13 +1,13 @@
 'use client'
 
-import { HydratedLecture } from '@/app/lib/lecture-actions'
+import { HydratedLecture, submitVideo } from '@/app/lib/lecture-actions'
 import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
 import { HiDownload, HiPencilAlt } from 'react-icons/hi'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Card } from 'flowbite-react'
-import Link from 'next/link'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, TextInput } from 'flowbite-react'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 function ImageCard({ lecture, uploadServePath, name, target }: {
     lecture: HydratedLecture,
@@ -61,11 +61,13 @@ function ImageCard({ lecture, uploadServePath, name, target }: {
     return <div className="col-span-1 h-full w-full flex flex-col">
         <input type="file" onChange={upload} accept="image/*" className="hidden" ref={ref}/>
 
-        <a className="block flex-grow" href={`${uploadServePath}${name}`}>
-            <img src={`${uploadServePath}${name}`} alt={t(`lecture.content.${target}`)}
-                 className="w-full h-auto rounded-t-3xl"/>
-        </a>
-        <div className="flex w-full p-5 bg-gray-50 dark:bg-gray-700 dark:text-white rounded-b-3xl">
+        <If condition={name != null}>
+            <a className="block flex-grow" href={`${uploadServePath}${name}`}>
+                <img src={`${uploadServePath}${name}`} alt={t(`lecture.content.${target}`)}
+                     className="w-full h-auto rounded-3xl"/>
+            </a>
+        </If>
+        <div className="flex w-full p-5 bg-gray-50 dark:bg-gray-700 dark:text-white rounded-3xl">
             <p className="text-xl font-display mr-auto">
                 <If condition={loading}>
                     {progress}%
@@ -85,10 +87,12 @@ function ImageCard({ lecture, uploadServePath, name, target }: {
                         onClick={() => ref.current?.click()}>
                     <HiPencilAlt className="text-xl"/>
                 </button>
-                <a download href={`${uploadServePath}${name}`} className="btn-icon-only"
-                   aria-label={t('lecture.content.open')}>
-                    <HiDownload className="text-xl"/>
-                </a>
+                <If condition={name != null}>
+                    <a download href={`${uploadServePath}${name}`} className="btn-icon-only"
+                       aria-label={t('lecture.content.open')}>
+                        <HiDownload className="text-xl"/>
+                    </a>
+                </If>
             </div>
         </div>
     </div>
@@ -142,11 +146,13 @@ function SlidesCard({ lecture, uploadServePath }: { lecture: HydratedLecture, up
         <input type="file" onChange={upload}
                accept="application/x-iwork-keynote-sffkey,application/pdf,application/vnd.ms-powerpoint,text/plain,text/html,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint.presentation.macroEnabled.12,application/vnd.openxmlformats-officedocument.presentationml.slideshow,application/vnd.ms-pps"
                className="hidden" ref={ref}/>
-        <div
-            className="bg-sky-50 dark:bg-sky-900 dark:text-white w-full text-center flex flex-col justify-center items-center rounded-t-3xl flex-grow">
-            <p>{t('lecture.content.slidesView')}</p>
-        </div>
-        <div className="flex w-full p-5 bg-gray-50 dark:bg-gray-700 dark:text-white rounded-b-3xl">
+        <If condition={lecture.uploadedSlides != null}>
+            <div
+                className="bg-sky-50 dark:bg-sky-900 dark:text-white w-full text-center flex flex-col justify-center items-center rounded-3xl flex-grow">
+                <p>{t('lecture.content.slidesView')}</p>
+            </div>
+        </If>
+        <div className="flex w-full p-5 bg-gray-50 dark:bg-gray-700 dark:text-white rounded-3xl">
             <p className="text-xl font-display mr-auto">
                 <If condition={loading}>
                     {progress}%
@@ -166,10 +172,12 @@ function SlidesCard({ lecture, uploadServePath }: { lecture: HydratedLecture, up
                         onClick={() => ref.current?.click()}>
                     <HiPencilAlt className="text-xl"/>
                 </button>
-                <a download href={`${uploadServePath}${lecture.uploadedSlides}`} className="btn-icon-only"
-                   aria-label={t('lecture.content.open')}>
-                    <HiDownload className="text-xl"/>
-                </a>
+                <If condition={lecture.uploadedSlides != null}>
+                    <a download href={`${uploadServePath}${lecture.uploadedSlides}`} className="btn-icon-only"
+                       aria-label={t('lecture.content.open')}>
+                        <HiDownload className="text-xl"/>
+                    </a>
+                </If>
             </div>
         </div>
     </div>
@@ -180,46 +188,74 @@ export default function LectureContent({ lecture, uploadServePath }: {
     uploadServePath: string
 }) {
     const { t } = useTranslationClient('studio')
+    const [ open, setOpen ] = useState(false)
+    const [ error, setError ] = useState(false)
+    const [ loading, setLoading ] = useState(false)
+    const [ video, setVideo ] = useState('')
+    const router = useRouter()
 
     return <>
-        <If condition={lecture.uploadedPoster == null && lecture.uploadedVideo == null && lecture.uploadedFeedback == null && lecture.uploadedSlides == null && lecture.uploadedGroupQR == null}>
-            <div className="w-full flex flex-col justify-center items-center">
-                <img src="/assets/illustrations/media-light.png" className="dark:hidden w-72 mb-3" alt=""/>
-                <img src="/assets/illustrations/media-dark.png" className="hidden dark:block w-72 mb-3" alt=""/>
-                <p>{t('lecture.content.empty')}</p>
-            </div>
-        </If>
-        <If condition={!(lecture.uploadedPoster == null && lecture.uploadedVideo == null && lecture.uploadedFeedback == null && lecture.uploadedSlides == null && lecture.uploadedGroupQR == null)}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
-                <If condition={lecture.uploadedPoster != null}>
-                    <ImageCard lecture={lecture} uploadServePath={uploadServePath} name={lecture.uploadedPoster!}
-                               target="poster"/>
-                </If>
+        <Modal show={open} onClose={() => setOpen(false)}>
+            <ModalHeader>{t('tasks.submitVideo.name')}</ModalHeader>
+            <ModalBody>
+                <p className="mb-3"><Trans t={t} i18nKey="tasks.submitReflection.modalDescription"
+                                           components={{
+                                               1: <span className="font-bold" key={123}/>,
+                                               2: <a href="https://youtube.com/upload" className="inline"
+                                                     key={256}/>
+                                           }}/></p>
+                <TextInput type="text" required
+                           color={error ? 'failure' : undefined}
+                           value={video} onChange={e => setVideo(e.currentTarget.value)}
+                           helperText={error ? t('tasks.submitVideo.inputError') : null}/>
+            </ModalBody>
+            <ModalFooter>
+                <Button color="blue" disabled={loading} onClick={async () => {
+                    setError(false)
+                    try {
+                        const url = new URL(video)
+                        if (url.host !== 'www.youtube.com' && url.host !== 'youtu.be' && url.host !== 'youtube.com') {
+                            setError(true)
+                            return
+                        }
+                        if ((url.host === 'www.youtube.com' || url.host === 'youtube.com') && !url.searchParams.has('v')) {
+                            setError(true)
+                            return
+                        }
+                    } catch {
+                        setError(true)
+                        return
+                    }
 
-                <If condition={lecture.uploadedSlides != null}>
-                    <SlidesCard lecture={lecture} uploadServePath={uploadServePath}/>
-                </If>
+                    setLoading(true)
+                    await submitVideo(lecture.id, video.replace('http://', 'https://'))
+                    router.refresh()
+                    setOpen(false)
+                }}>
+                    {t('tasks.submitVideo.cta')}
+                </Button>
+                <Button color="gray" onClick={() => setOpen(false)}>
+                    {t('cancel')}
+                </Button>
+            </ModalFooter>
+        </Modal>
 
-                <If condition={lecture.uploadedGroupQR != null}>
-                    <ImageCard lecture={lecture} uploadServePath={uploadServePath} name={lecture.uploadedGroupQR!}
-                               target="groupQR"/>
-                </If>
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
+            <ImageCard lecture={lecture} uploadServePath={uploadServePath} name={lecture.uploadedPoster!}
+                       target="poster"/>
 
-                <If condition={lecture.uploadedFeedback != null}>
-                    <ImageCard lecture={lecture} uploadServePath={uploadServePath} name={lecture.uploadedFeedback!}
-                               target="feedback"/>
-                </If>
+            <SlidesCard lecture={lecture} uploadServePath={uploadServePath}/>
 
-                <If condition={lecture.uploadedVideo != null}>
-                    <Card className="col-span-1 h-full w-full relative">
-                        <h2>{t('lecture.content.videoTitle')}</h2>
-                        <p className="secondary">{t('lecture.content.videoMessage')}</p>
-                        <Button as={Link} color="blue" href={`/core/lecture/${lecture.id}`}>
-                            {t('lecture.content.videoCta')}
-                        </Button>
-                    </Card>
-                </If>
-            </div>
-        </If>
+            <ImageCard lecture={lecture} uploadServePath={uploadServePath} name={lecture.uploadedGroupQR!}
+                       target="groupQR"/>
+
+            <ImageCard lecture={lecture} uploadServePath={uploadServePath} name={lecture.uploadedFeedback!}
+                       target="feedback"/>
+        </div>
+
+        <Button color="blue" pill
+                className="flex justify-center items-center" onClick={() => setOpen(true)}>
+            {t('lecture.content.videoCta')}
+        </Button>
     </>
 }

@@ -354,8 +354,8 @@
       "groupQR": "Group QR Code",
       "feedback": "Feedback Form",
       "videoTitle": "Video",
-      "videoMessage": "Your lecture video is now publicly available.",
-      "videoCta": "View Video"
+      "videoMessage": "Set the lecture video link.",
+      "videoCta": "Update Video"
     },
     "people": {
       "message": "These people are involved in your lecture. Feel free to contact them for help!",
@@ -400,14 +400,18 @@
     }
   },
   "create": {
-    "title": "Start Your Next Lecture",
-    "details": "To get started, you will need to fill out the following information. <1>All questions are required. Please answer in <2>Chinese</2>.</1>",
+    "title": "Create A Lecture",
+    "details": "To get started, fill out the following information. <1>All questions are required. Please answer in <2>Chinese</2>.</1>",
     "form": {
-      "title": "What's the title of your lecture?",
+      "title": "What's the title of this lecture?",
+      "speaker": "Who is the student speaker?",
+      "host": "Who is the student host?",
+      "date": "What was the date of this lecture?",
       "contact": "Please share your WeChat ID or WeChat phone number so we can contact you.",
       "preSurveyQ1": "Please tell us about the content of your lecture.",
       "preSurveyQ2": "Why did you choose this topic?",
       "titleError": "Please enter at most 100 characters.",
+      "dateError": "Must be in 2008-01-01 format.",
       "contactError": "Please enter at most 100 characters.",
       "surveyQ1Error": "Please enter at most 1000 characters.",
       "surveyQ2Error": "Please enter at most 1000 characters."

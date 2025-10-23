@@ -3,9 +3,7 @@
 import { countMyView, HydratedLecture, toggleLike } from '@/app/lib/lecture-actions'
 import { useTranslationClient } from '@/app/i18n/client'
 import {
-    HiAcademicCap,
     HiBriefcase,
-    HiPhotograph,
     HiPresentationChartBar,
     HiShare,
     HiSpeakerphone,
@@ -112,8 +110,7 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
                             <HiSpeakerphone className="text-white text-2xl"/>
                         </div>
                         <div>
-                            <p className="font-display text-xl font-bold">{lecture.user.name}</p>
-                            <p className="font-display">{lecture.user.pinyin}</p>
+                            <p className="font-display text-xl font-bold">{lecture.overrideUserName ?? lecture.user.name}</p>
                         </div>
                     </div>
 
@@ -124,27 +121,8 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
                             </div>
                         </div>
                         <p>{t('lecture.host')}<span
-                            className="font-bold">{lecture.assignee?.name ?? t('lecture.notAssigned')}</span></p>
-                    </div>
-
-                    <div className="flex items-center mb-3">
-                        <div className="mr-3">
-                            <div className="rounded-full flex justify-center items-center bg-yellow-300 w-8 h-8">
-                                <HiAcademicCap className="text-white"/>
-                            </div>
-                        </div>
-                        <p>{t('lecture.teacher')}<span
-                            className="font-bold">{lecture.assigneeTeacher?.name ?? t('lecture.notAssigned')}</span></p>
-                    </div>
-
-                    <div className="flex items-center mb-8">
-                        <div className="mr-3">
-                            <div className="rounded-full flex justify-center items-center bg-pink-500 w-8 h-8">
-                                <HiPhotograph className="text-white"/>
-                            </div>
-                        </div>
-                        <p>{t('lecture.poster')}<span
-                            className="font-bold">{lecture.posterAssignee?.name ?? t('lecture.notAssigned')}</span></p>
+                            className="font-bold">{lecture.overrideAssigneeName ?? lecture.assignee?.name ?? t('lecture.notAssigned')}</span>
+                        </p>
                     </div>
 
                     <div className="flex w-full flex-wrap gap-3">
@@ -201,16 +179,6 @@ export default function CoreLectureClient({ lecture, uploadServePath }: {
                              className="rounded-3xl w-full"/>
                     </div>
                 </If>
-
-                <div
-                    className={`rounded-3xl bg-gray-50 dark:bg-gray-800 p-8 overflow-y-auto ${lecture.uploadedVideo == null ? 'h-full min-h-96' : 'max-h-96'}`}>
-                    <p className="text-sm secondary font-display">{t('lecture.survey')}</p>
-                    <p className="font-display font-bold">{t('lecture.preSurveyQ1')}</p>
-                    <p className="mb-3">{lecture.preSurveyQ1}</p>
-
-                    <p className="font-display font-bold">{t('lecture.preSurveyQ2')}</p>
-                    <p className="mb-3">{lecture.preSurveyQ2}</p>
-                </div>
             </div>
         </div>
     </div>

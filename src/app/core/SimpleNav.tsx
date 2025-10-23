@@ -25,9 +25,10 @@ export default async function SimpleNav() {
             </Link>
         </div>
         <div className="hidden lg:flex gap-3">
-            <Button pill color="blue" as={Link} href="/studio">
+            {user != null && user.permissions.includes('admin.manage') &&
+                <Button pill color="blue" as={Link} href="/studio">
                 {t('studio')}
-            </Button>
+                </Button>}
             {user != null && <Link href="/studio/settings" className="btn-icon-only w-10 h-10" aria-label="User Icon">
                 <span className="font-bold">{(user ?? 'a').name.at(0)}</span>
             </Link>}

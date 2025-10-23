@@ -4,7 +4,7 @@ import { requireUser } from '@/app/login/login-actions'
 import * as fs from 'fs/promises'
 import path from 'node:path'
 import { createWriteStream } from 'node:fs'
-import { LectureAuditLogType, LectureTasks, NotificationType, PrismaClient } from '@prisma/client'
+import { LectureAuditLogType, NotificationType, PrismaClient } from '@prisma/client'
 import { Readable } from 'node:stream'
 import { sendNotification } from '@/app/lib/notify-action'
 
@@ -45,17 +45,6 @@ export async function POST(req: NextRequest, { params }: {
     }
     // Validate if this target is acceptable
     if (target === 'poster') {
-        const task = await prisma.lectureTask.findFirst({
-            where: {
-                lectureId: lecture.id,
-                type: LectureTasks.submitPoster
-            }
-        })
-
-        if (task?.assigneeId !== user.id && lecture.userId !== user.id && !user.permissions.includes('admin.manage')) {
-            return NextResponse.error()
-        }
-
         if (lecture.uploadedPoster != null) {
             await fs.unlink(getPath(lecture.uploadedPoster))
         }
@@ -72,8 +61,7 @@ export async function POST(req: NextRequest, { params }: {
                 id: lecture.id
             },
             data: {
-                uploadedPoster: filename,
-                posterApproved: false
+                uploadedPoster: filename
             }
         })
         await prisma.lectureAuditLog.create({
@@ -87,38 +75,8 @@ export async function POST(req: NextRequest, { params }: {
         if (lecture.userId !== user.id) {
             await sendNotification(lecture.user, NotificationType.submittedPoster, [ user.name ], lecture.id)
         }
-        if (task != null) {
-            await prisma.lectureTask.delete({
-                where: {
-                    id: task.id
-                }
-            })
-        }
-        if (await prisma.lectureTask.count({
-            where: {
-                type: LectureTasks.schoolApprovePoster,
-                lectureId: lecture.id
-            }
-        }) === 0) {
-            await prisma.lectureTask.create({
-                data: {
-                    type: LectureTasks.schoolApprovePoster,
-                    assigneeId: lecture.assigneeId!,
-                    lectureId: lecture.id,
-                    dueAt: daysBefore(lecture.date!, 1)
-                }
-            })
-        }
-
         return NextResponse.json({ success: true })
     } else if (target === 'slides' && (lecture.userId === user.id || user.permissions.includes('admin.manage'))) {
-        const task = await prisma.lectureTask.findFirst({
-            where: {
-                lectureId: lecture.id,
-                type: LectureTasks.submitPresentation
-            }
-        })
-
         let isFirstSubmit = true
         if (lecture.uploadedSlides != null) {
             isFirstSubmit = false
@@ -137,8 +95,7 @@ export async function POST(req: NextRequest, { params }: {
                 id: lecture.id
             },
             data: {
-                uploadedSlides: filename,
-                slidesApproved: false
+                uploadedSlides: filename
             }
         })
         await prisma.lectureAuditLog.create({
@@ -149,67 +106,9 @@ export async function POST(req: NextRequest, { params }: {
                 values: [ filename ]
             }
         })
-        if (task != null) {
-            await prisma.lectureTask.delete({
-                where: {
-                    id: task.id
-                }
-            })
-        }
-        if (lecture.assigneeTeacherId != null && await prisma.lectureTask.count({
-            where: {
-                type: LectureTasks.teacherApprovePresentation,
-                lectureId: lecture.id
-            }
-        }) === 0) {
-            await prisma.lectureTask.create({
-                data: {
-                    type: LectureTasks.teacherApprovePresentation,
-                    assigneeId: lecture.assigneeId!,
-                    lectureId: lecture.id,
-                    dueAt: daysBefore(lecture.date!, 1)
-                }
-            })
-        }
-        if (lecture.posterApproved === true && isFirstSubmit) {
-            await prisma.lectureTask.create({
-                data: {
-                    type: LectureTasks.sendAdvertisements,
-                    assigneeId: lecture.assigneeId!,
-                    lectureId: lecture.id,
-                    dueAt: daysBefore(lecture.date!, 1)
-                }
-            })
-        }
-
-        if (isFirstSubmit) {
-            await prisma.lectureTask.create({
-                data: {
-                    type: LectureTasks.createGroupChat,
-                    assigneeId: lecture.assigneeId!,
-                    lectureId: lecture.id,
-                    dueAt: daysBefore(lecture.date!, 1)
-                }
-            })
-            await prisma.lectureTask.create({
-                data: {
-                    type: LectureTasks.inviteParticipants,
-                    assigneeId: lecture.userId,
-                    lectureId: lecture.id,
-                    dueAt: daysBefore(lecture.date!, 1)
-                }
-            })
-        }
 
         return NextResponse.json({ success: true })
     } else if (target === 'groupQR' && (lecture.assigneeId === user.id || user.permissions.includes('admin.manage'))) {
-        const task = await prisma.lectureTask.findFirst({
-            where: {
-                lectureId: lecture.id,
-                type: LectureTasks.createGroupChat
-            }
-        })
-
         if (lecture.uploadedGroupQR != null) {
             await fs.unlink(getPath(lecture.uploadedGroupQR))
         }
@@ -237,25 +136,9 @@ export async function POST(req: NextRequest, { params }: {
                 values: [ filename ]
             }
         })
-        await sendNotification(lecture.user, NotificationType.createdGroupChat, [ user.name ], lecture.id)
-
-        if (task != null) {
-            await prisma.lectureTask.delete({
-                where: {
-                    id: task.id
-                }
-            })
-        }
 
         return NextResponse.json({ success: true })
     } else if (target === 'feedback' && (lecture.assigneeId === user.id || user.permissions.includes('admin.manage'))) {
-        const task = await prisma.lectureTask.findFirst({
-            where: {
-                lectureId: lecture.id,
-                type: LectureTasks.submitFeedback
-            }
-        })
-
         if (lecture.uploadedFeedback != null) {
             await fs.unlink(getPath(lecture.uploadedFeedback))
         }
@@ -283,15 +166,6 @@ export async function POST(req: NextRequest, { params }: {
                 values: [ filename ]
             }
         })
-        await sendNotification(lecture.user, NotificationType.submittedFeedback, [ user.name ], lecture.id)
-        if (task != null) {
-            await prisma.lectureTask.delete({
-                where: {
-                    id: task.id
-                }
-            })
-        }
-
         return NextResponse.json({ success: true })
     }
     return NextResponse.error()

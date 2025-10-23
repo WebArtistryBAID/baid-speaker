@@ -354,8 +354,8 @@
       "groupQR": "群聊二维码",
       "feedback": "反馈表格",
       "videoTitle": "视频",
-      "videoMessage": "您的讲座视频现在已公开。",
-      "videoCta": "查看视频"
+      "videoMessage": "设置讲座视频链接。",
+      "videoCta": "更改链接"
     },
     "people": {
       "message": "以下人员参与帮助开展您的讲座。如需帮助，请随时联系他们!",
@@ -400,14 +400,18 @@
     }
   },
   "create": {
-    "title": "开始您的下一个讲座",
+    "title": "创建讲座",
     "details": "请填写以下信息。<1>所有问题均需填写。</1> <2></2>",
     "form": {
-      "title": "您的讲座标题是什么?",
+      "title": "这一讲座标题是什么?",
+      "speaker": "这一讲座人是谁?",
+      "host": "这一讲座主持人是谁?",
+      "date": "这一讲座日期是什么?",
       "contact": "请提供您的微信号或微信绑定的手机号以便我们联系您。",
       "preSurveyQ1": "请告诉我们您的讲座内容。",
       "preSurveyQ2": "为什么选择这个主题?",
       "titleError": "请输入不超过 100 个字符。",
+      "dateError": "必须如 2008-01-01。",
       "contactError": "请输入不超过 100 个字符。",
       "surveyQ1Error": "请输入不超过 1000 个字符。",
       "surveyQ2Error": "请输入不超过 1000 个字符。"

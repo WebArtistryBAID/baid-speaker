@@ -6,7 +6,6 @@ import { getMyLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-act
 import If from '@/app/lib/If'
 import { Breadcrumb, BreadcrumbItem, Button, Card, Pagination } from 'flowbite-react'
 import Link from 'next/link'
-import { LectureRoleIconCircle, LectureStatusIconCircle } from '@/app/lib/lecture-icons'
 import { useCachedUser } from '@/app/login/login-client'
 import { HiColorSwatch, HiRefresh } from 'react-icons/hi'
 
@@ -53,29 +52,6 @@ export default function StudioLectures() {
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
                 {page.items.map(lecture => <Card key={lecture.id} className="col-span-2">
                     <h2>{lecture.title}</h2>
-                    <div className="flex items-center">
-                        <div className="mr-3">
-                            <LectureStatusIconCircle status={lecture.status}/>
-                        </div>
-                        <p>{t('myLectures.status')}<span
-                            className="font-bold">{t(`lectureStatus.${lecture.status}.name`)}</span></p>
-                    </div>
-
-                    <div className="flex items-center">
-                        <div className="mr-3">
-                            <LectureRoleIconCircle lecture={lecture} user={me}/>
-                        </div>
-                        <p>{t('myLectures.role')}
-                            <span className="font-bold">
-                            <If condition={lecture.userId === me.id}>{t('myLectures.speaker')}</If>
-                            <If condition={lecture.assigneeId === me.id}>{t('myLectures.host')}</If>
-                            <If condition={lecture.assigneeTeacherId === me.id}>{t('myLectures.teacher')}</If>
-                            <If condition={lecture.posterAssigneeId === me.id}>{t('myLectures.poster')}</If>
-                            <If condition={lecture.collaborators.some(c => c.id === me.id)}>{t('myLectures.collaborator')}</If>
-                                </span>
-                        </p>
-                    </div>
-
                     <div className="flex items-center mb-3">
                         <div className="mr-3">
                             <div className="rounded-full flex justify-center items-center bg-blue-500 w-8 h-8">
