@@ -17,8 +17,13 @@ import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
 import { User } from '@prisma/client'
 import { getMyUser } from '@/app/login/login-actions'
+import { CookiesProvider } from 'react-cookie'
 
-export default function StudioLayout({ children }: { children: ReactNode }) {
+export default function WrappedStudioLayout({ children }: { children: ReactNode }) {
+    return <CookiesProvider><StudioLayout>{children}</StudioLayout></CookiesProvider>
+}
+
+function StudioLayout({ children }: { children: ReactNode }) {
     const { t } = useTranslationClient('studio')
     const [ myUser, setMyUser ] = useState<User>()
     useEffect(() => {

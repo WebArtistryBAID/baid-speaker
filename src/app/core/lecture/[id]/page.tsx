@@ -2,6 +2,7 @@ import { getLecture } from '@/app/lib/lecture-actions'
 import CoreLectureClient from '@/app/core/lecture/[id]/CoreLectureClient'
 import { redirect } from 'next/navigation'
 import SimpleNav from '@/app/core/SimpleNav'
+import { CookiesProvider } from 'react-cookie'
 
 export default async function CoreLectureBase({ params }: { params: Promise<{ id: string }> }) {
     const id = (await params).id
@@ -11,6 +12,6 @@ export default async function CoreLectureBase({ params }: { params: Promise<{ id
     }
     return <>
         <SimpleNav/>
-        <CoreLectureClient lecture={lecture} uploadServePath={`/${process.env.UPLOAD_SERVE_PATH}/`}/>
+        <CookiesProvider><CoreLectureClient lecture={lecture} uploadServePath={`/${process.env.UPLOAD_SERVE_PATH}/`}/></CookiesProvider>
     </>
 }

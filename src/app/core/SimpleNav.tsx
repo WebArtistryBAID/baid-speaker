@@ -4,6 +4,7 @@ import { serverTranslation } from '@/app/i18n'
 import { getMyUser } from '@/app/login/login-actions'
 import { HiSearch } from 'react-icons/hi'
 import SearchBar from '@/app/core/SearchBar'
+import { CookiesProvider } from 'react-cookie'
 
 export default async function SimpleNav() {
     const {t} = await serverTranslation('core')
@@ -16,7 +17,7 @@ export default async function SimpleNav() {
         </NavbarBrand>
 
         <div className="hidden lg:flex w-1/2 xl:w-1/3">
-            <SearchBar/>
+            <CookiesProvider><SearchBar/></CookiesProvider>
         </div>
 
         <div className="lg:hidden">

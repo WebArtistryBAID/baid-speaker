@@ -2,8 +2,13 @@
 
 import { useTranslationClient } from '@/app/i18n/client'
 import { getLoginTarget } from '@/app/login/login-actions'
+import { CookiesProvider } from 'react-cookie'
 
-export default function PageLoginOnboarding() {
+export default function WrappedLoginOnboarding() {
+    return <CookiesProvider><PageLoginOnboarding /></CookiesProvider>
+}
+
+function PageLoginOnboarding() {
     const { t } = useTranslationClient('login')
 
     return <div className="messagebox-container">
