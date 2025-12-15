@@ -43,12 +43,11 @@ export default function StudioLectures() {
                 <img src="/assets/illustrations/hi-light.png" className="dark:hidden w-72" alt=""/>
                 <img src="/assets/illustrations/hi-dark.png" className="hidden dark:block w-72" alt=""/>
                 <p className="mb-3">{t('myLectures.empty')}</p>
-                <Button color="blue" as={Link} href="/studio/lectures/create">{t('myLectures.startLecture')}</Button>
+                <Link href="/studio/lectures/create"><Button color="blue" as="div">{t('myLectures.startLecture')}</Button></Link>
             </div>
         </If>
         <If condition={page.pages >= 1}>
-            <Button className="mb-5 inline-block" color="blue" as={Link}
-                    href="/studio/lectures/create">{t('myLectures.startLecture')}</Button>
+            <Link href="/studio/lectures/create"><Button className="mb-5 inline-block" color="blue" as="div">{t('myLectures.startLecture')}</Button></Link>
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mb-8">
                 {page.items.map(lecture => <Card key={lecture.id} className="col-span-2">
                     <h2>{lecture.title}</h2>
@@ -62,8 +61,7 @@ export default function StudioLectures() {
                             className="font-bold">{lecture.updatedAt.toLocaleString()}</span></p>
                     </div>
 
-                    <Button color="blue" as={Link}
-                            href={`/studio/lectures/${lecture.id}`}>{t('myLectures.cta')}</Button>
+                    <Link href={`/studio/lectures/${lecture.id}`}><Button color="blue" as="div">{t('myLectures.cta')}</Button></Link>
                 </Card>)}
             </div>
             <div className="flex overflow-x-auto sm:justify-center">

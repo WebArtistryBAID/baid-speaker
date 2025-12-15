@@ -12,8 +12,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                display: [ 'Outfit', 'Noto Sans CJK SC', 'system-ui', 'sans-serif' ],
-                body: [ 'Noto Sans CJK SC', 'system-ui', 'sans-serif' ]
+                display: [ 'Outfit', 'system-ui', 'sans-serif' ],
+                body: [ 'system-ui', 'sans-serif' ]
             }
         }
     },

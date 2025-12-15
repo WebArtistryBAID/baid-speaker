@@ -13,7 +13,7 @@ import {
 } from 'react-icons/hi'
 import { Button } from 'flowbite-react'
 import If from '@/app/lib/If'
-import { LectureStatus, User } from '@prisma/client'
+import { LectureStatus, User } from '@/generated/prisma/browser'
 import { useEffect, useState } from 'react'
 import { getMyUser } from '@/app/login/login-actions'
 import { useRouter } from 'next/navigation'

@@ -1,7 +1,7 @@
 import {redirect} from 'next/navigation'
 import CoreSearchClient from '@/app/core/search/CoreSearchClient'
 import {searchPublicLectures} from '@/app/lib/lecture-actions'
-import { CookiesProvider } from 'react-cookie'
+import CookiesBoundary from '@/app/lib/CookiesBoundary'
 
 export default async function CoreSearchBase(
     props: {
@@ -14,6 +14,6 @@ export default async function CoreSearchBase(
     }
     const q = (await searchParams).q
     const query = (q == null ? '' : (q as string)).trim()
-    return <CookiesProvider><CoreSearchClient lectures={await searchPublicLectures(0, query)}
-                                              uploadServePath={`/${process.env.UPLOAD_SERVE_PATH}/`} query={query}/></CookiesProvider>
+    return <CookiesBoundary><CoreSearchClient lectures={await searchPublicLectures(0, query)}
+                                              uploadServePath={`/${process.env.UPLOAD_SERVE_PATH}/`} query={query}/></CookiesBoundary>
 }

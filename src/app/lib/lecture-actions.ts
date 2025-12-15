@@ -7,15 +7,13 @@ import {
     LectureTasks,
     NotificationType,
     Prisma,
-    PrismaClient,
     User,
     UserType
-} from '@prisma/client'
+} from '@/generated/prisma/client'
 import { requireUser, requireUserPermission } from '@/app/login/login-actions'
 import { sendNotification } from '@/app/lib/notify-action'
 import LectureWhereInput = Prisma.LectureWhereInput
-
-const prisma = new PrismaClient()
+import { prisma } from '@/app/lib/prisma'
 
 export interface Paginated<T> {
     items: T[]
@@ -252,7 +250,7 @@ export async function toggleLike(lectureID: number): Promise<void> {
             },
             data: {
                 likedUsers: {
-                    set: lecture.likedUsers.filter(id => id !== user.id)
+                    set: lecture.likedUsers.filter((id: string) => id !== user.id)
                 }
             }
         })

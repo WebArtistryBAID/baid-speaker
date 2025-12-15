@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { getPublicLectures, HydratedLecture, Paginated } from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
-import { LectureStatus } from '@prisma/client'
+import { LectureStatus } from '@/generated/prisma/browser'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 export default function CoreClient({ lectures, uploadServePath }: {

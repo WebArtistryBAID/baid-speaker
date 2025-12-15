@@ -1,6 +1,6 @@
 'use client'
 
-import { User } from '@prisma/client'
+import { User } from '@/generated/prisma/browser'
 import { Breadcrumb, BreadcrumbItem, ToggleSwitch } from 'flowbite-react'
 import { HiColorSwatch } from 'react-icons/hi'
 import { useTranslationClient } from '@/app/i18n/client'

@@ -6,7 +6,7 @@ import { HiColorSwatch, HiDocumentText } from 'react-icons/hi'
 import { HydratedLecture } from '@/app/lib/lecture-actions'
 import { useEffect, useRef, useState } from 'react'
 import If from '@/app/lib/If'
-import { User } from '@prisma/client'
+import { User } from '@/generated/prisma/browser'
 import { getMyUser } from '@/app/login/login-actions'
 import LectureContent from '@/app/studio/lectures/[id]/LectureContent'
 

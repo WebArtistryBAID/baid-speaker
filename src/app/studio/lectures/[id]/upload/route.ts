@@ -4,18 +4,13 @@ import { requireUser } from '@/app/login/login-actions'
 import * as fs from 'fs/promises'
 import path from 'node:path'
 import { createWriteStream } from 'node:fs'
-import { LectureAuditLogType, NotificationType, PrismaClient } from '@prisma/client'
+import { LectureAuditLogType, NotificationType } from '@/generated/prisma/client'
 import { Readable } from 'node:stream'
 import { sendNotification } from '@/app/lib/notify-action'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/app/lib/prisma'
 
 function getPath(relative: string): string {
     return path.join(process.env.UPLOAD_PATH!, relative)
-}
-
-function daysBefore(d: Date, days: number): Date {
-    return new Date(d.getTime() - days * 24 * 60 * 60 * 1000)
 }
 
 export async function POST(req: NextRequest, { params }: {
@@ -77,9 +72,7 @@ export async function POST(req: NextRequest, { params }: {
         }
         return NextResponse.json({ success: true })
     } else if (target === 'slides' && (lecture.userId === user.id || user.permissions.includes('admin.manage'))) {
-        let isFirstSubmit = true
         if (lecture.uploadedSlides != null) {
-            isFirstSubmit = false
             await fs.unlink(getPath(lecture.uploadedSlides))
         }
         const filename = `${id}-slides-${Date.now()}.${file.name.split('.').pop()}`

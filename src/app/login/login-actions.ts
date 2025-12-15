@@ -1,11 +1,10 @@
 'use server'
 
-import { Lecture, NotificationType, PrismaClient, User } from '@prisma/client'
+import { Lecture, NotificationType, User } from '@/generated/prisma/client'
 import { me } from '@/app/login/login'
 import { Paginated } from '@/app/lib/lecture-actions'
 import { decodeJwt } from 'jose'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/app/lib/prisma'
 
 export interface HydratedNotification {
     id: number
@@ -68,7 +67,7 @@ export async function toggleUserPermission(id: number, permission: string): Prom
             where: { id },
             data: {
                 permissions: {
-                    set: user.permissions.filter(p => p !== permission)
+                    set: user.permissions.filter((p: string) => p !== permission)
                 }
             }
         })
@@ -168,7 +167,7 @@ export async function toggleInboxNotification(type: NotificationType): Promise<v
             where: { id: user.id },
             data: {
                 inboxNotifications: {
-                    set: user.inboxNotifications.filter(t => t !== type)
+                    set: user.inboxNotifications.filter((t: NotificationType) => t !== type)
                 }
             }
         })
@@ -191,7 +190,7 @@ export async function toggleSMSNotification(type: NotificationType): Promise<voi
             where: { id: user.id },
             data: {
                 smsNotifications: {
-                    set: user.smsNotifications.filter(t => t !== type)
+                    set: user.smsNotifications.filter((t: NotificationType) => t !== type)
                 }
             }
         })

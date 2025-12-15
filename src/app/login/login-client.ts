@@ -1,4 +1,4 @@
-import { User, UserType } from '@prisma/client'
+import { User, UserType } from '@/generated/prisma/client'
 import { useCookies } from 'react-cookie'
 import { decodeJwt } from 'jose'
 

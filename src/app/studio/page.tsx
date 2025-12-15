@@ -5,7 +5,7 @@ import { requireUserPermission } from '@/app/login/login-actions'
 import { getMyOwnLatestLecture } from '@/app/lib/lecture-actions'
 import If from '@/app/lib/If'
 import Link from 'next/link'
-import { LectureStatus } from '@prisma/client'
+import { LectureStatus } from '@/generated/prisma/browser'
 
 export default async function StudioHome() {
     const { t } = await serverTranslation('studio')
@@ -24,20 +24,24 @@ export default async function StudioHome() {
                 <Card className="col-span-2">
                     <h2>{t('dashboard.continueCard.title')}</h2>
                     <p className="secondary xl:mb-6">{t('dashboard.continueCard.subtitle')}</p>
-                    <Button as={Link} href={`/studio/lectures/${lecture?.id}`}>
-                        {t('dashboard.continueCard.cta')}
-                        <HiArrowRight className="btn-guide-icon"/>
-                    </Button>
+                    <Link href={`/studio/lectures/${lecture?.id}`}>
+                        <Button as="div">
+                            {t('dashboard.continueCard.cta')}
+                            <HiArrowRight className="btn-guide-icon"/>
+                        </Button>
+                    </Link>
                 </Card>
             </If>
             <If condition={lecture == null || lecture.status === LectureStatus.completed}>
                 <Card className="col-span-2">
                     <h2>{t('dashboard.createCard.title')}</h2>
                     <p className="secondary xl:mb-6">{t('dashboard.createCard.subtitle')}</p>
-                    <Button as={Link} href="/studio/lectures/create">
-                        {t('dashboard.createCard.cta')}
-                        <HiArrowRight className="btn-guide-icon"/>
-                    </Button>
+                    <Link href="/studio/lectures/create">
+                        <Button as="div">
+                            {t('dashboard.createCard.cta')}
+                            <HiArrowRight className="btn-guide-icon"/>
+                        </Button>
+                    </Link>
                 </Card>
             </If>
             <Card className="col-span-1">

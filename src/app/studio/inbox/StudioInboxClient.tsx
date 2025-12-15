@@ -7,7 +7,7 @@ import {dismissNotification, getMyNotifications, HydratedNotification} from '@/a
 import If from '@/app/lib/If'
 import {Alert, Breadcrumb, BreadcrumbItem, Pagination} from 'flowbite-react'
 import {HiColorSwatch, HiInformationCircle} from 'react-icons/hi'
-import {NotificationType} from '@prisma/client'
+import {NotificationType} from '@/generated/prisma/browser'
 import {Trans} from 'react-i18next/TransWithoutContext'
 import Link from 'next/link'
 

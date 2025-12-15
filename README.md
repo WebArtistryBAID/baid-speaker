@@ -16,7 +16,7 @@ To run in development:
 
 | Name                     | Description                                                                                                     |
 |--------------------------|-----------------------------------------------------------------------------------------------------------------|
-| `DATABASE_URL`           | The database URL to use. PostgreSQL is required.                                                                |
+| `DATABASE_URI`           | The database URL to use. PostgreSQL is required.                                                                |
 | `JWT_SECRET`             | The JWT secret key to use. You can generate one with `openssl rand -hex 32`.                                    |
 | `HOST`                   | The location where this service is hosted. No trailing slashes.                                                 |
 | `UPLOAD_PATH`            | The directory where uploaded files are stored. In development, this is `public/uploads`.                        |

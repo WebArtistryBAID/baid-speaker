@@ -2,10 +2,10 @@
 
 import { useTranslationClient } from '@/app/i18n/client'
 import { getLoginTarget } from '@/app/login/login-actions'
-import { CookiesProvider } from 'react-cookie'
+import CookiesBoundary from '@/app/lib/CookiesBoundary'
 
 export default function WrappedLoginOnboarding() {
-    return <CookiesProvider><PageLoginOnboarding /></CookiesProvider>
+    return <CookiesBoundary><PageLoginOnboarding /></CookiesBoundary>
 }
 
 function PageLoginOnboarding() {

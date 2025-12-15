@@ -15,12 +15,12 @@ import { HiAcademicCap, HiChartPie, HiCog, HiUser, HiUsers } from 'react-icons/h
 import Link from 'next/link'
 import { useTranslationClient } from '@/app/i18n/client'
 import If from '@/app/lib/If'
-import { User } from '@prisma/client'
+import { User } from '@/generated/prisma/browser'
 import { getMyUser } from '@/app/login/login-actions'
-import { CookiesProvider } from 'react-cookie'
+import CookiesBoundary from '@/app/lib/CookiesBoundary'
 
 export default function WrappedStudioLayout({ children }: { children: ReactNode }) {
-    return <CookiesProvider><StudioLayout>{children}</StudioLayout></CookiesProvider>
+    return <CookiesBoundary><StudioLayout>{children}</StudioLayout></CookiesBoundary>
 }
 
 function StudioLayout({ children }: { children: ReactNode }) {
@@ -49,17 +49,23 @@ function StudioLayout({ children }: { children: ReactNode }) {
                         className="font-display">BAID Speaker</span></SidebarLogo>
                     <SidebarItems>
                         <SidebarItemGroup>
-                            <SidebarItem as={Link} href="/studio" icon={HiChartPie}>
-                                {t('nav.dashboard')}
-                            </SidebarItem>
-                            <SidebarItem as={Link} href="/studio/lectures" icon={HiAcademicCap}>
-                                {t('nav.lectures')}
-                            </SidebarItem>
+                            <Link href="/studio">
+                                <SidebarItem as="div" icon={HiChartPie}>
+                                    {t('nav.dashboard')}
+                                </SidebarItem>
+                            </Link>
+                            <Link href="/studio/lectures">
+                                <SidebarItem icon={HiAcademicCap}>
+                                    {t('nav.lectures')}
+                                </SidebarItem>
+                            </Link>
                             <If condition={myUser?.permissions.includes('admin.manage')}>
                                 <SidebarCollapse label="Management" icon={HiCog}>
-                                    <SidebarItem as={Link} href="/studio/users" icon={HiUsers}>
-                                        {t('nav.user')}
-                                    </SidebarItem>
+                                    <Link href="/studio/users">
+                                        <SidebarItem icon={HiUsers}>
+                                            {t('nav.user')}
+                                        </SidebarItem>
+                                    </Link>
                                 </SidebarCollapse>
                             </If>
                         </SidebarItemGroup>

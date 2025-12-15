@@ -1,6 +1,6 @@
 'use client'
 
-import { NotificationType, User } from '@prisma/client'
+import { NotificationType, User } from '@/generated/prisma/browser'
 import { useTranslationClient } from '@/app/i18n/client'
 import { Breadcrumb, BreadcrumbItem, Button, Checkbox } from 'flowbite-react'
 import { HiColorSwatch, HiUser } from 'react-icons/hi'

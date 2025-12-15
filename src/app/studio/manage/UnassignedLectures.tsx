@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import If from '@/app/lib/If'
 import { HiRefresh, HiSpeakerphone } from 'react-icons/hi'
 import { getMyUser } from '@/app/login/login-actions'
-import { User } from '@prisma/client'
+import { User } from '@/generated/prisma/browser'
 
 export default function UnassignedLectures() {
     const {t} = useTranslationClient('studio')

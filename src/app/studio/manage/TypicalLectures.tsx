@@ -3,7 +3,7 @@
 import {useTranslationClient} from '@/app/i18n/client'
 import {useEffect, useState} from 'react'
 import {getLectures, HydratedLecture, Paginated} from '@/app/lib/lecture-actions'
-import {Prisma, User} from '@prisma/client'
+import {Prisma, User} from '@/generated/prisma/browser'
 import {getMyUser} from '@/app/login/login-actions'
 import If from '@/app/lib/If'
 import {Button, Card, Pagination} from 'flowbite-react'
@@ -70,8 +70,7 @@ export default function TypicalLectures({ filter }: { filter: LectureWhereInput 
                             className="font-bold">{lecture.updatedAt.toLocaleString()}</span></p>
                     </div>
 
-                    <Button as={Link} color="blue"
-                            href={`/studio/lectures/${lecture.id}`}>{t('manage.typical.view')}</Button>
+                    <Link href={`/studio/lectures/${lecture.id}`}><Button as="div" color="blue">{t('manage.typical.view')}</Button></Link>
                 </Card>)}
             </div>
 

@@ -1,4 +1,4 @@
-import { Lecture, LectureStatus, User } from '@prisma/client'
+import { Lecture, LectureStatus, User } from '@/generated/prisma/browser'
 import {
     HiAcademicCap,
     HiAnnotation,

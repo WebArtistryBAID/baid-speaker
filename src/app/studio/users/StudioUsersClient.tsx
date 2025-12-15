@@ -1,10 +1,10 @@
 'use client'
 
-import {Paginated} from '@/app/lib/lecture-actions'
-import {User} from '@prisma/client'
-import {useTranslationClient} from '@/app/i18n/client'
-import {useEffect, useState} from 'react'
-import {getUsers} from '@/app/login/login-actions'
+import { Paginated } from '@/app/lib/lecture-actions'
+import { User } from '@/generated/prisma/browser'
+import { useTranslationClient } from '@/app/i18n/client'
+import { useEffect, useState } from 'react'
+import { getUsers } from '@/app/login/login-actions'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -16,7 +16,7 @@ import {
     TableRow,
     TextInput
 } from 'flowbite-react'
-import {HiColorSwatch, HiSearch} from 'react-icons/hi'
+import { HiColorSwatch, HiSearch } from 'react-icons/hi'
 import Link from 'next/link'
 import If from '@/app/lib/If'
 
@@ -47,8 +47,10 @@ export default function StudioUsersClient({ users }: { users: Paginated<User> })
                 {page.items.map(user => <TableRow className="tr" key={user.id}>
                     <TableCell className="th w-4/5">{user.name}</TableCell>
                     <TableCell className="w-1/5">
-                        <Button className="inline-block" color="blue" as={Link} href={`/studio/users/${user.id}`} pill
-                                size="xs">{t('users.view')}</Button>
+                        <Link href={`/studio/users/${user.id}`}>
+                            <Button className="inline-block" color="blue" as="div" pill
+                                    size="xs">{t('users.view')}</Button>
+                        </Link>
                     </TableCell>
                 </TableRow>)}
             </TableBody>
