@@ -250,7 +250,7 @@ export async function toggleLike(lectureID: number): Promise<void> {
             },
             data: {
                 likedUsers: {
-                    set: lecture.likedUsers.filter((id: string) => id !== user.id)
+                    set: lecture.likedUsers.filter((id: number) => id !== user.id)
                 }
             }
         })
