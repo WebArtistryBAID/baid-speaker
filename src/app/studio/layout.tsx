@@ -61,6 +61,11 @@ function StudioLayout({ children }: { children: ReactNode }) {
                             </Link>
                             <If condition={myUser?.permissions.includes('admin.manage')}>
                                 <SidebarCollapse label="Management" icon={HiCog}>
+                                    <Link href="/studio/manage">
+                                        <SidebarItem icon={HiAcademicCap}>
+                                            {t('nav.manage')}
+                                        </SidebarItem>
+                                    </Link>
                                     <Link href="/studio/users">
                                         <SidebarItem icon={HiUsers}>
                                             {t('nav.user')}
