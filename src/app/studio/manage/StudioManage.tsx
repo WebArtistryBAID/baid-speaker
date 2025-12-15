@@ -6,7 +6,7 @@ import { HiCheckCircle, HiClock, HiColorSwatch } from 'react-icons/hi'
 import { HiEllipsisHorizontalCircle, HiListBullet } from 'react-icons/hi2'
 import UnassignedLectures from '@/app/studio/manage/UnassignedLectures'
 import TypicalLectures from '@/app/studio/manage/TypicalLectures'
-import { LectureStatus } from '@/generated/prisma/client'
+import { LectureStatus } from '@/generated/prisma/browser'
 
 export default function StudioManage() {
     const { t } = useTranslationClient('studio')
