@@ -41,7 +41,9 @@ export async function POST(req: NextRequest, { params }: {
     // Validate if this target is acceptable
     if (target === 'poster') {
         if (lecture.uploadedPoster != null) {
-            await fs.unlink(getPath(lecture.uploadedPoster))
+            try {
+                await fs.unlink(getPath(lecture.uploadedPoster))
+            } catch {}
         }
         const filename = `${id}-poster-${Date.now()}.${file.name.split('.').pop()}`
         const stream = createWriteStream(getPath(filename))
@@ -73,7 +75,9 @@ export async function POST(req: NextRequest, { params }: {
         return NextResponse.json({ success: true })
     } else if (target === 'slides' && (lecture.userId === user.id || user.permissions.includes('admin.manage'))) {
         if (lecture.uploadedSlides != null) {
-            await fs.unlink(getPath(lecture.uploadedSlides))
+            try {
+                await fs.unlink(getPath(lecture.uploadedSlides))
+            } catch {}
         }
         const filename = `${id}-slides-${Date.now()}.${file.name.split('.').pop()}`
         const stream = createWriteStream(getPath(filename))
@@ -103,7 +107,9 @@ export async function POST(req: NextRequest, { params }: {
         return NextResponse.json({ success: true })
     } else if (target === 'groupQR' && (lecture.assigneeId === user.id || user.permissions.includes('admin.manage'))) {
         if (lecture.uploadedGroupQR != null) {
-            await fs.unlink(getPath(lecture.uploadedGroupQR))
+            try {
+                await fs.unlink(getPath(lecture.uploadedGroupQR))
+            } catch {}
         }
         const filename = `${id}-groupQR-${Date.now()}.${file.name.split('.').pop()}`
         const stream = createWriteStream(getPath(filename))
@@ -133,7 +139,9 @@ export async function POST(req: NextRequest, { params }: {
         return NextResponse.json({ success: true })
     } else if (target === 'feedback' && (lecture.assigneeId === user.id || user.permissions.includes('admin.manage'))) {
         if (lecture.uploadedFeedback != null) {
-            await fs.unlink(getPath(lecture.uploadedFeedback))
+            try {
+                await fs.unlink(getPath(lecture.uploadedFeedback))
+            } catch {}
         }
         const filename = `${id}-feedback-${Date.now()}.${file.name.split('.').pop()}`
         const stream = createWriteStream(getPath(filename))
